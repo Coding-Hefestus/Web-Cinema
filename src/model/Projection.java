@@ -4,12 +4,14 @@ import java.util.GregorianCalendar;
 
 public class Projection extends Moviefiable{
 	
-	private int movie;	//movie id;
-	private int projectionType; //projection type id;
-	private int hall; //id hall;
-	private Period perido;
+	private Movie movie;
+	private ProjectionType projectionType;
+	private Hall hall;
+	private Period period;
 	private double ticketPrice;
-	private int administrator; //id admina
+	private User administrator;
 	
+	
+
 	
 }
