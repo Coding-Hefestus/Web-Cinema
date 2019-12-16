@@ -1,15 +1,16 @@
 package model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class User extends Moviefiable {
 
 	private String username;
 	private String password;
-	private GregorianCalendar registrationDate;
+	private LocalDateTime registrationDate;
 	private Role role;
 
-	public User(int id, boolean active, String username, String password, GregorianCalendar registrationDate, Role role) {
+	public User(int id, boolean active, String username, String password, LocalDateTime registrationDate, Role role) {
 		super(id, active);
 		this.username = username;
 		this.password = password;
@@ -39,11 +40,11 @@ public class User extends Moviefiable {
 		this.password = password;
 	}
 
-	public GregorianCalendar getRegistrationDate() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(GregorianCalendar registrationDate) {
+	public void setRegistrationDate(LocalDateTime registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 

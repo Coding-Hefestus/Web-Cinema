@@ -1,17 +1,18 @@
 package model;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Period {
 	
 	private int id;
-	private GregorianCalendar start;
-	private GregorianCalendar end;
+	private LocalDateTime start;
+	private LocalDateTime end;
 	
 	
 	
-	public Period(int id, GregorianCalendar start, GregorianCalendar end) {
+	public Period(int id, LocalDateTime start, LocalDateTime end) {
 		super();
 		this.id = id;
 		this.start = start;
@@ -22,17 +23,18 @@ public class Period {
 	
 	
 	
-	public Period(int id,  GregorianCalendar start, int duration) {
+	public Period(int id,  LocalDateTime start, int duration) {
 		this.id = id;
-		this.start = start;
-		this.end = (GregorianCalendar) start.clone();
-		this.end.add(Calendar.MINUTE, duration);
+		this.start = start;		
+		this.end = LocalDateTime.of
+				(start.getYear(), start.getMonth(), start.getDayOfMonth(), 
+				start.getHour(), start.getMinute()).plusMinutes(duration);		
 	}
 	
 	public boolean overlaps(Period other) {
-		if ( this.getStart().before(other.getStart()) && this.getEnd().before(other.getStart())) {
+		if ( this.getStart().isBefore(other.getStart()) && this.getEnd().isBefore(other.getStart())) {
 			return false;
-		} else if (this.getStart().after(other.getEnd()) && this.getEnd().after(other.getEnd())) {
+		} else if (this.getStart().isAfter(other.getEnd()) && this.getEnd().isAfter(other.getEnd())) {
 			return false;
 		} else return true;
 	}
@@ -45,19 +47,19 @@ public class Period {
 		this.id = id;
 	}
 
-	public GregorianCalendar getStart() {
+	public LocalDateTime getStart() {
 		return start;
 	}
 
-	public void setStart(GregorianCalendar start) {
+	public void setStart(LocalDateTime start) {
 		this.start = start;
 	}
 
-	public GregorianCalendar getEnd() {
+	public LocalDateTime getEnd() {
 		return end;
 	}
 
-	public void setEnd(GregorianCalendar end) {
+	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
 	

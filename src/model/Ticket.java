@@ -1,54 +1,72 @@
 package model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Ticket extends Moviefiable {
-
-	private int projection;
-	private int seat; //seat id;
-	private GregorianCalendar purchasingTime;
-	private int user; //id user;
 	
-	public Ticket(int id, boolean active, int projection, int seat, GregorianCalendar purchasingTime, int user) {
+	private Projection projection;
+	private Seat seat;
+	private LocalDateTime purchasingDate;
+	private User user;
+	
+	
+	
+	
+	
+	public Ticket(int id, boolean active, Projection projection, Seat seat, LocalDateTime purchasingDate, User user) {
 		super(id, active);
 		this.projection = projection;
 		this.seat = seat;
-		this.purchasingTime = purchasingTime;
+		this.purchasingDate = purchasingDate;
 		this.user = user;
 	}
-	
-	public Ticket() {this(-1, false, -1, -1, null, -1);}
-	
-	
-	
-	
-	public int getProjection() {
+
+
+
+
+
+	public Ticket() {this(-1, false, null, null, null, null);}
+
+
+	public Projection getProjection() {
 		return projection;
 	}
-	public void setProjection(int projection) {
+
+
+	public void setProjection(Projection projection) {
 		this.projection = projection;
 	}
-	public int getSeat() {
+
+
+	public Seat getSeat() {
 		return seat;
 	}
-	public void setSeat(int seat) {
+
+
+	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
-	public GregorianCalendar getPurchasingTime() {
-		return purchasingTime;
+
+
+	public LocalDateTime getPurchasingDate() {
+		return purchasingDate;
 	}
-	public void setPurchasingTime(GregorianCalendar purchasingTime) {
-		this.purchasingTime = purchasingTime;
+
+
+	public void setPurchasingDate(LocalDateTime purchasingDate) {
+		this.purchasingDate = purchasingDate;
 	}
-	public int getUser() {
+
+
+	public User getUser() {
 		return user;
 	}
-	public void setUser(int user) {
+
+	public void setUser(User user) {
 		this.user = user;
 	}
 	
-	
-
 	
 
 }
