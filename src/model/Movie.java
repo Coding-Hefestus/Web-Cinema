@@ -7,8 +7,7 @@ public class Movie extends Moviefiable{
 	private int productionYear;
 	private String description;
 	
-	
-	
+
 	public Movie(int id, boolean active, String name, int duration, int productionYear, String description) {
 		super(id, active);
 		this.name = name;
