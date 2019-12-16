@@ -1,5 +1,7 @@
 package model;
 
+import java.util.function.Predicate;
+
 public class Movie extends Moviefiable{
 	
 	private String name;
@@ -58,6 +60,25 @@ public class Movie extends Moviefiable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public static Predicate<Movie> nameFilter(String filter){
+		return m -> m.getName().toLowerCase().contains(filter.toLowerCase());
+	}
+	
+	
+	public static Predicate<Movie> durationFilter(int fromFilter, int toFilter){
+		return  m -> fromFilter <= m.getDuration() && m.getDuration() <= toFilter;
+	}
+	
+
+	public static Predicate<Movie> productionFilter(int fromFilter, int toFilter){			
+		return m -> fromFilter <=  m.getProductionYear() &&   m.getProductionYear() <= toFilter;		
+	}
+	
+	public static Predicate<Movie> descriptionFilter(String filter){
+		return m -> m.getDescription().toLowerCase().contains(filter.toLowerCase());
+	}
+	
 	
 	
 	

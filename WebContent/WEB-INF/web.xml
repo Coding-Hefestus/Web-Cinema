@@ -8,7 +8,7 @@
     <description></description>
     <display-name>LoginServlet</display-name>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>LoginServlet</servlet-class>
+    <servlet-class>servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -24,4 +24,7 @@
     <servlet-name>MovieServlet</servlet-name>
     <url-pattern>/MovieServlet</url-pattern>
   </servlet-mapping>
+  <listener>
+    <listener-class>servlets.InitListener</listener-class>
+  </listener>
 </web-app>
