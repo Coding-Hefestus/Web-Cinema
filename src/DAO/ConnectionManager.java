@@ -1,8 +1,11 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
 public class ConnectionManager {
 	
@@ -15,30 +18,35 @@ public class ConnectionManager {
 	private static final String PATH = WINDOWS_PATH;
 	
 	
-	private static Connection connection;
 
+	private static DataSource dataSource;
+	
+	
 	public static void open() {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + PATH); // folder-i u stazi moraju biti kreirani, ali .db datoteka ne mora
+			Properties dataSourceProperties = new Properties();
+			dataSourceProperties.setProperty("driverClassName", "org.sqlite.JDBC");
+			dataSourceProperties.setProperty("url", "jdbc:sqlite:" + PATH);
+			
+			dataSource = BasicDataSourceFactory.createDataSource(dataSourceProperties); // connection pool
 		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
 	}
-	
-	public static Connection getConnection() {
-		
-		return connection;
-	}
 
-	public static void close() {
+	public static Connection getConnection() {
 		try {
-			connection.close();
-		} catch (SQLException ex) {
+			return dataSource.getConnection(); // slobodna konekcija se vadi iz pool-a na zahtev
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
+
+		return null;
 	}
+	
+
+
 
 }

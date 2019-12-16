@@ -3,11 +3,11 @@ package model;
 public class Seat extends Moviefiable {
 
 	private int number;
-	private int hall; //hall id;
+	private Hall hall;
 	private boolean taken;
 	
 	
-	public Seat(int id, boolean active, int number, int hall, boolean taken) {
+	public Seat(int id, boolean active, int number, Hall hall, boolean taken) {
 		super(id, active);
 		this.number = number;
 		this.hall = hall;
@@ -17,7 +17,7 @@ public class Seat extends Moviefiable {
 
 
 
-	public Seat() {this(-1, false, -1, -1, false);}
+	public Seat() {this(-1, false, -1, null, false);}
 
 
 
@@ -36,14 +36,14 @@ public class Seat extends Moviefiable {
 
 
 
-	public int getHall() {
+	public Hall getHall() {
 		return hall;
 	}
 
 
 
 
-	public void setHall(int hall) {
+	public void setHall(Hall hall) {
 		this.hall = hall;
 	}
 
