@@ -44,7 +44,9 @@ public class MovieServlet extends HttpServlet {
 		final String descriptionFilter = new String(descriptionF);
 		
 		try {
-	
+			
+			ArrayList<Movie> fm = (ArrayList<Movie>) MovieDAO.getAll();
+			
 			
 			ArrayList<Movie> filteredMovies = (ArrayList<Movie>) MovieDAO.getAll().stream()
 					.filter(Movie.nameFilter(titleFilter)						
@@ -53,13 +55,13 @@ public class MovieServlet extends HttpServlet {
 							.and(Movie.descriptionFilter(descriptionFilter)))						
 							.collect(Collectors.toList());
 			
-			request.setAttribute("titleFilter", titleFilter);
+			request.setAttribute("nameFilter", titleFilter);
 			
 			request.setAttribute("toDurationFilter", toDurationFilter);
 			request.setAttribute("fromDurationFilter", fromDurationFilter);
 			
-			request.setAttribute("fromPublishingFilter", fromProductionFilter);
-			request.setAttribute("toPublishingFilter", toProductionFilter);
+			request.setAttribute("fromProductionFilter", fromProductionFilter);
+			request.setAttribute("toProductionFilter", toProductionFilter);
 			
 			request.setAttribute("descriptionFilter", descriptionFilter);
 
@@ -86,8 +88,8 @@ public class MovieServlet extends HttpServlet {
 			temp = (temp > 0 ? temp : 0);
 			tempFilter = temp;
 		} catch(Exception e) {
-			tempFilter = 0;
-			e.printStackTrace();
+			return 0;
+			//e.printStackTrace();
 			
 		}
 		return  tempFilter;
@@ -97,12 +99,13 @@ public class MovieServlet extends HttpServlet {
 	private  int getToFilter(String filter) {
 		int tempFilter = 0;
 		try {
-			int temp = Integer.valueOf(filter);
+			//int temp = Integer.valueOf(filter);
+			int temp = Integer.parseInt(filter);
 			temp = (temp > 0 ? temp : Integer.MAX_VALUE);
 			tempFilter = temp;
 		} catch(Exception e) {
-			tempFilter = Integer.MAX_VALUE;
-			e.printStackTrace();
+			return Integer.MAX_VALUE;
+			//e.printStackTrace();
 			
 		}
 		return  tempFilter;

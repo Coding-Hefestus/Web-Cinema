@@ -49,15 +49,37 @@ public class UserDAO {
 				//System.out.println(s);
 				//System.exit(1);
 				//Date date = rset.getDate(5);
-				Timestamp timestamp = rset.getTimestamp(1);
+				//Timestamp timestamp = rset.getTimestamp(5);
+				
 				//Timestamp timestamp = new Timestamp(date.getTime());
 				//Timestamp timestamp = rset.getTimestamp(5);
-				LocalDateTime registartionDate = timestamp.toLocalDateTime();
+				String dateTimeString = rset.getString(5);
+				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
+				
+				//Timestamp datetime = new Timestamp(DatetimeDAO.DATETIME_FORMAT.parse(datetimeString).getTime());
+				LocalDateTime registartionDate = ts.toLocalDateTime();
 		
 	
 				Role role = Role.valueOf(rset.getString(6));
-
-				return new User(id, active, username, password, registartionDate, role);
+				
+				
+				User u = new User(id, active, username, password, registartionDate, role);
+				System.out.println("id: " + u.getId());
+				System.out.println("active: " + u.isActive());
+				System.out.println("username: " + u.getUsername());
+				System.out.println("password: " + u.getPassword());
+				System.out.println("reg date: " + u.getRegistrationDate().toString());
+				if (u.getRole() == Role.ADMIN) {
+					System.out.println("ROLE: " + u.getRole());
+				}
+				if (u.getRegistrationDate() instanceof LocalDateTime) {
+					System.out.println("radi");
+				}
+			
+				
+				return u;
+				
+				//return new User(id, active, username, password, registartionDate, role);
 			}
 		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
@@ -71,10 +93,6 @@ public class UserDAO {
 		
 	}
 	
-//	private LocalDateTime convertToEntityAttribute(Date date) {
-//        return Optional.ofNullable(date)
-//          .map(Date::toLocalDateTime)
-//          .orElse(null);
-//    }
+
 
 }

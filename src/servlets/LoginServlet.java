@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
 			if (user == null) { response.sendRedirect("./Login.html"); return;}
 			else {
 				request.getSession().setAttribute("loggedInUser", user);
-				System.out.println("sdfsd");
 				response.sendRedirect("./MainPageApp.html");
 				
 			}

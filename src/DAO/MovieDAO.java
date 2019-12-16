@@ -25,16 +25,16 @@ public class MovieDAO {
 			String query = "SELECT * FROM Movie WHERE Active = ?";
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(2, 1); //column 2, value 1 i.e. Active
+			pstmt.setInt(1, 1); //column 2, value 1 i.e. Active, preskace se kolona id iz nekog razloga
 			
 			rset = pstmt.executeQuery();
 			
 			int index, id, duration, productionYear;
 			String name, description;
-			boolean active = false;
+			boolean active;
 			
 			while(rset.next()) {
-				
+				active = false;
 				index = 1;
 				
 				Movie movie = new Movie();
@@ -67,14 +67,11 @@ public class MovieDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 			//kako?
 		}
+		Movie m = movies.get(0);
 		
+		System.out.println("id filmaa: " + m.getId());
 		
-		
-		
-		
-		
-		
-		return null;
+		return movies;
 	}
 	
 //	za odredjeno filtriranje...
