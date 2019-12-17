@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 public class Movie extends Moviefiable{
@@ -72,14 +73,56 @@ public class Movie extends Moviefiable{
 	
 
 	public static Predicate<Movie> productionFilter(int fromFilter, int toFilter){			
-		return m -> fromFilter <=  m.getProductionYear() &&   m.getProductionYear() <= toFilter;		
+		return m -> fromFilter <=  m.getProductionYear() && m.getProductionYear() <= toFilter;		
 	}
 	
 	public static Predicate<Movie> descriptionFilter(String filter){
 		return m -> m.getDescription().toLowerCase().contains(filter.toLowerCase());
 	}
 	
+	public static Comparator<Movie> comparatorByName(String direction){
+		
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getName);
+		case "dsc":		
+			return Comparator.comparing(Movie::getName).reversed();
+		default: return null;
+		}		
+	}
 	
+	public static Comparator<Movie> comparatorByDuration(String direction){
+		
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getDuration);
+		case "dsc":		
+			return Comparator.comparing(Movie::getDuration).reversed();
+		default: return null;
+		}		
+	}
+	
+	public static Comparator<Movie> comparatorByProductionYear(String direction){
+		
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getProductionYear);
+		case "dsc":		
+			return Comparator.comparing(Movie::getProductionYear).reversed();
+		default: return null;
+		}		
+	}
+	
+	public static Comparator<Movie> comparatorByDescription(String direction){
+		
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getDescription);
+		case "dsc":		
+			return Comparator.comparing(Movie::getDescription).reversed();
+		default: return null;
+		}		
+	}
 	
 	
 	

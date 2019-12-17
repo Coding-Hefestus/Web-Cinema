@@ -1,14 +1,19 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.collections4.ComparatorUtils;
 
 import DAO.MovieDAO;
 import model.Movie;
@@ -20,14 +25,13 @@ public class MovieServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		//filter params
 		String nameF = request.getParameter("nameFilter"); 
 		nameF = (nameF != null ? nameF : "");		
 		final String titleFilter = new String(nameF);
 
 		String fromDF = request.getParameter("fromDurationFilter"); //fromDF - fromDurationFilter
 		final int fromDurationFilter = getFilter(fromDF);
-
 		
 		String toDF = request.getParameter("toDurationFilter"); //toDF - toDurationFilter
 		final int toDurationFilter = getToFilter(toDF);
@@ -43,10 +47,28 @@ public class MovieServlet extends HttpServlet {
 		descriptionF = (descriptionF != null ? descriptionF : "");		
 		final String descriptionFilter = new String(descriptionF);
 		
+		//sorter params
+		
+		List<Comparator<Movie>> comparators = new ArrayList<>();
+		
+		String nameSort = request.getParameter("byName");
+		String durationSort = request.getParameter("byDuration");		
+		String productionYearSort = request.getParameter("byProductionYear");		
+		String descriptionSort = request.getParameter("byDescription");
+		
+		
+		if (nameSort != null) comparators.add(Movie.comparatorByName(nameSort));
+		if (durationSort != null) comparators.add(Movie.comparatorByDuration(durationSort));
+		if (productionYearSort != null) comparators.add(Movie.comparatorByProductionYear(productionYearSort));
+		if (descriptionSort != null) comparators.add(Movie.comparatorByDescription(descriptionSort));
+		
+		
+		
+		
+		
+		
 		try {
-			
-			ArrayList<Movie> fm = (ArrayList<Movie>) MovieDAO.getAll();
-			
+
 			
 			ArrayList<Movie> filteredMovies = (ArrayList<Movie>) MovieDAO.getAll().stream()
 					.filter(Movie.nameFilter(titleFilter)						
@@ -54,6 +76,9 @@ public class MovieServlet extends HttpServlet {
 							.and(Movie.productionFilter(fromProductionFilter, toProductionFilter))
 							.and(Movie.descriptionFilter(descriptionFilter)))						
 							.collect(Collectors.toList());
+			
+			//Sorting here
+			if (comparators.size() != 0) Collections.sort(filteredMovies, ComparatorUtils.chainedComparator(comparators));
 			
 			request.setAttribute("nameFilter", titleFilter);
 			

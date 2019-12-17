@@ -67,9 +67,9 @@ public class MovieDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 			//kako?
 		}
-		Movie m = movies.get(0);
+
 		
-		System.out.println("id filmaa: " + m.getId());
+
 		
 		return movies;
 	}
