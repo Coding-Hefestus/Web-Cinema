@@ -12,12 +12,101 @@ CREATE TABLE Movie
 
 );
 select * from Movie
+delete from Movie where id=4
 
 
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Jumanji: Welcome to the Jungle', 120, 2017, 'Description goes here' );
+INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Jumanji: Jungle', 120, 2017, 'Description goes here' );
 INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here' );
 INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'John Shaft', 100 ,2001, 'Description goes here' );
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Lord of the Rings - Fellowship of the Ring', 125 ,2003, 'Description goes here' );
+INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Lord of the Rings - Part I', 125 ,2003, 'Description goes here' );
+
+
+--------------------------------------------------------
+create table Acting
+(
+    idMovie INTEGER NOT NULL,
+    idActor INTEGER NOT NULL,
+    PRIMARY KEY (idMovie, idActor),
+    FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
+    FOREIGN KEY(idActor) REFERENCES Actor(id) ON DELETE RESTRICT
+)
+drop table Acting
+delete FROM table Acting where id = (2, 2)
+select * from Acting
+INSERT INTO Acting (idMovie, idActor) VALUES (1, 1);
+INSERT INTO Acting (idMovie, idActor) VALUES (1, 2);
+INSERT INTO Acting (idMovie, idActor) VALUES (2, 2);
+INSERT INTO Acting (idMovie, idActor) VALUES (3, 3);
+create table Actor
+(
+
+id INTEGER PRIMARY KEY,
+active INTEGER NOT NULL,
+name TEXT NOT NULL
+
+)
+
+drop table Actor
+select * from Actor
+INSERT INTO Actor (active, name) VALUES (1, 'Dwayne Johnson - Rock');
+INSERT INTO Actor (active, name) VALUES (1, 'Karen Gillan');
+INSERT INTO Actor (active, name) VALUES (1, 'Samuel L Jackson');
+--------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------
+create table Genre
+(
+    id INTEGER PRIMARY KEY,
+    active INTEGER NOT NULL,
+    name TEXT NOT NULL
+
+)
+select * from Genre
+INSERT INTO Genre (active, name) VALUES (1, 'Comedy');
+INSERT INTO Genre (active, name) VALUES (1, 'Action');
+INSERT INTO Genre (active, name) VALUES (1, 'Adventure');
+
+create table MovieGenre
+(
+    idMovie INTEGER NOT NULL,
+    idGenre INTEGER NOT NULL,
+    PRIMARY KEY (idMovie, idGenre),
+    FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
+    FOREIGN KEY(idGenre) REFERENCES Genre(id) ON DELETE RESTRICT
+
+)
+select * from MovieGenre
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 1);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 1);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 2);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 3);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 2);
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Acting.idMovie, Actor.id, Actor.active, Actor.name, MovieGenre.idMovie, Genre.id, Genre.active, Genre.name
+FROM Movie
+left join Acting on Movie.id = Acting.idMovie
+left join Actor on Acting.idActor = Actor.id
+left join MovieGenre on Movie.id = MovieGenre.idMovie
+left join Genre on MovieGenre.idGenre = Genre.id
+where Movie.active = 1
+order by Movie.id;
+
+
+--where Movie.id = 1 --ovo je za getMovieById
+--group by Movie.id, Acting.idMovie
+--where m.id = acting.idMovie and acting.idActor = actor.id
+
+
+
+
+
+
+
 
 
 CREATE TABLE User 
@@ -26,18 +115,24 @@ CREATE TABLE User
     active INTEGER NOT NULL DEFAULT 0,
     username VARCHAR(10) UNIQUE NOT NULL, 
     password VARCHAR(10) NOT NULL, 
-    registrationDate TIMESTEMP NOT NULL, --XX-XX-XXXX XX:XX
+    registrationDate DATETIME NOT NULL, --XX-XX-XXXX XX:XX
     role VARCHAR(11) NOT NULL DEFAULT 'USER' -- SQLite ne poznaje enum-e --unspecified role 11 char
    
 );
 
+drop table User
+select * 
+from User
+where active = 1
 
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '2007-01-01 10:00:00', 'ADMIN');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '2008-01-01 10:00:00', 'USER');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '2009-01-01 10:00:00', 'UNSPECIFIED');
+
+--id pre active
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', datetime('2007-01-01 10:00'), 'ADMIN');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', datetime('2008-01-01 10:00'), 'USER');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', datetime('2009-01-01 10:00'), 'UNSPECIFIED');
 
 delete from User
-select * from User
+select * from User where registrationDate >  datetime('2007-01-01 10:00');
 
 
 

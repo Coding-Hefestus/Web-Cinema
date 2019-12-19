@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Movie extends Moviefiable{
 	
@@ -9,18 +12,36 @@ public class Movie extends Moviefiable{
 	private int duration;
 	private int productionYear;
 	private String description;
+	private ArrayList<Actor> actors;
+	private HashSet<Genre> genres;
+	private HashSet<Director> directors;
 	
 
-	public Movie(int id, boolean active, String name, int duration, int productionYear, String description) {
+	public Movie(int id, boolean active, String name, int duration, int productionYear, String description, ArrayList<Actor> actors, HashSet<Genre> genres, HashSet<Director> directors ) {
 		super(id, active);
 		this.name = name;
 		this.duration = duration;
 		this.productionYear = productionYear;
 		this.description = description;
+		this.actors = actors;
+		this.genres = genres;
+		this.directors = directors;
+	}
+	
+	//constructor when adding new Movie
+	public Movie(boolean active, String name, int duration, int productionYear, String description, ArrayList<Actor> actors, HashSet<Genre> genres, HashSet<Director> directors) {
+		this.active = active;
+		this.name = name;
+		this.duration = duration;
+		this.productionYear = productionYear;
+		this.description = description;
+		this.actors = actors;
+		this.genres = genres;
+		this.directors = directors;
 	}
 	
 	
-	public Movie() {this(-1, false, "", -1, -1, "");}
+	public Movie() {this(-1, false, "", -1, -1, "", new ArrayList<Actor>(), new HashSet<Genre>(),new HashSet<Director>());}
 
 
 	public String getName() {
@@ -62,6 +83,31 @@ public class Movie extends Moviefiable{
 		this.description = description;
 	}
 	
+	public ArrayList<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(ArrayList<Actor> actors) {
+		this.actors = actors;
+	}
+	
+
+	public HashSet<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(HashSet<Genre> genres) {
+		this.genres = genres;
+	}
+
+	public HashSet<Director> getDirectors() {
+		return directors;
+	}
+
+	public void setDirectors(HashSet<Director> directors) {
+		this.directors = directors;
+	}
+
 	public static Predicate<Movie> nameFilter(String filter){
 		return m -> m.getName().toLowerCase().contains(filter.toLowerCase());
 	}
@@ -79,6 +125,16 @@ public class Movie extends Moviefiable{
 	public static Predicate<Movie> descriptionFilter(String filter){
 		return m -> m.getDescription().toLowerCase().contains(filter.toLowerCase());
 	}
+	
+	public static Predicate<Movie> actorsFilter(String filter){
+		return m -> m.getActorsString().contains(filter.toLowerCase());
+	}
+	
+	public static Predicate<Movie> genresFilter(String filter){
+		return m -> m.getGenresString().contains(filter.toLowerCase());
+	}
+	
+	
 	
 	public static Comparator<Movie> comparatorByName(String direction){
 		
@@ -124,7 +180,47 @@ public class Movie extends Moviefiable{
 		}		
 	}
 	
+	public static Comparator<Movie> compartorByActors(String direction){
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getActorsString);
+		case "dsc":		
+			return Comparator.comparing(Movie::getActorsString).reversed();
+		default: return null;
+		}	
+	}
 	
+	public static Comparator<Movie> compartorByGenres(String direction){
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(Movie::getGenresString);
+		case "dsc":		
+			return Comparator.comparing(Movie::getGenresString).reversed();
+		default: return null;
+		}	
+	}
+	
+	public String getActorsString() {
+		if (this.getActors().size() == 0) return "";
+		return this.getActors().stream().map(Actor::getName).collect(Collectors.joining("," + "\n")).toLowerCase();
+	}
+	
+	
+	public String getActorsDisplay() {
+		if (this.getActors().size() == 0) return "";
+		return this.getActors().stream().map(Actor::getName).collect(Collectors.joining("," + "\n"));
+
+	}
+	
+	public String getGenresString() {
+		if (this.getGenres().size() == 0) return "";
+		return this.getGenres().stream().map(Genre::getName).collect(Collectors.joining("," + "\n")).toLowerCase();
+	}
+	
+	public String getGenresDisplay() {
+		if (this.getGenres().size() == 0) return "";
+		return this.getGenres().stream().map(Genre::getName).collect(Collectors.joining("," + "\n"));
+	}
 	
 	
 	

@@ -27,4 +27,34 @@
   <listener>
     <listener-class>servlets.InitListener</listener-class>
   </listener>
+  <servlet>
+    <description></description>
+    <display-name>AddNewMovieServlet</display-name>
+    <servlet-name>AddNewMovieServlet</servlet-name>
+    <servlet-class>servlets.AddNewMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewMovieServlet</servlet-name>
+    <url-pattern>/AddNewMovieServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteMovieServlet</display-name>
+    <servlet-name>DeleteMovieServlet</servlet-name>
+    <servlet-class>servlets.DeleteMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteMovieServlet</servlet-name>
+    <url-pattern>/DeleteMovieServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditMovieServlet</display-name>
+    <servlet-name>EditMovieServlet</servlet-name>
+    <servlet-class>servlets.EditMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditMovieServlet</servlet-name>
+    <url-pattern>/EditMovieServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

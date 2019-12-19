@@ -56,6 +56,8 @@ public class UserDAO {
 				String dateTimeString = rset.getString(5);
 				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
 				
+				
+				
 				//Timestamp datetime = new Timestamp(DatetimeDAO.DATETIME_FORMAT.parse(datetimeString).getTime());
 				LocalDateTime registartionDate = ts.toLocalDateTime();
 		
