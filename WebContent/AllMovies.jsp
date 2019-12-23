@@ -21,9 +21,9 @@
 			<th>Name</th>
 			<th>Duration</th>
 			<th>Production year</th>
-			<th>Description</th>
-			<th>Actors</th>
-			<th>Genre</th>
+			<th>Genres</th>
+			<th>Distributor</th>
+			<th>Country of origin</th>
 					
 		</tr>
 		
@@ -88,39 +88,6 @@
 				
 				</td>
 				
-				<td align="center"><input type="text" name="descriptionFilter" value="<%= request.getAttribute("descriptionFilter")%>">
-					<fieldset>
-        						<legend>Sorting order</legend>
-        						
-        						
-        						<input type="radio" id="descriptionAsc" name="byDescription" value="asc">
-    							<label for="descriptionAsc">Ascending</label><br>
-
-    							<input type="radio" id="descriptionDsc" name="byDescription" value="dsc">
-    							<label for="descriptionDsc">Descending</label>
-
-        					
-    				</fieldset> 
-				
-				</td>
-				
-				
-				<td align="center"><input type="text" name="actorsFilter" value="<%= request.getAttribute("actorsFilter")%>">
-						<fieldset>
-        						<legend>Sorting order</legend>
-        						
-        						
-        						<input type="radio" id="byActorsAsc" name="byActors" value="asc">
-    							<label for="byActosAsc">Ascending</label><br>
-
-    							<input type="radio" id="byActorsDsc" name="byActors" value="dsc">
-    							<label for="byActorsDsc">Descending</label>
-
-        					
-    				</fieldset> 
-				
-				</td>
-				
 				<td align="center"><input type="text" name="genresFilter" value="<%= request.getAttribute("genresFilter")%>">
 						<fieldset>
         						<legend>Sorting order</legend>
@@ -136,6 +103,73 @@
     				</fieldset> 
 				
 				</td>
+				
+				<td align="center"><input type="text" name="distributorFilter" value="<%= request.getAttribute("distributorFilter")%>">
+						<fieldset>
+        						<legend>Sorting order</legend>
+        						
+        						
+        						<input type="radio" id="byDistributorAsc" name="byDistributor" value="asc">
+    							<label for="byDistributorAsc">Ascending</label><br>
+
+    							<input type="radio" id="byDistributorDsc" name="byDistributor" value="dsc">
+    							<label for="byDistributorDsc">Descending</label>
+
+        					
+    				</fieldset> 
+				
+				</td>
+				
+				<td align="center"><input type="text" name="countryOfOriginFilter" value="<%= request.getAttribute("countryOfOriginFilter")%>">
+						<fieldset>
+        						<legend>Sorting order</legend>
+        						
+        						
+        						<input type="radio" id="byCountryOfOriginFilterAsc" name="byCountryOfOrigin" value="asc">
+    							<label for="byCountryOfOriginFilterAsc">Ascending</label><br>
+
+    							<input type="radio" id="byDistributorDsc" name="byCountryOfOrigin" value="dsc">
+    							<label for="byCountryOfOriginFilterDsc">Descending</label>
+
+        					
+    				</fieldset> 
+				
+				</td>
+				
+				<%-- <td align="center"><input type="text" name="descriptionFilter" value="<%= request.getAttribute("descriptionFilter")%>">
+					<fieldset>
+        						<legend>Sorting order</legend>
+        						
+        						
+        						<input type="radio" id="descriptionAsc" name="byDescription" value="asc">
+    							<label for="descriptionAsc">Ascending</label><br>
+
+    							<input type="radio" id="descriptionDsc" name="byDescription" value="dsc">
+    							<label for="descriptionDsc">Descending</label>
+
+        					
+    				</fieldset> 
+				
+				</td> --%>
+				
+				
+				<%-- <td align="center"><input type="text" name="actorsFilter" value="<%= request.getAttribute("actorsFilter")%>">
+						<fieldset>
+        						<legend>Sorting order</legend>
+        						
+        						
+        						<input type="radio" id="byActorsAsc" name="byActors" value="asc">
+    							<label for="byActosAsc">Ascending</label><br>
+
+    							<input type="radio" id="byActorsDsc" name="byActors" value="dsc">
+    							<label for="byActorsDsc">Descending</label>
+
+        					
+    				</fieldset> 
+				
+				</td> --%>
+				
+				
 				
 				
 				<td align="center"><input type="submit" value="Filter"></td>
@@ -156,12 +190,15 @@
 			<%for (Movie m : filteredMovies){ %>
 			
 				<tr>
-					<td><a href="#?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
+					<td><a href="SingleMovieServlet?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
 					<td><%=m.getDuration() %></td>
 					<td><%=m.getProductionYear() %></td>
-					<td><%=m.getDescription() %></td>
-					<td><%=m.getActorsDisplay() %></td>
 					<td><%=m.getGenresDisplay() %></td>
+					<td><%=m.getDistributor() %></td>
+					<td><%=m.getCountryOfOrigin() %></td>
+					<%-- <td><%=m.getDescription() %></td>
+					<td><%=m.getActorsDisplay() %></td>
+					<td><%=m.getGenresDisplay() %></td> --%>
 					
 					
 					<td>

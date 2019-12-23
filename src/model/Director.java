@@ -19,7 +19,21 @@ public class Director extends Moviefiable {
 		this.name = name;
 	}
 	
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+	    if (!(obj instanceof Director))
+	        return false;
+	    if (obj == this)
+	        return true;
+	    return this.getId() == ((Director) obj).getId();
+	}
 	
+	
+	@Override
+	public int hashCode() {
+
+		return this.id;
+	}
 	
 
 }

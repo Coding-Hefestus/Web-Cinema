@@ -57,4 +57,14 @@
     <servlet-name>EditMovieServlet</servlet-name>
     <url-pattern>/EditMovieServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SingleMovieServlet</display-name>
+    <servlet-name>SingleMovieServlet</servlet-name>
+    <servlet-class>servlets.SingleMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SingleMovieServlet</servlet-name>
+    <url-pattern>/SingleMovieServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

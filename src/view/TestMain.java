@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import DAO.MovieDAO;
+import model.Actor;
 import model.Dimension;
 import model.Genre;
 import model.Movie;
@@ -19,14 +20,14 @@ public class TestMain {
 		//System.out.println(movies.size());
 		//Movie m = movies.get(0);
 		//System.out.println(m.getDuration() + " " + m.getId() + " " + m.isActive());
-		if (Dimension.IID.equals(Dimension.valueOf("IID"))) {
-			System.out.println("AF");
-		}
+//		if (Dimension.IID.equals(Dimension.valueOf("IID"))) {
+//			System.out.println("AF");
+//		}
 		
-		HashSet<Genre> set = new HashSet<Genre>();
+		HashSet<Actor> set = new HashSet<Actor>();
 		
-		Genre g1 = new Genre(1, true, "Comedy");
-		Genre g2 = new Genre(1, true, "Comedy");
+		Actor g1 = new Actor(1, true, "Dwayne Johnson - Rock");
+		Actor g2 = new Actor(2, true, "Dwayne Johnson - Rock");
 		
 		set.add(g1);
 		set.add(g2);

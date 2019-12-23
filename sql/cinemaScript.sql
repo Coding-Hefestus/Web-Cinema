@@ -8,17 +8,24 @@ CREATE TABLE Movie
     name VARCHAR(50) NOT NULL,
     duration REAL CHECK(duration > 0),
     productionYear INTEGER CHECK(productionYear > 0),
-    description VARCHAR(100) DEFAULT 'No available description'
+    description VARCHAR(100) DEFAULT '',
+    distributor VARCHAR(100) NOT NULL,
+    countryOfOrigin VARCHAR(100) NOT NULL
 
 );
+
+
+
+
+
 select * from Movie
-delete from Movie where id=4
+delete from Movie where id = 2
 
 
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Jumanji: Jungle', 120, 2017, 'Description goes here' );
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here' );
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'John Shaft', 100 ,2001, 'Description goes here' );
-INSERT INTO Movie (active, name, duration, productionYear, description) VALUES ( 1, 'Lord of the Rings - Part I', 125 ,2003, 'Description goes here' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: Jungle', 120, 2017, 'Description goes here', '20th Century Fox', 'USA' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here', '20th Century Fox', 'USA'  );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'John Shaft', 100 ,2001, 'Description goes here', 'DreamWorks', 'USA' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Lord of the Rings - Part I', 125 ,2003, 'Description goes here', 'Lions Gate', 'USA' );
 
 
 --------------------------------------------------------
@@ -30,7 +37,7 @@ create table Acting
     FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
     FOREIGN KEY(idActor) REFERENCES Actor(id) ON DELETE RESTRICT
 )
-drop table Acting
+
 delete FROM table Acting where id = (2, 2)
 select * from Acting
 INSERT INTO Acting (idMovie, idActor) VALUES (1, 1);
@@ -81,20 +88,74 @@ INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 1);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 2);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 3);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 2);
+
+
+
+
+
+create table Director
+(
+    id INTEGER PRIMARY KEY,
+    active INTEGER NOT NULL,
+    name TEXT NOT NULL
+)
+select * from Director
+INSERT INTO Director (active, name) VALUES (1, 'Jake Kasdan');
+INSERT INTO Director (active, name) VALUES (1, 'John Singleton');
+INSERT INTO Director (active, name) VALUES (1, 'Peter Jackson');
+
+
+create table Directing
+(
+    idMovie INTEGER NOT NULL,
+    idDirector INTEGER NOT NULL,
+    PRIMARY KEY (idMovie, idDirector),
+    FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
+    FOREIGN KEY(idDirector) REFERENCES Director(id) ON DELETE RESTRICT
+
+)
+select * from Directing
+
+drop table Directing
+
+INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
+
+INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
+
+
+INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
+INSERT INTO Directing (idMovie, idDirector) VALUES (3, 2);
+INSERT INTO Directing (idMovie, idDirector) VALUES (4, 3);
+
+
 -------------------------------------------------------------------------------------------------------------------
 
 
 
 ------------------------------------------------------------------------------------------------------------------------
 
-SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Acting.idMovie, Actor.id, Actor.active, Actor.name, MovieGenre.idMovie, Genre.id, Genre.active, Genre.name
+SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Movie.distributor, Movie.countryOfOrigin, Acting.idMovie, Actor.id, Actor.active, Actor.name, MovieGenre.idMovie, Genre.id, Genre.active, Genre.name, Directing.idMovie, Director.id, Director.active, Director.name                  
 FROM Movie
 left join Acting on Movie.id = Acting.idMovie
 left join Actor on Acting.idActor = Actor.id
 left join MovieGenre on Movie.id = MovieGenre.idMovie
 left join Genre on MovieGenre.idGenre = Genre.id
+left join Directing on Movie.id = Directing.idMovie
+left join Director on Directing.idDirector = Director.id
 where Movie.active = 1
 order by Movie.id;
+
+
+SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Movie.distributor, Movie.countryOfOrigin, Acting.idMovie, Actor.id, Actor.active, Actor.name,  MovieGenre.idMovie, Genre.id, Genre.active, Genre.name, Directing.idMovie, Director.id, Director.active, Director.name
+FROM Movie
+LEFT JOIN Acting ON Movie.id = Acting.idMovie
+LEFT JOIN Actor ON Acting.idActor = Actor.id
+LEFT JOIN MovieGenre ON Movie.id = MovieGenre.idMovie
+LEFT JOIN Genre ON MovieGenre.idGenre = Genre.id
+LEFT JOIN Directing on Movie.id = Directing.idMovie
+LEFT JOIN Director on Directing.idDirector = Director.id
+WHERE Movie.active = 1 and Movie.id = 4
+ORDER BY Movie.id
 
 
 --where Movie.id = 1 --ovo je za getMovieById

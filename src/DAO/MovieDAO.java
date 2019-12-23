@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.Actor;
+import model.Director;
 import model.Genre;
 import model.Movie;
 
@@ -26,46 +27,41 @@ public class MovieDAO {
 		
 		try {
 			
-			String query = "SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Acting.idMovie, Actor.id, Actor.active, Actor.name,  MovieGenre.idMovie, Genre.id, Genre.active, Genre.name" 
+			String query = "SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Movie.distributor, Movie.countryOfOrigin, Acting.idMovie, Actor.id, Actor.active, Actor.name,  MovieGenre.idMovie, Genre.id, Genre.active, Genre.name, Directing.idMovie, Director.id, Director.active, Director.name" 
 							+ " FROM Movie" 
 							+ " LEFT JOIN Acting ON Movie.id = Acting.idMovie" 
 							+ " LEFT JOIN Actor ON Acting.idActor = Actor.id"
-							+ " LEFT JOIN MovieGenre on Movie.id = MovieGenre.idMovie"
+							+ " LEFT JOIN MovieGenre ON Movie.id = MovieGenre.idMovie"
 							+ " LEFT JOIN Genre ON MovieGenre.idGenre = Genre.id"
+							+ " LEFT JOIN Directing ON Movie.id = Directing.idMovie"
+							+ " LEFT JOIN Director ON Directing.idDirector = Director.id"
 							+ " WHERE Movie.active = 1"
 							+ " ORDER BY Movie.id";
+			
 			pstmt = conn.prepareStatement(query);			
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
+				
 				if (!movies.containsKey(rset.getInt(1))) {
 					Movie movie = createMovie(rset);
 					movies.put(movie.getId(), movie);
-					if (rset.getInt(1) == rset.getInt(7)) {
-						Actor actor = createActor(rset); //new Actor();
-						//movies.get(movie.getId()).getActors().add(actor);
-						movie.getActors().add(actor);
-					}
-					if (rset.getInt(1) == rset.getInt(11)) {
-						Genre genre = createGenre(rset);
-						//movies.get(movie.getId()).getGenres().add(genre);
-						movie.getGenres().add(genre);
-					}
-				} else {
-					if(rset.getInt(1) == rset.getInt(7)) {
-						Actor actor = createActor(rset); 
-						movies.get(rset.getInt(1)).getActors().add(actor);
-					}
-					if (rset.getInt(1) == rset.getInt(11)) {
-						Genre genre = createGenre(rset);
-						movies.get(rset.getInt(1)).getGenres().add(genre);
-					}
-					else {
-					
-						Movie movie = createMovie(rset);
-						movies.put(movie.getId(), movie);
-					}
 				}
+				//if(rset.getInt(1) == rset.getInt(7)) {
+					Actor actor = createActor(rset); 
+					movies.get(rset.getInt(1)).getActors().add(actor);
+				//}
+				//if (rset.getInt(1) == rset.getInt(13)) {
+					Genre genre = createGenre(rset);
+					movies.get(rset.getInt(1)).getGenres().add(genre);
+				//}
+				
+				//if (rset.getInt(1) == rset.getInt(17)) {
+					Director director = createDirectors(rset);
+					movies.get(rset.getInt(1)).getDirectors().add(director);
+				//}
+
+				
 			}//od while
 			
 
@@ -136,28 +132,59 @@ public class MovieDAO {
 	}
 	
 	public static Movie getById(int movieId) throws SQLException {
+		HashMap<Integer, Movie> movies = new  HashMap<Integer, Movie>();
 		
 		Connection conn = ConnectionManager.getConnection();
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM Movie WHERE id = ?";
+			String query = "SELECT Movie.id, Movie.active, Movie.name, Movie.duration, Movie.productionYear, Movie.description, Movie.distributor, Movie.countryOfOrigin, Acting.idMovie, Actor.id, Actor.active, Actor.name,  MovieGenre.idMovie, Genre.id, Genre.active, Genre.name, Directing.idMovie, Director.id, Director.active, Director.name" 
+					+ " FROM Movie" 
+					+ " LEFT JOIN Acting ON Movie.id = Acting.idMovie" 
+					+ " LEFT JOIN Actor ON Acting.idActor = Actor.id"
+					+ " LEFT JOIN MovieGenre ON Movie.id = MovieGenre.idMovie"
+					+ " LEFT JOIN Genre ON MovieGenre.idGenre = Genre.id"
+					+ " LEFT JOIN Directing ON Movie.id = Directing.idMovie"
+					+ " LEFT JOIN Director ON Directing.idDirector = Director.id"
+					+ " WHERE Movie.active = 1 AND Movie.id = ?";
+					
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, movieId);
 			
-
-			rset = pstmt.executeQuery();
-
-			if (rset.next()) {
-				//active, name, duration, productionYear, description
-				int index = 1;
-				
-				return null;
-				//return new Movie(rset.getInt(index++),rset.getInt(index++) > 0 ? true : false ,rset.getString(index++), rset.getInt(index++), rset.getInt(index++), rset.getString(index++));
 			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				if (!movies.containsKey(rset.getInt(1))) {
+					Movie movie = createMovie(rset);
+					movies.put(movie.getId(), movie);
+				}
+		         
+				if (rset.getInt(10) != 0) {
+					Actor actor = createActor(rset); 
+					movies.get(rset.getInt(1)).getActors().add(actor);
+				}
+				
+				if (rset.getInt(14) != 0) {
+					Genre genre = createGenre(rset);
+					movies.get(rset.getInt(1)).getGenres().add(genre);
+				}
+				
+				if (rset.getInt(18) != 0) {
+					Director director = createDirectors(rset);
+					movies.get(rset.getInt(1)).getDirectors().add(director);
+					
+				}
+					
+				
+
+				
+				
 			}
+			
 		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
@@ -167,7 +194,7 @@ public class MovieDAO {
 	
 		
 		
-		return null;
+		return movies.get(movieId);
 	}
 	
 	
@@ -206,8 +233,9 @@ public class MovieDAO {
 //	}
 	private static Movie createMovie(ResultSet rset) throws SQLException {
 		Movie movie = new Movie();
+		
 		int index, id, duration, productionYear;
-		String name, description;
+		String name, description, distributor, countryOfOrigin;
 		boolean active;
 		index = 1;
 		id = rset.getInt(index++);
@@ -228,34 +256,52 @@ public class MovieDAO {
 		description = rset.getString(index++);
 		movie.setDescription(description);
 		
+		distributor = rset.getString(index++);
+		movie.setDistributor(distributor);
+		
+		countryOfOrigin = rset.getString(index++);
+		movie.setCountryOfOrigin(countryOfOrigin);
+		
 		return movie;
 	}
 	
 	
 	private static Actor createActor(ResultSet rset) throws SQLException {
 		Actor actor = new Actor();
-		int index = 8;
-		int idActor = rset.getInt(index++);
-		
-		actor.setId(idActor);
+		//int index = 10;
+		//int idActor = rset.getInt(10);
+		//if (rset.getInt(10).equals("null"))
 	
-		actor.setActive(rset.getInt(index++) == 0 ? false : true);
+		actor.setId(rset.getInt(10));
+	
+		actor.setActive(rset.getInt(11) == 0 ? false : true);
 
-		actor.setName(rset.getString(index++));
+		actor.setName(rset.getString(12));
 		return actor;
 		
 	}
 	
 	private static Genre createGenre(ResultSet rset) throws SQLException{
 		Genre genre = new Genre();
-		int index = 12;
+		//int index = 14;
 		
-		genre.setId(rset.getInt(index++));
-		genre.setActive(rset.getInt(index++) == 0 ? false : true);
-		genre.setName(rset.getString(index++));
+		genre.setId(rset.getInt(14));
+		genre.setActive(rset.getInt(15) == 0 ? false : true);
+		genre.setName(rset.getString(16));
 		
 		return genre;
 		
+	}
+	
+	private static Director createDirectors(ResultSet rset) throws SQLException{
+		Director director = new Director();
+		//int index = 18;
+		
+		director.setId(rset.getInt(18));
+		director.setActive(rset.getInt(19) == 0 ? false : true);
+		director.setName(rset.getString(20));
+		
+		return director;
 	}
 	
 } //od klase
