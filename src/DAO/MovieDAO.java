@@ -47,19 +47,19 @@ public class MovieDAO {
 					Movie movie = createMovie(rset);
 					movies.put(movie.getId(), movie);
 				}
-				//if(rset.getInt(1) == rset.getInt(7)) {
+				if(rset.getInt(10) != 0) {
 					Actor actor = createActor(rset); 
 					movies.get(rset.getInt(1)).getActors().add(actor);
-				//}
-				//if (rset.getInt(1) == rset.getInt(13)) {
+				}
+				if (rset.getInt(14) != 0) {
 					Genre genre = createGenre(rset);
 					movies.get(rset.getInt(1)).getGenres().add(genre);
-				//}
+				}
 				
-				//if (rset.getInt(1) == rset.getInt(17)) {
+				if (rset.getInt(18) != 0) {
 					Director director = createDirectors(rset);
 					movies.get(rset.getInt(1)).getDirectors().add(director);
-				//}
+				}
 
 				
 			}//od while

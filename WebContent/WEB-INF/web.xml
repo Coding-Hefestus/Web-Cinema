@@ -67,4 +67,14 @@
     <servlet-name>SingleMovieServlet</servlet-name>
     <url-pattern>/SingleMovieServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddDirectorServlet</display-name>
+    <servlet-name>AddDirectorServlet</servlet-name>
+    <servlet-class>servlets.AddDirectorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddDirectorServlet</servlet-name>
+    <url-pattern>/AddDirectorServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

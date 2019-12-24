@@ -35,7 +35,10 @@ public class Movie extends Moviefiable{
 	}
 	
 	//constructor when adding new Movie
-	public Movie(boolean active, String name, int duration, int productionYear, String description,  String distributor, String countryOfOrigin, HashSet<Actor> actors, HashSet<Genre> genres, HashSet<Director> directors) {
+	public Movie(boolean active, String name, int duration, int productionYear, 
+			String description,  String distributor, String countryOfOrigin, 
+			HashSet<Actor> actors, HashSet<Genre> genres, HashSet<Director> directors) {
+		
 		this.active = active;
 		this.name = name;
 		this.duration = duration;

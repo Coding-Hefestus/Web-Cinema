@@ -24,12 +24,12 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM User WHERE active = ? AND username = ? AND password = ?";
+			String query = "SELECT * FROM User WHERE active = 1 AND username = ? AND password = ?";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 	
-			pstmt.setInt(index++, 1); 	//column 1; column id, doesn't count, primary key auto increment whatever...
+			//pstmt.setInt(index++, 1); 	
 			pstmt.setString(index++, username);	//column 2
 			pstmt.setString(index++, password);// column 3
 			//System.out.println(index);
@@ -45,23 +45,11 @@ public class UserDAO {
 			
 				boolean active = (rset.getInt(2) == 0 ? false : true);
 				
-				//String s = rset.getString(5);
-				//System.out.println(s);
-				//System.exit(1);
-				//Date date = rset.getDate(5);
-				//Timestamp timestamp = rset.getTimestamp(5);
-				
-				//Timestamp timestamp = new Timestamp(date.getTime());
-				//Timestamp timestamp = rset.getTimestamp(5);
 				String dateTimeString = rset.getString(5);
 				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
-				
-				
-				
-				//Timestamp datetime = new Timestamp(DatetimeDAO.DATETIME_FORMAT.parse(datetimeString).getTime());
+
 				LocalDateTime registartionDate = ts.toLocalDateTime();
-		
-	
+
 				Role role = Role.valueOf(rset.getString(6));
 
 				return new User(id, active, username, password, registartionDate, role);
