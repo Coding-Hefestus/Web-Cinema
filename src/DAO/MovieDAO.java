@@ -159,8 +159,7 @@ public class MovieDAO {
 	        	throw new SQLException("Creating movie failed, no rows affected.");
 	        }
 	        	
-	       conn.commit(); // sada se izvršavaju sve naredbe između 2 commit-a
-
+	       conn.commit(); // 
 	       return affectedRows != 0 && newMovie.getId() != 0;
 
 		} catch (Exception ex) {
@@ -177,13 +176,94 @@ public class MovieDAO {
 	
 	public static boolean delete(int idMovie) throws SQLException {
 		
-		Movie m = getById(idMovie);
-		m.setActive(false);
-		if (update(m)) {
-			return true;
+		Movie movie = getById(idMovie);
+		movie.setActive(false);
+		
+		if (movie == null) {
+			System.out.println("movie null");
 		}
-		return false;
+		
+		if (movie.getActors() == null) {
+			System.out.println("actors null");
+		}
+		
+		if (movie.getDirectors() == null) {
+			System.out.println("directors null");
+		}
+		
+		if (movie.getGenres() == null) {
+			System.out.println("genres null");
+		}
+		
+		
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		
+		
+		try {
+			conn.setAutoCommit(false); 
+			conn.commit();
+			String query = "UPDATE Movie SET active = ? WHERE id = ?";
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setInt(index++, movie.isActive() ? 1 : 0);
+			pstmt.setInt(index++, movie.getId());
+			
+			int affectedRows = pstmt.executeUpdate();
+
+	        if (affectedRows != 0) {
+	        	
+	        	if (!movie.getDirectors().isEmpty()) {
+	        		for (Director d : movie.getDirectors()) {
+	        			query = "DELETE FROM Directing WHERE idMovie = ? AND idDirector = ?";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, movie.getId());
+	    				pstmt.setInt(2, d.getId());
+	    				pstmt.executeUpdate();
+	        		}
+	        	}
+	        	
+	        	if (!movie.getActors().isEmpty()) {
+	        		for (Actor a : movie.getActors()) {
+	        			query = "DELETE FROM Acting WHERE idMovie = ? AND idActor = ?";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, movie.getId());
+	    				pstmt.setInt(2, a.getId());
+	    				pstmt.executeUpdate();
+	        		}
+	        	}
+	        	
+	        	if (!movie.getGenres().isEmpty()) {
+	        		for (Genre g : movie.getGenres()) {
+	        			query = "DELETE FROM MovieGenre WHERE idMovie = ? AND idGenre = ?";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, movie.getId());
+	    				pstmt.setInt(2, g.getId());
+	    				pstmt.executeUpdate();
+	        		}
+	        	}
+	        	
+	        }
+	        conn.commit(); // 
+		    return affectedRows != 0;
+			
+		}catch(Exception e) {
+			try {conn.rollback();} catch (Exception ex1) {ex1.printStackTrace();} // ako je 2. commit neuspešan, vratiti bazu u stanje koje je zapamćeno 1. commit-om
+			throw e;		
+		} finally {
+			try {conn.setAutoCommit(true);} catch (Exception ex1) {ex1.printStackTrace();} // svaku sledeću naredbu izvršavati odmah
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+
 	}
+		
+		
+		
+		
+		
+	
 	
 	public static Movie getById(int movieId) throws SQLException {
 		HashMap<Integer, Movie> movies = new  HashMap<Integer, Movie>();
@@ -259,7 +339,7 @@ public class MovieDAO {
 		PreparedStatement pstmt = null;
 		try {
 			//active, name, duration, productionYear, description
-			String query = "UPDATE Movie SET active = ?, name = ?, duration = ?,  productionYear = ?, description = ? "
+			String query = "UPDATE Movie SET active = ?, name = ?, duration = ?,  productionYear = ?, description = ?, distributor = ?, countryOfOrigin = ? "
 					+ "WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
@@ -270,8 +350,10 @@ public class MovieDAO {
 			pstmt.setInt(index++, movie.getDuration());
 			pstmt.setInt(index++, movie.getProductionYear());
 			pstmt.setString(index++, movie.getDescription());
+			pstmt.setString(index++, movie.getDistributor());
+			pstmt.setString(index++, movie.getCountryOfOrigin());
 			pstmt.setInt(index++, movie.getId());
-
+		
 			return pstmt.executeUpdate() == 1;
 		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
@@ -280,11 +362,7 @@ public class MovieDAO {
 	
 	}
 	
-	
-//	za odredjeno filtriranje...
-//	public static List<Movie> getAll(String name, double lowPrice, double highPrice) throws Exception {
-//		return new ArrayList<>();
-//	}
+
 	private static Movie createMovie(ResultSet rset) throws SQLException {
 		Movie movie = new Movie();
 		

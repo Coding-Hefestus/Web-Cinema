@@ -19,18 +19,7 @@ public class DeleteMovieServlet extends HttpServlet {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
-		String stringId = request.getParameter("delete");
 		
-		try {
-			int idMovie = Integer.valueOf(stringId);
-			
-			MovieDAO.delete(idMovie);
-			
-		  
-		} catch(Exception e) {
-			
-		}
-		response.sendRedirect("./MovieServlet");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -38,7 +27,22 @@ public class DeleteMovieServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		
+		
+		String stringId = request.getParameter("delete");
+		
+		try {
+			int idMovie = Integer.valueOf(stringId);
+			System.out.println(idMovie);
+			
+			MovieDAO.delete(idMovie);
+				
 
+		} catch(Exception e) {
+			
+		}
+		response.sendRedirect("./MovieServlet");
+		
 		//doGet(request, response);
 	}
 

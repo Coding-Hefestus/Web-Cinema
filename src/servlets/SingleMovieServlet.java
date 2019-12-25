@@ -31,14 +31,13 @@ public class SingleMovieServlet extends HttpServlet {
 		try {
 			Movie movie = MovieDAO.getById(idMovie);
 			request.setAttribute("movie", movie);
+			
 			request.getRequestDispatcher("./SingleMovie.jsp").forward(request, response);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
 
-		
-		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

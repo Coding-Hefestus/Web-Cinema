@@ -29,7 +29,7 @@
 		
 			<tr><td align="left">Name:</td><td><input  type="text" name="movieName" value="<%=movie.getName()%>"></td></tr>
 			<tr><td align="left">Duration:</td><td><input type="text" name="movieDuration" value="<%= movie.getDuration() < 0 ?  ""  : movie.getDuration()%>"/></td></tr>
-			<tr><td align="left">Production year:</td><td><input type="text" name="movieProductionYear" value="<%= movie.getProductionYear() < 1950 ?  "" : movie.getDuration() %>"/></td></tr>
+			<tr><td align="left">Production year:</td><td><input type="text" name="movieProductionYear" value="<%= movie.getProductionYear() < 1950 ?  "" : movie.getProductionYear() %>"/></td></tr>
  			<tr><td align="left">Description:</td><td><input type="text" name="movieDescription" value="<%= movie.getDescription()%>"/></td></tr> 
 		    <tr><td align="left">Country of origin:</td><td><input type="text" name="countryOfOrigin" value="<%= movie.getCountryOfOrigin()%>"/></td></tr>
 			<tr><td align="left">Distributor:</td><td><input type="text" name="distributor" value="<%= movie.getDistributor()%>"/></td></tr>

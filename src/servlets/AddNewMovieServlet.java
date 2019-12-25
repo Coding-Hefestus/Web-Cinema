@@ -53,12 +53,9 @@ public class AddNewMovieServlet extends HttpServlet {
 				request.setAttribute("actors", ActorDAO.getAllActors());
 				request.setAttribute("genres", GenreDAO.getAllGenres());
 				request.setAttribute("key", String.valueOf(loggedInUser.getId()));
-				
-				
+
 				request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
-				
-				
-				
+
 			} catch (SQLException e) {
 
 				e.printStackTrace();
@@ -76,16 +73,19 @@ public class AddNewMovieServlet extends HttpServlet {
 			boolean success = true; //pretpostavljamo da ce svi podaci/parametri biti u redu, ako samo jedan pukne ovaj boolean se manja na false
 			
 			if (!movieName.equals("")) movie.setName(movieName); //NAME
+			else success = false; 
 			
 			try {
 				int duration = Integer.valueOf(movieDuration);
 				if (duration > 0) movie.setDuration(duration);
+				else success = false; 
 			} catch(Exception e) {success = false;};
 			
 			
 			try {
 				int productionY = Integer.valueOf(movieProductionYear);
 				if (productionY > 1950) movie.setProductionYear(productionY);
+				else success = false; 
 			}catch(Exception e) {success = false;};
 			
 			

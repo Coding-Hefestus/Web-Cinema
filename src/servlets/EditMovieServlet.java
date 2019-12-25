@@ -2,11 +2,16 @@ package servlets;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.ActorDAO;
+import DAO.DirectorDAO;
+import DAO.GenreDAO;
 import DAO.MovieDAO;
 import model.Movie;
 import model.User;
@@ -21,72 +26,104 @@ public class EditMovieServlet extends HttpServlet {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
+		
+	}
+		
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		
 		String movieName = request.getParameter("movieName");
 		String movieDuration = request.getParameter("movieDuration");
 		String movieProductionYear = request.getParameter("movieProductionYear");
 		String movieDescription = request.getParameter("movieDescription");
-		Movie editMovie = (Movie) request.getAttribute("editMovie");
-		if (movieName != null || movieDuration != null || movieProductionYear != null || movieDescription != null) {
+		String countryOfOrigin = request.getParameter("countryOfOrigin");
+		String movieDistributor = request.getParameter("distributor");
+		
+		//prvi put stizemo na servlet tj trazimo da se edituje izabrani film
+		if (movieName == null || movieDuration == null || movieProductionYear == null || movieDescription == null || countryOfOrigin == null || movieDistributor == null ) {
 			
 			try {
-				//System.out.println("asfas");
-				//System.out.println(movieName);
+				String movie = request.getParameter("edit");
+				int idMovie = Integer.valueOf(movie);
+				
+				request.getSession().setAttribute(String.valueOf(loggedInUser.getId()), MovieDAO.getById(idMovie));
+	
+				request.setAttribute("directors", DirectorDAO.getAllDirectors());
+				request.setAttribute("actors", ActorDAO.getAllActors());
+				request.setAttribute("genres", GenreDAO.getAllGenres());
+				request.setAttribute("key", String.valueOf(loggedInUser.getId()));
+				
+				request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		} else {
+			
+			//editovao je fil provera podatak
+			
+			Movie movie = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
+			
+			boolean success = true;
+			
+			 //pretpostavljamo da ce svi podaci/parametri biti u redu, ako samo jedan pukne ovaj boolean se manja na false
+			
+			if (!movieName.equals("")) movie.setName(movieName); //NAME
+			else success = false;
+			
+			try {
 				int duration = Integer.valueOf(movieDuration);
-				int productioYear = Integer.valueOf(movieProductionYear);
-				if (duration < 0 || productioYear < 1950) {
-					System.out.println("if");
-					request.setAttribute("editMovie", editMovie);
-					request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
+				if (duration > 0) movie.setDuration(duration);
+				else success = false; 
+			} catch(Exception e) {success = false;};
+			
+			
+			try {
+				int productionY = Integer.valueOf(movieProductionYear);
+				if (productionY > 1950) movie.setProductionYear(productionY);
+				else success = false; 
+			}catch(Exception e) {success = false;};
+			
+			
+			movie.setDescription(movieDescription);
+			
+			
+			if (!countryOfOrigin.equals("")) movie.setCountryOfOrigin(countryOfOrigin);
+			else success = false;
+			
+			if (!movieDistributor.equals("")) movie.setDistributor(movieDistributor);
+			else success = false;
+
+			try {
+				
+				if (success) {
+					
+					request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
+					MovieDAO.update(movie);
+					response.sendRedirect("./MovieServlet");
 					return;
 				} else {
 					
-					editMovie.setName(movieName);
-					editMovie.setDuration(duration);
-					editMovie.setProductionYear(productioYear);
-					editMovie.setDescription(movieDescription);
-					System.out.println("asfafsasd");
-					MovieDAO.update(editMovie);
+					request.setAttribute("key", String.valueOf(loggedInUser.getId()));
+					request.setAttribute("directors", DirectorDAO.getAllDirectors());
+					request.setAttribute("actors", ActorDAO.getAllActors());
+					request.setAttribute("genres", GenreDAO.getAllGenres());
 					
-					response.sendRedirect("./MovieServlet");
+					request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
 					return;
 				}
-			} catch(Exception e) {
-				request.setAttribute("editMovie", editMovie);
-				//request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
-				return;
-			}
-	
-		} else {
-			try {
-				String stringId = request.getParameter("edit");
-				int idMovie = Integer.valueOf(stringId);
 				
-				editMovie = MovieDAO.getById(idMovie);
-				System.out.println(editMovie.getName());
-				request.setAttribute("editMovie", editMovie);
-				request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
-				return;
-			  
-			} catch(Exception e) {
-				response.sendRedirect("./MovieServlet");
-				return;
+				
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
-		
 
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-		
-		
-		
-		
-	
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
 	}
 
 }

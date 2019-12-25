@@ -26,7 +26,7 @@ INSERT INTO Movie (active, name, duration, productionYear, description, distribu
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here', '20th Century Fox', 'USA'  );
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'John Shaft', 100 ,2001, 'Description goes here', 'DreamWorks', 'USA' );
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Lord of the Rings - Part I', 125 ,2003, 'Description goes here', 'Lions Gate', 'USA' );
-
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Joker', 125 ,2019, '', 'Cinematicks', 'USA' );
 
 --------------------------------------------------------
 create table Acting
@@ -115,12 +115,15 @@ create table Directing
 
 )
 select * from Directing
-
+select * from Director
 drop table Directing
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
 
-INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
+delete from Directing
+where idMovie = 1 AND idDirector =3
+
+INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
 
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);

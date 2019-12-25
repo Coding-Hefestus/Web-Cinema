@@ -31,7 +31,8 @@ public class TestMain {
 		
 		set.add(g1);
 		set.add(g2);
-		
+		System.out.println(set.size());
+		set.remove(new Actor(1, false, "Dwayne Johnson - Rock"));
 		System.out.println(set.size());
 		
 		

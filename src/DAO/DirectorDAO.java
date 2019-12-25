@@ -76,5 +76,58 @@ public class DirectorDAO {
 		
 		return null;
 	}
+	
+	public static boolean removeDirectorFromMovie(int idMovie, int idDirector) throws SQLException {
+		
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		String query = "DELETE FROM Directing WHERE idMovie = ? AND idDirector = ?";
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idMovie);
+			pstmt.setInt(2, idDirector);
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			return affectedRows == 1 ? true : false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+
+	}
+	
+	public static boolean addDirectorInMovie(int idMovie, int idDirector) throws SQLException {
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		String query = "INSERT INTO Directing (idMovie, idDirector) VALUES (?, ?)";
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idMovie);
+			pstmt.setInt(2, idDirector);
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			return affectedRows == 1 ? true : false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+	}
+		
+	
 
 }//od klase

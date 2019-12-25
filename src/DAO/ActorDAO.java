@@ -78,7 +78,58 @@ public static ArrayList<Actor> getAllActors() throws SQLException{
 		}
 	
 	
-	return null;
-}
+		return null;
+	}
+	
+	public static boolean removeActorFromMovie(int idMovie, int idActor) throws SQLException {
+		
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		String query = "DELETE FROM Acting WHERE idMovie = ? AND idActor = ?";
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idMovie);
+			pstmt.setInt(2, idActor);
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			return affectedRows == 1 ? true : false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+
+	}
+	
+	public static boolean addActorInMovie(int idMovie, int idActor) throws SQLException {
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		String query = "INSERT INTO Acting (idMovie, idActor) VALUES (?, ?)";
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idMovie);
+			pstmt.setInt(2, idActor);
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			return affectedRows == 1 ? true : false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+	}
 
 }

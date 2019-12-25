@@ -196,20 +196,17 @@
 					<td><%=m.getGenresDisplay() %></td>
 					<td><%=m.getDistributor() %></td>
 					<td><%=m.getCountryOfOrigin() %></td>
-					<%-- <td><%=m.getDescription() %></td>
-					<td><%=m.getActorsDisplay() %></td>
-					<td><%=m.getGenresDisplay() %></td> --%>
 					
-					
+
 					<td>
-						<form action="EditMovieServlet" method="get">
+						<form action="EditMovieServlet" method="post">
   					
   							<button name="edit" type="submit" value="<%= m.getId()%>">Edit movie</button>
   							
 						</form>
 					</td>
 					<td>
-						<form action="DeleteMovieServlet" method="get">
+						<form action="DeleteMovieServlet" method="post">
   					
   							<button name="delete" type="submit" value="<%= m.getId()%>">Delete movie</button>
   							
