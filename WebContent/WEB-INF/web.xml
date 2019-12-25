@@ -77,4 +77,24 @@
     <servlet-name>AddDirectorServlet</servlet-name>
     <url-pattern>/AddDirectorServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddActorServlet</display-name>
+    <servlet-name>AddActorServlet</servlet-name>
+    <servlet-class>servlets.AddActorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddActorServlet</servlet-name>
+    <url-pattern>/AddActorServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddGenreServlet</display-name>
+    <servlet-name>AddGenreServlet</servlet-name>
+    <servlet-class>servlets.AddGenreServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddGenreServlet</servlet-name>
+    <url-pattern>/AddGenreServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

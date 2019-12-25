@@ -52,7 +52,7 @@ public class Movie extends Moviefiable{
 	}
 	
 	
-	public Movie() {this(-1, false, "", -1, -1, "", "", "", new HashSet<Actor>(), new HashSet<Genre>(),new HashSet<Director>());}
+	public Movie() {this(-1, true, "", -1, -1, "", "", "", new HashSet<Actor>(), new HashSet<Genre>(),new HashSet<Director>());}
 
 
 	public String getName() {

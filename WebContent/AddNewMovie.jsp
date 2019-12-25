@@ -27,30 +27,27 @@
 	<form action="AddNewMovieServlet" method="post">
 		<table>
 		
-			<tr><td align="left">Name:</td><td><input  type="text" name="movieName"/></td></tr>
+			<tr><td align="left">Name:</td><td><input  type="text" name="movieName" value="<%=movie.getName()%>"></td></tr>
 			<tr><td align="left">Duration:</td><td><input type="text" name="movieDuration" value="<%= movie.getDuration() < 0 ?  ""  : movie.getDuration()%>"/></td></tr>
 			<tr><td align="left">Production year:</td><td><input type="text" name="movieProductionYear" value="<%= movie.getProductionYear() < 1950 ?  "" : movie.getDuration() %>"/></td></tr>
- 			<tr><td align="left">Description:</td><td><input type="text" name="movieDescription"/></td></tr> 
-		    <tr><td align="left">Country of origin:</td><td><input type="text" name="countryOfOrigin"/></td></tr>
-			<tr><td align="left">Distributor:</td><td><input type="text" name="distributor"/></td></tr>
-			
-		
-			<tr>
-				<td align="left">Directors:<select> <% for(Director d : movie.getDirectors()){ %> <option value="<%=d.getId() %>"> <%=d.getName() %> </option> <%} %> </select> </td>
-				<td>
-
-				</td>
-			</tr>
+ 			<tr><td align="left">Description:</td><td><input type="text" name="movieDescription" value="<%= movie.getDescription()%>"/></td></tr> 
+		    <tr><td align="left">Country of origin:</td><td><input type="text" name="countryOfOrigin" value="<%= movie.getCountryOfOrigin()%>"/></td></tr>
+			<tr><td align="left">Distributor:</td><td><input type="text" name="distributor" value="<%= movie.getDistributor()%>"/></td></tr>
+			<tr><td align="left">Directors:<select> <% for(Director d : movie.getDirectors()){ %> <option value="<%=d.getId() %>"> <%=d.getName() %> </option> <%} %> </select> </td></tr>
+			<tr><td align="left">Actors:<select> <% for(Actor a : movie.getActors()){ %> <option value="<%=a.getId() %>"> <%=a.getName() %> </option> <%} %> </select> </td></tr>
+			<tr><td align="left">Genres:<select> <% for(Genre g : movie.getGenres()){ %> <option value="<%=g.getId() %>"> <%=g.getName() %> </option> <%} %> </select> </td></tr>
 			
 				
-			<tr>
+			<!-- <tr>
 			
 				<td>
-					<!-- <input type="submit" value="Add new movie"> -->
+					<input type="submit" value="Add new movie">
 				</td>
 			
-			</tr>
+			</tr> -->
 		</table>
+		<input type="submit" value="Add new movie">
+	</form>
 
 	<!-- </form> -->
 	
@@ -79,7 +76,7 @@
 					<input type="submit" value="Add actor">
 	</form></br>
 	<form action="AddGenreServlet" method="post">
-						<select name="actor">
+						<select name="genre">
 							<% for(Genre g : allGenres){ %>
 				
 						
@@ -91,8 +88,7 @@
 					<input type="submit" value="Add genre">
 	</form></br>
 	
-	<input type="submit" value="Add new movie">
-	</form>
+	
 
 </body>
 </html>

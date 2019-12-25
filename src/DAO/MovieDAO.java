@@ -85,40 +85,94 @@ public class MovieDAO {
 		
 		
 		try {
-			String query = "INSERT INTO Movie (active, name, duration, productionYear, description) "
-					+ "VALUES (?, ?, ?, ?, ?)";
+			conn.setAutoCommit(false); 
+			conn.commit();
+			String query = "INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			int index = 1;
 			
-			pstmt.setInt(index++, 1);
+			pstmt.setInt(index++, newMovie.isActive() ? 1 : 0);
 			pstmt.setString(index++, newMovie.getName());
 			pstmt.setInt(index++, newMovie.getDuration());
 			pstmt.setInt(index++, newMovie.getProductionYear());
 			pstmt.setString(index++, newMovie.getDescription());
+			pstmt.setString(index++, newMovie.getDistributor());
+			pstmt.setString(index++, newMovie.getCountryOfOrigin());
+			
 
+			
 			int affectedRows = pstmt.executeUpdate();
 
-	        if (affectedRows == 0) {
-	            throw new SQLException("Creating movie failed, no rows affected.");
-	        }
+	        if (affectedRows != 0) {
+	            //
+	        	 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+	 	            if (generatedKeys.next()) {
+	 	            	newMovie.setId(generatedKeys.getInt(1));
+	 	            }
+	 	            else {
+	 	                throw new SQLException("Creating movie failed, no ID obtained.");
+	 	            }
+	 	        }
+	        	 
+	        	if (!newMovie.getDirectors().isEmpty()) {
+	        		
+	        		for (Director d : newMovie.getDirectors()) {
+	        			query = "INSERT INTO Directing (idMovie, idDirector) VALUES (?, ?)";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, newMovie.getId());
+	    				pstmt.setInt(2, d.getId());
+	    				pstmt.executeUpdate();
+	        		}
+	        	}
+	        	
+	        	if (!newMovie.getActors().isEmpty()) {
+	        		
+	        		for (Actor a : newMovie.getActors()) {
+	        			query = "INSERT INTO Acting (idMovie, idActor) VALUES (?, ?)";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, newMovie.getId());
+	    				pstmt.setInt(2, a.getId());
+	    				pstmt.executeUpdate();
+	        		}
 
-	        try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	            	newMovie.setId(generatedKeys.getInt(1));
-	            }
-	            else {
-	                throw new SQLException("Creating user failed, no ID obtained.");
-	            }
+	        	}
+	        	
+	        	if (!newMovie.getGenres().isEmpty()) {
+	        		
+	        		for (Genre g : newMovie.getGenres()) {
+	        			query = "INSERT INTO MovieGenre (idMovie, idGenre) VALUES (?, ?)";
+	        			pstmt = conn.prepareStatement(query);
+	        			pstmt.setInt(1, newMovie.getId());
+	    				pstmt.setInt(2, g.getId());
+	    				pstmt.executeUpdate();
+	        		}
+
+	        	}
+	        	 
+	        	
+	        	 
+	        	 
+	        	 
+	        } else {
+	        	throw new SQLException("Creating movie failed, no rows affected.");
 	        }
-	       System.out.println("Inserted record's ID: " + newMovie.getId());
-	      
+	        	
+	       conn.commit(); // sada se izvršavaju sve naredbe između 2 commit-a
+
 	       return affectedRows != 0 && newMovie.getId() != 0;
 
+		} catch (Exception ex) {
+			try {conn.rollback();} catch (Exception ex1) {ex1.printStackTrace();} // ako je 2. commit neuspešan, vratiti bazu u stanje koje je zapamćeno 1. commit-om
+			throw ex;		
 		} finally {
+			try {conn.setAutoCommit(true);} catch (Exception ex1) {ex1.printStackTrace();} // svaku sledeću naredbu izvršavati odmah
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
+
+	
 	}
 	
 	public static boolean delete(int idMovie) throws SQLException {

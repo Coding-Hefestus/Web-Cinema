@@ -11,40 +11,37 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.ActorDAO;
 import DAO.DirectorDAO;
 import DAO.GenreDAO;
+import model.Actor;
 import model.Director;
 import model.Movie;
 import model.User;
 
-
-public class AddDirectorServlet extends HttpServlet {
+public class AddActorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+ 
    
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
 		//doGet(request, response);
-		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
-		String director = request.getParameter("director");
-		int direcotorId = Integer.valueOf(director);
+		String actor = request.getParameter("actor");
+		int actorId = Integer.valueOf(actor);
 		
 		try {
-			Director d = (Director) DirectorDAO.getDirectorById(direcotorId);
+			Actor a = (Actor) ActorDAO.getActorById(actorId);
 
 			Movie movie = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 			
-			movie.getDirectors().add(d);
+			movie.getActors().add(a);
 			request.setAttribute("key", String.valueOf(loggedInUser.getId()));
 			request.setAttribute("directors", DirectorDAO.getAllDirectors());
 			request.setAttribute("actors", ActorDAO.getAllActors());
@@ -55,6 +52,7 @@ public class AddDirectorServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 	}

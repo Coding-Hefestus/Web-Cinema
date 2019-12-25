@@ -12,39 +12,39 @@ import DAO.ActorDAO;
 import DAO.DirectorDAO;
 import DAO.GenreDAO;
 import model.Director;
+import model.Genre;
 import model.Movie;
 import model.User;
 
 
-public class AddDirectorServlet extends HttpServlet {
+public class AddGenreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-   
-
+    
+  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
+
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
-		String director = request.getParameter("director");
-		int direcotorId = Integer.valueOf(director);
+		String genre = request.getParameter("genre");
+		int genreId = Integer.valueOf(genre);
 		
 		try {
-			Director d = (Director) DirectorDAO.getDirectorById(direcotorId);
+			Genre g = (Genre) GenreDAO.getGenreById(genreId);
 
 			Movie movie = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 			
-			movie.getDirectors().add(d);
+			movie.getGenres().add(g);
 			request.setAttribute("key", String.valueOf(loggedInUser.getId()));
 			request.setAttribute("directors", DirectorDAO.getAllDirectors());
 			request.setAttribute("actors", ActorDAO.getAllActors());
@@ -55,6 +55,7 @@ public class AddDirectorServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 	}
