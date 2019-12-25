@@ -34,6 +34,7 @@ public class AddActorServlet extends HttpServlet {
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
 		String actor = request.getParameter("actor");
+		String origin = request.getParameter("origin");
 		int actorId = Integer.valueOf(actor);
 		
 		try {
@@ -46,13 +47,19 @@ public class AddActorServlet extends HttpServlet {
 			request.setAttribute("directors", DirectorDAO.getAllDirectors());
 			request.setAttribute("actors", ActorDAO.getAllActors());
 			request.setAttribute("genres", GenreDAO.getAllGenres());
-			request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
+		
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+		if (origin.equals("EditMovie")) {
+			request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
+		} else if (origin.equals("AddNewMovie")) {
+			request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
+		}
 		
 		
 	}

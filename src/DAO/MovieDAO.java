@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -151,10 +152,6 @@ public class MovieDAO {
 
 	        	}
 	        	 
-	        	
-	        	 
-	        	 
-	        	 
 	        } else {
 	        	throw new SQLException("Creating movie failed, no rows affected.");
 	        }
@@ -179,24 +176,7 @@ public class MovieDAO {
 		Movie movie = getById(idMovie);
 		movie.setActive(false);
 		
-		if (movie == null) {
-			System.out.println("movie null");
-		}
-		
-		if (movie.getActors() == null) {
-			System.out.println("actors null");
-		}
-		
-		if (movie.getDirectors() == null) {
-			System.out.println("directors null");
-		}
-		
-		if (movie.getGenres() == null) {
-			System.out.println("genres null");
-		}
-		
-		
-		
+
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
 		
@@ -338,7 +318,8 @@ public class MovieDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			//active, name, duration, productionYear, description
+			conn.setAutoCommit(false); 
+			conn.commit();
 			String query = "UPDATE Movie SET active = ?, name = ?, duration = ?,  productionYear = ?, description = ?, distributor = ?, countryOfOrigin = ? "
 					+ "WHERE id = ?";
 
@@ -354,13 +335,112 @@ public class MovieDAO {
 			pstmt.setString(index++, movie.getCountryOfOrigin());
 			pstmt.setInt(index++, movie.getId());
 		
-			return pstmt.executeUpdate() == 1;
+			int affectedRows = pstmt.executeUpdate();
+			
+			if (affectedRows == 1) {
+				pstmt.close();
+				
+				query = "DELETE FROM Directing WHERE idMovie = ? AND idDirector IN (" + getDirectorsIdsAsStrings() + ")";
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, movie.getId());
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				
+//				DirectorDAO.cleanAllDirectorsForMovie(movie.getId());
+				if(!movie.getDirectors().isEmpty()) {
+					for (Director d : movie.getDirectors()) {
+						//DirectorDAO.addDirectorInMovie(movie.getId(), d.getId());
+						query = "INSERT INTO Directing (idMovie, idDirector) VALUES (?, ?)";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, movie.getId());
+						pstmt.setInt(2, d.getId());
+						pstmt.executeUpdate();
+						pstmt.close();
+					
+					}
+						
+				}
+				
+				
+				query = "DELETE FROM Acting WHERE idMovie = ? AND idActor IN (" + getActorsIdsAsStrings() + ")";
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, movie.getId());
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				
+///				ActorDAO.cleanAllActorsForMovie(movie.getId());
+				if(!movie.getActors().isEmpty()) {
+					for (Actor a : movie.getActors()) {
+						//ActorDAO.addActorInMovie(movie.getId(), a.getId());
+						query = "INSERT INTO Acting (idMovie, idActor) VALUES (?, ?)";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, movie.getId());
+						pstmt.setInt(2, a.getId());
+						pstmt.executeUpdate();
+						pstmt.close();
+						
+					}
+				}
+				
+				
+				query = "DELETE FROM MovieGenre WHERE idMovie = ? AND idGenre IN (" + getGenresIdsAsStrings() + ")";
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, movie.getId());
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				
+//				GenreDAO.cleanAllGenresForMovie(movie.getId());
+				if(!movie.getGenres().isEmpty()) {
+					for (Genre g : movie.getGenres()) {
+						//GenreDAO.addGenreInMovie(movie.getId(), g.getId());
+						query = "INSERT INTO MovieGenre (idMovie, idGenre) VALUES (?, ?)";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, movie.getId());
+						pstmt.setInt(2, g.getId());
+						pstmt.executeUpdate();
+						pstmt.close();
+					}
+				}
+				
+//				DirectorDAO.cleanAllDirectorsForMovie(movie.getId());
+//				if(!movie.getDirectors().isEmpty()) {
+//					for (Director d : movie.getDirectors()) DirectorDAO.addDirectorInMovie(movie.getId(), d.getId()); 
+//				}
+//					
+//				ActorDAO.cleanAllActorsForMovie(movie.getId());
+//				if(!movie.getActors().isEmpty()) {
+//					for (Actor a : movie.getActors())  ActorDAO.addActorInMovie(movie.getId(), a.getId());
+//				}
+//				
+//				
+//				GenreDAO.cleanAllGenresForMovie(movie.getId());
+//				if(!movie.getGenres().isEmpty()) {
+//					for (Genre g : movie.getGenres()) GenreDAO.addGenreInMovie(movie.getId(), g.getId());
+//				}
+//				
+//				 conn.commit();
+			}
+			
+		     return affectedRows != 0;
+			
+		}catch(Exception e) {
+			try {conn.rollback();} catch (Exception ex1) {ex1.printStackTrace();} // ako je 2. commit neuspešan, vratiti bazu u stanje koje je zapamćeno 1. commit-om
+			//System.out.println(e);
+			throw e;		
 		} finally {
+			try {conn.setAutoCommit(true);} catch (Exception ex1) {ex1.printStackTrace();} // svaku sledeću naredbu izvršavati odmah
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
-	
+			
 	}
+		
 	
 
 	private static Movie createMovie(ResultSet rset) throws SQLException {
@@ -435,5 +515,29 @@ public class MovieDAO {
 		
 		return director;
 	}
+	
+	private static String getDirectorsIdsAsStrings() throws SQLException {
+		
+		ArrayList<Director> allDirectors = DirectorDAO.getAllDirectors();
+		return allDirectors.stream().map(Director::getId)
+									.map(id -> id.toString())
+									.collect(Collectors.joining(", "));
+				
+	}
+	
+	private static String getActorsIdsAsStrings() throws SQLException {
+		ArrayList<Actor> allActors = ActorDAO.getAllActors();
+		return allActors.stream().map(Actor::getId)
+									.map(id -> id.toString())
+									.collect(Collectors.joining(", "));
+	}
+	
+	private static String getGenresIdsAsStrings() throws SQLException {
+		ArrayList<Genre> allGenres = GenreDAO.getAllGenres();
+		return allGenres.stream().map(Genre::getId)
+									.map(id -> id.toString())
+									.collect(Collectors.joining(", "));
+	}
+
 	
 } //od klase

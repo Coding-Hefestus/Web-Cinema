@@ -20,7 +20,7 @@ CREATE TABLE Movie
 
 select * from Movie
 delete from Movie where id = 2
-
+update Movie set name = 'film 2' where id = 9
 
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: Jungle', 120, 2017, 'Description goes here', '20th Century Fox', 'USA' );
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here', '20th Century Fox', 'USA'  );
@@ -119,9 +119,9 @@ select * from Director
 drop table Directing
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
-
+INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
 delete from Directing
-where idMovie = 1 AND idDirector =3
+where idMovie = 1 AND idDirector in (1,3)
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
 
@@ -129,6 +129,8 @@ INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
 INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
 INSERT INTO Directing (idMovie, idDirector) VALUES (3, 2);
 INSERT INTO Directing (idMovie, idDirector) VALUES (4, 3);
+
+INSERT INTO Directing (idMovie, idDirector) VALUES (6, 1);
 
 
 -------------------------------------------------------------------------------------------------------------------

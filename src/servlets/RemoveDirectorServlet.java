@@ -39,13 +39,13 @@ public class RemoveDirectorServlet extends HttpServlet {
 			Movie movie = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 			movie.getDirectors().remove(director);
 			
-			if (DirectorDAO.removeDirectorFromMovie(movie.getId(), director.getId())) {
+			//if (DirectorDAO.removeDirectorFromMovie(movie.getId(), director.getId())) {
 				
 				request.setAttribute("key", String.valueOf(loggedInUser.getId()));
 				request.setAttribute("directors", DirectorDAO.getAllDirectors());
 				request.setAttribute("actors", ActorDAO.getAllActors());
 				request.setAttribute("genres", GenreDAO.getAllGenres());
-			} 			
+			//} 			
 
 		} catch (Exception e) {
 			e.printStackTrace();

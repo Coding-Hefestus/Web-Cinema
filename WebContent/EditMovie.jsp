@@ -62,7 +62,7 @@ function removeDirector(){
 						</select>
 					<input type="submit" value="Remove director">
 	</form></br>
-	<form action="AddDirectorWhenEditingServlet" method="post">
+	<form action="AddDirectorServlet" method="post">
 						<select name="director">
 							<% for(Director d : allDirectors){ %>
 				
@@ -72,6 +72,7 @@ function removeDirector(){
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="EditMovie">
 					<input type="submit" value="Add director">
 	</form></br>
 	
@@ -91,7 +92,7 @@ function removeDirector(){
 						</select>
 					<input type="submit" value="Remove actor">
 	</form></br>
-	<form action="AddActorWhenEditingServlet" method="post">
+	<form action="AddActorServlet" method="post">
 						<select name="actor">
 							<% for(Actor a : allActors){ %>
 				
@@ -101,6 +102,7 @@ function removeDirector(){
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="EditMovie">
 					<input type="submit" value="Add actor">
 	</form></br>
 	
@@ -122,7 +124,7 @@ function removeDirector(){
 						</select>
 					<input type="submit" value="Remove genre">
 	</form></br>
-	<form action="AddGenreWhenEditingServlet" method="post">
+	<form action="AddGenreServlet" method="post">
 						<select name="genre">
 							<% for(Genre g : allGenres){ %>
 				
@@ -132,6 +134,7 @@ function removeDirector(){
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="EditMovie">
 					<input type="submit" value="Add genre">
 	</form></br>
 	

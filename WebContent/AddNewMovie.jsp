@@ -61,6 +61,7 @@
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="AddNewMovie">
 					<input type="submit" value="Add director">
 	</form></br>
 	<form action="AddActorServlet" method="post">
@@ -73,6 +74,7 @@
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="AddNewMovie">
 					<input type="submit" value="Add actor">
 	</form></br>
 	<form action="AddGenreServlet" method="post">
@@ -85,6 +87,7 @@
 				
 							<%} %>
 						</select>
+					<input type="hidden" name="origin" value="AddNewMovie">
 					<input type="submit" value="Add genre">
 	</form></br>
 	

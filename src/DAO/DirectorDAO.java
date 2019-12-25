@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
 import model.Director;
 
 public class DirectorDAO {
@@ -127,7 +131,39 @@ public class DirectorDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
 	}
+	
+	public static void cleanAllDirectorsForMovie(int idMovie) throws SQLException {
+		Connection conn = ConnectionManager.getConnection();
 		
+		
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		String query = "DELETE FROM Directing WHERE idMovie = ? AND idDirector IN (" + getDirectorsIdsAsStrings() + ")";
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idMovie);
+			
+			pstmt.executeUpdate();
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+		
+	}
+	
+	
+	private static String getDirectorsIdsAsStrings() throws SQLException {
+		
+		ArrayList<Director> allDirectors = getAllDirectors();
+		return allDirectors.stream().map(Director::getId)
+									.map(id -> id.toString())
+									.collect(Collectors.joining(", "));
+				
+	}
 	
 
 }//od klase

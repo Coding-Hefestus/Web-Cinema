@@ -107,16 +107,7 @@
     <servlet-name>RemoveDirectorServlet</servlet-name>
     <url-pattern>/RemoveDirectorServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddDirectorWhenEditingServlet</display-name>
-    <servlet-name>AddDirectorWhenEditingServlet</servlet-name>
-    <servlet-class>servlets.AddDirectorWhenEditingServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddDirectorWhenEditingServlet</servlet-name>
-    <url-pattern>/AddDirectorWhenEditingServlet</url-pattern>
-  </servlet-mapping>
+ 
   <servlet>
     <description></description>
     <display-name>RemoveActorServlet</display-name>
@@ -137,24 +128,6 @@
     <servlet-name>RemoveGenreServlet</servlet-name>
     <url-pattern>/RemoveGenreServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddActorWhenEditingServlet</display-name>
-    <servlet-name>AddActorWhenEditingServlet</servlet-name>
-    <servlet-class>servlets.AddActorWhenEditingServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddActorWhenEditingServlet</servlet-name>
-    <url-pattern>/AddActorWhenEditingServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddGenreWhenEditingServlet</display-name>
-    <servlet-name>AddGenreWhenEditingServlet</servlet-name>
-    <servlet-class>servlets.AddGenreWhenEditingServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddGenreWhenEditingServlet</servlet-name>
-    <url-pattern>/AddGenreWhenEditingServlet</url-pattern>
-  </servlet-mapping>
+  
+  
 </web-app>
