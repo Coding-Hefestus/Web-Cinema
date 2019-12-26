@@ -54,8 +54,6 @@ public class UserDAO {
 				LocalDateTime registartionDate = ts.toLocalDateTime();
 
 				Role role = Role.valueOf(rset.getString(6));
-				
-				System.out.println(Utility.convertDateWithTimeToString(registartionDate));
 
 				return new User(id, active, username, password, registartionDate, role);
 				

@@ -29,7 +29,7 @@
 						<input type="text" name="usernameFilter" value="<% request.getAttribute("usernameFilter"); %>">
 				 	</fieldset> 
     					<fieldset> 
-        						<legend>Sorting order</legend>
+        						<legend>Sorting</legend>
         						
         						<input type="radio" id="nameAsc" name="byUsername" value="asc">
     							<label for="nameAsc">Ascending</label><br>
@@ -55,13 +55,13 @@
     					</fieldset> 
     					
     					<fieldset>
-        						<legend>Sorting order</legend>
+        						<legend>Sorting</legend>
         						
-        						<input type="radio" id="nameAsc" name="byRole" value="asc">
-    							<label for="nameAsc">Ascending</label><br>
+        						<input type="radio" id="roleAsc" name="byRole" value="asc">
+    							<label for="roleAsc">Ascending</label><br>
 
-    							<input type="radio" id="nameDsc" name="byRole" value="dsc">
-    							<label for="nameDsc">Descending</label>
+    							<input type="radio" id="roleDsc" name="byRole" value="dsc">
+    							<label for="roleDsc">Descending</label>
 
     					</fieldset> 
 				</td>
@@ -69,13 +69,27 @@
 				
 				
 				<td align="center">
+					<fieldset>
+						<legend>Filter</legend>
 						from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
 									 <select name="fromYear"> <%for (int i = 1950; i <= 2020; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>	
 						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
 									 <select name="toYear"> <%for (int i = 1950; i <= 2020; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
+					</fieldset>
+					
+					<fieldset>
+						<legend>Sorting</legend>
 						
+        						
+        						<input type="radio" id="dateAsc" name="byDate" value="asc">
+    							<label for="dateAsc">Ascending</label><br>
+
+    							<input type="radio" id="dateDsc" name="byDate" value="dsc">
+    							<label for="dateDsc">Descending</label>
+					</fieldset>
+					
 
 				</td>
 					
