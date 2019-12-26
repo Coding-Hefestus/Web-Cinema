@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import model.Role;
 import model.User;
@@ -52,6 +54,8 @@ public class UserDAO {
 				LocalDateTime registartionDate = ts.toLocalDateTime();
 
 				Role role = Role.valueOf(rset.getString(6));
+				
+				System.out.println(Utility.convertDateWithTimeToString(registartionDate));
 
 				return new User(id, active, username, password, registartionDate, role);
 				
@@ -64,8 +68,45 @@ public class UserDAO {
 		}
 
 		return null;
+	}
+	
+	public static ArrayList<User> getAll() throws SQLException, ParseException{
 		
+		ArrayList<User> users = new ArrayList<User>();
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM User WHERE active = 1";
+
+			pstmt = conn.prepareStatement(query);
+			int index;;
+	
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				index = 1;
+				int id = rset.getInt(index++);
+				boolean active = (rset.getInt(index++) == 0 ? false : true);
+				String username = rset.getString(index++);
+				String password = rset.getString(index++);
+				String dateTimeString = rset.getString(index++);
+				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
+				LocalDateTime registartionDate = ts.toLocalDateTime();
+				Role role = Role.valueOf(rset.getString(index++));
+				
+				users.add(new User(id, active, username, password, registartionDate, role));
+				
+			}
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		
+		}
+		
+		return users;
 	}
 	
 	public static boolean alreadyExists(String username, String password) throws SQLException {
@@ -115,7 +156,7 @@ public class UserDAO {
 			pstmt.setString(index++, newUser.getUsername());
 			pstmt.setString(index++, newUser.getPassword());
 			//pstmt.setTimestamp(index++, Timestamp.valueOf(newUser.getRegistrationDate()));//(index++, Datetime.); //Timestamp.valueOf(newUser.getRegistrationDate())
-			pstmt.setString(index++, Utility.convertDateWithTimeToString(newUser.getRegistrationDate()));
+			pstmt.setString(index++, Utility.convertDateWithTimeToStringToDB(newUser.getRegistrationDate()));
 			pstmt.setString(index++, newUser.getRole().toString());
 			
 			int affectedRows = pstmt.executeUpdate();

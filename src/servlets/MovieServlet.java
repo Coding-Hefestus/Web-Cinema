@@ -48,14 +48,6 @@ public class MovieServlet extends HttpServlet {
 		String toPF = request.getParameter("toProductionFilter"); //toPF - toProductionFilter
 		final int toProductionFilter = getToFilter(toPF);
 		
-//		String descriptionF = request.getParameter("descriptionFilter"); 
-//		descriptionF = (descriptionF != null ? descriptionF : "");		
-//		final String descriptionFilter = new String(descriptionF);
-		
-//		String actorsF = request.getParameter("actorsFilter"); 
-//		actorsF = (actorsF != null ? actorsF : "");		
-//		final String actorsFilter = new String(actorsF);
-		
 		String genresF = request.getParameter("genresFilter"); 
 		genresF = (genresF != null ? genresF : "");		
 		final String genresFilter = new String(genresF);
@@ -107,9 +99,6 @@ public class MovieServlet extends HttpServlet {
 			
 			request.setAttribute("fromProductionFilter", fromProductionFilter);
 			request.setAttribute("toProductionFilter", toProductionFilter);
-			
-			
-			//request.setAttribute("descriptionFilter", descriptionFilter);
 			
 			request.setAttribute("genresFilter", genresFilter);
 			

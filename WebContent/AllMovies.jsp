@@ -2,6 +2,7 @@
 <%@page import="model.Movie"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.User"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
  <%ArrayList<Movie> filteredMovies = (ArrayList<Movie>) request.getAttribute("filteredMovies"); %>
  <%User loggedInUser = (User) request.getSession().getAttribute("loggedInUser"); %>

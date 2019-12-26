@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import DAO.MovieDAO;
 import model.Actor;
@@ -23,7 +24,9 @@ public class TestMain {
 //		if (Dimension.IID.equals(Dimension.valueOf("IID"))) {
 //			System.out.println("AF");
 //		}
-		
+		//for (Integer  i : IntStream.rangeClosed(1, 3).g) {
+			
+		//}
 		HashSet<Actor> set = new HashSet<Actor>();
 		
 		Actor g1 = new Actor(1, true, "Dwayne Johnson - Rock");

@@ -137,4 +137,14 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UsersManagementServlet</display-name>
+    <servlet-name>UsersManagementServlet</servlet-name>
+    <servlet-class>servlets.UsersManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsersManagementServlet</servlet-name>
+    <url-pattern>/UsersManagementServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

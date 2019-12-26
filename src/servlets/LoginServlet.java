@@ -19,6 +19,9 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+		if (loggedInUser == null) response.sendRedirect("./Login.html");
 	}
 
 
@@ -31,7 +34,9 @@ public class LoginServlet extends HttpServlet {
 			if (user == null) { response.sendRedirect("./Login.html"); return;}
 			else {
 				request.getSession().setAttribute("loggedInUser", user);
-				response.sendRedirect("./MainPageApp.html");
+				
+				//request.getRequestDispatcher("./MainPageApp.jsp").forward(request, response);
+				response.sendRedirect("./MainPageApp.jsp");
 				
 			}
 				
