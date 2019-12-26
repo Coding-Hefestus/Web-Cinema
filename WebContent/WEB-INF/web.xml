@@ -107,7 +107,6 @@
     <servlet-name>RemoveDirectorServlet</servlet-name>
     <url-pattern>/RemoveDirectorServlet</url-pattern>
   </servlet-mapping>
- 
   <servlet>
     <description></description>
     <display-name>RemoveActorServlet</display-name>
@@ -128,6 +127,14 @@
     <servlet-name>RemoveGenreServlet</servlet-name>
     <url-pattern>/RemoveGenreServlet</url-pattern>
   </servlet-mapping>
-  
-  
+  <servlet>
+    <description></description>
+    <display-name>RegisterServlet</display-name>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>servlets.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

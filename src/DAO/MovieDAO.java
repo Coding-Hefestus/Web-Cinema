@@ -239,12 +239,7 @@ public class MovieDAO {
 
 	}
 		
-		
-		
-		
-		
-	
-	
+
 	public static Movie getById(int movieId) throws SQLException {
 		HashMap<Integer, Movie> movies = new  HashMap<Integer, Movie>();
 		
@@ -266,8 +261,6 @@ public class MovieDAO {
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, movieId);
-			
-			
 			
 			rset = pstmt.executeQuery();
 			
@@ -292,10 +285,6 @@ public class MovieDAO {
 					movies.get(rset.getInt(1)).getDirectors().add(director);
 					
 				}
-					
-				
-
-				
 				
 			}
 			
@@ -304,9 +293,6 @@ public class MovieDAO {
 			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
-		
-	
-		
 		
 		return movies.get(movieId);
 	}
@@ -347,20 +333,16 @@ public class MovieDAO {
 				pstmt.executeUpdate();
 				
 				pstmt.close();
-				
-//				DirectorDAO.cleanAllDirectorsForMovie(movie.getId());
+
 				if(!movie.getDirectors().isEmpty()) {
 					for (Director d : movie.getDirectors()) {
-						//DirectorDAO.addDirectorInMovie(movie.getId(), d.getId());
 						query = "INSERT INTO Directing (idMovie, idDirector) VALUES (?, ?)";
 						pstmt = conn.prepareStatement(query);
 						pstmt.setInt(1, movie.getId());
 						pstmt.setInt(2, d.getId());
 						pstmt.executeUpdate();
 						pstmt.close();
-					
-					}
-						
+					}	
 				}
 				
 				
@@ -372,10 +354,8 @@ public class MovieDAO {
 				
 				pstmt.close();
 				
-///				ActorDAO.cleanAllActorsForMovie(movie.getId());
 				if(!movie.getActors().isEmpty()) {
 					for (Actor a : movie.getActors()) {
-						//ActorDAO.addActorInMovie(movie.getId(), a.getId());
 						query = "INSERT INTO Acting (idMovie, idActor) VALUES (?, ?)";
 						pstmt = conn.prepareStatement(query);
 						pstmt.setInt(1, movie.getId());

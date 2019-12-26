@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
-import model.Actor;
 import model.Genre;;
 
 
@@ -134,33 +132,8 @@ public static ArrayList<Genre> getAllGenres() throws SQLException{
 	}
 	
 	
-	public static void cleanAllGenresForMovie(int idMovie) throws SQLException {
-		Connection conn = ConnectionManager.getConnection();
-
-		PreparedStatement pstmt = null;
-		//ResultSet rset = null;
-		String query = "DELETE FROM MovieGenre WHERE idMovie = ? AND idGenre IN (" + getGenresIdsAsStrings() + ")";
-		
-		try {
-
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, idMovie);
-			pstmt.executeUpdate();
-
-		} finally {
-			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
-		}
-		
-	}
 	
-	private static String getGenresIdsAsStrings() throws SQLException {
-		ArrayList<Genre> allGenres = getAllGenres();
-		return allGenres.stream().map(Genre::getId)
-									.map(id -> id.toString())
-									.collect(Collectors.joining(", "));
-	}
+	
 	
 	
 	
