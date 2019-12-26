@@ -147,4 +147,24 @@
     <servlet-name>UsersManagementServlet</servlet-name>
     <url-pattern>/UsersManagementServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SingleUserServlet</display-name>
+    <servlet-name>SingleUserServlet</servlet-name>
+    <servlet-class>servlets.SingleUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SingleUserServlet</servlet-name>
+    <url-pattern>/SingleUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditUserServlet</display-name>
+    <servlet-name>EditUserServlet</servlet-name>
+    <servlet-class>servlets.EditUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditUserServlet</servlet-name>
+    <url-pattern>/EditUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

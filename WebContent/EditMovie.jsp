@@ -139,7 +139,9 @@ function removeDirector(){
 	</form></br>
 	
 	
-	
+	<form action="UsersManagementServlet" method="get">
+		<input type=submit value="Users management" style=width:100%>
+	</form>
 	
 	
 	

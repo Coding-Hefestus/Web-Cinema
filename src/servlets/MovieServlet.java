@@ -34,7 +34,7 @@ public class MovieServlet extends HttpServlet {
 		String nameF = request.getParameter("nameFilter"); 
 		nameF = (nameF != null ? nameF : "");		
 		final String titleFilter = new String(nameF);
-
+		
 		String fromDF = request.getParameter("fromDurationFilter"); //fromDF - fromDurationFilter
 		final int fromDurationFilter = getFilter(fromDF);
 		
@@ -78,7 +78,9 @@ public class MovieServlet extends HttpServlet {
 		if (countryOfOriginSort != null) comparators.add(Movie.comparatorByCountryOfOrigin(countryOfOriginSort));
 		if (distributorSort != null) comparators.add(Movie.comparatorByDistributor(distributorSort));
 		if (genresSort != null) comparators.add(Movie.compartorByGenres(genresSort));
-		
+		//System.out.println("from: " + fromDurationFilter);
+		//System.out.println("to: " + toDurationFilter);
+
 		try {
 
 			ArrayList<Movie> filteredMovies = (ArrayList<Movie>) MovieDAO.getAll().stream()
@@ -125,6 +127,7 @@ public class MovieServlet extends HttpServlet {
 	}
 	
 	private  int getFilter(String filter) {
+		if (filter != null) System.out.println("from: " + filter);
 		int tempFilter = 0;
 		try {
 			int temp = Integer.valueOf(filter);
@@ -140,6 +143,7 @@ public class MovieServlet extends HttpServlet {
 	
 	
 	private  int getToFilter(String filter) {
+		
 		int tempFilter = 0;
 		try {
 			//int temp = Integer.valueOf(filter);
@@ -147,6 +151,7 @@ public class MovieServlet extends HttpServlet {
 			temp = (temp > 0 ? temp : Integer.MAX_VALUE);
 			tempFilter = temp;
 		} catch(Exception e) {
+			
 			return Integer.MAX_VALUE;
 			//e.printStackTrace();
 			

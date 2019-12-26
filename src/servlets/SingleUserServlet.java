@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,41 +10,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.MovieDAO;
+import DAO.UserDAO;
 import model.Movie;
 import model.User;
 
-
-public class SingleMovieServlet extends HttpServlet {
+/**
+ * Servlet implementation class SingleUserServlet
+ */
+public class SingleUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-   
 
-	
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
-		
-		
-		String idM = request.getParameter("id");
-		int idMovie = Integer.valueOf(idM);
+		String idU = request.getParameter("id");
+		int idUser = Integer.valueOf(idU);
 		
 		try {
-			Movie movie = MovieDAO.getById(idMovie);
-			request.setAttribute("movie", movie);
-			
-			request.getRequestDispatcher("./SingleMovie.jsp").forward(request, response);
-		} catch (SQLException e) {
+			User user = UserDAO.getById(idUser);
+			request.setAttribute("user", user);
+			request.getRequestDispatcher("./SingleUser.jsp").forward(request, response);
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

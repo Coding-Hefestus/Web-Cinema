@@ -58,11 +58,15 @@ public class User extends Moviefiable {
 	}
 	
 	public static Predicate<User> usernameFilter(String filter){
-		return m -> m.getUsername().toLowerCase().contains(filter.toLowerCase());
+		return u -> u.getUsername().toLowerCase().contains(filter.toLowerCase());
 	}
 	
 	public static Predicate<User> roleFilter(String filter){
-		return m -> m.getRole().toString().toLowerCase().contains(filter.toLowerCase());
+		return u -> u.getRole().toString().toLowerCase().contains(filter.toLowerCase());
+	}
+	
+	public static Predicate<User> registrationDateFilter(LocalDateTime from, LocalDateTime to){
+		return u -> u.getRegistrationDate().isBefore(to) && u.getRegistrationDate().isAfter(from);
 	}
 	
 	public static Comparator<User> comparatorByUsername(String direction){
@@ -80,13 +84,26 @@ public class User extends Moviefiable {
 		
 		switch (direction) {
 		case "asc":
-			return Comparator.comparing(User::getRole);
+			return Comparator.comparing(User::getStringRole);
 		case "dsc":		
-			return Comparator.comparing(User::getRole).reversed();
+			return Comparator.comparing(User::getStringRole).reversed();
+		default: return null;
+		}		
+	}
+	
+	public static Comparator<User> comparatorByRegistrationDate(String direction){
+		
+		switch (direction) {
+		case "asc":
+			return Comparator.comparing(User::getRegistrationDate);
+		case "dsc":		
+			return Comparator.comparing(User::getRegistrationDate).reversed();
 		default: return null;
 		}		
 	}
 	
 	
-	
+	private String getStringRole() {
+		return this.getRole().toString();
+	}
 }

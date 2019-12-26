@@ -32,7 +32,7 @@
 		<form action="MovieServlet" method="get"> 
 			<tr>
 				<td align="center">
-					<input type="text" name="nameFilter" value="<% request.getAttribute("nameFilter"); %>">
+					<input type="text" name="nameFilter" value="<%= request.getAttribute("nameFilter") %>">
 				 	
     					 <fieldset>
         						<legend>Sorting order</legend>
@@ -242,6 +242,9 @@
 				<%if (loggedInUser.getRole() == Role.ADMIN){%>
 					 <form action="AddNewMovieServlet" method="post">
 					 	<input type=submit value="Add new movie" style=width:100%>
+					 </form>
+					 <form action="UsersManagementServlet" method="get">
+					 	<input type=submit value="Users management" style=width:100%>
 					 </form>
 				<%} %>
 </body>

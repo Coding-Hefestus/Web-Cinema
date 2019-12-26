@@ -21,12 +21,12 @@
 			<th>Registration date</th>
 		</tr>
 		
-		<form action="MovieServlet" method="get">
+		<form action="UsersManagementServlet" method="get">
 			<tr>
 				<td align="center">
 					<fieldset> 
 						<legend>Filter</legend>
-						<input type="text" name="usernameFilter" value="<% request.getAttribute("usernameFilter"); %>">
+						<input type="text" name="usernameFilter" value="<%=request.getAttribute("usernameFilter") %>">
 				 	</fieldset> 
     					<fieldset> 
         						<legend>Sorting</legend>
@@ -76,7 +76,7 @@
 									 <select name="fromYear"> <%for (int i = 1950; i <= 2020; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>	
 						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
-									 <select name="toYear"> <%for (int i = 1950; i <= 2020; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
+									<select  name="toYear" > <%for (int i = 1950; i <= 2020; i++ ){ %> <option selected="selected" value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
 					</fieldset>
 					
 					<fieldset>
@@ -95,7 +95,9 @@
 					
 					
 			
+				<td align="center"><input type="submit" value="Filter"></td>
 				
+				<td align="center"><input type="submit" value="Sort"></td>
 			
 				
 			</tr>
@@ -105,14 +107,15 @@
 		
 		<%for (User u : filteredUsers){ %>
 			<tr>
-					<td><a href="#?id=<%= u.getId() %>"> <%= u.getUsername() %></a></td>
+					<td><a href="SingleUserServlet?id=<%= u.getId() %>"> <%= u.getUsername() %></a></td>
 					<td><%=u.getRole() %></td>
-					<td><%=Utility.convertDateWithTimeToString(u.getRegistrationDate()) %></td>
-					
+					<td><%=Utility.convertDateWithTimeToString(u.getRegistrationDate()) %></td>	
 			</tr>
 		
 		<%} %>
 		
 	</table>
+	
+	<a href="./MainPageApp.jsp">Back to Main Page</a>
 </body>
 </html>

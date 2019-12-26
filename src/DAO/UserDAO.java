@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.Role;
@@ -17,7 +18,9 @@ import utility.Utility;
 
 public class UserDAO {
 	
-	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	//public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+	public static DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 	
 	public static User get(String username, String password) throws Exception{
 		
@@ -91,7 +94,10 @@ public class UserDAO {
 				String password = rset.getString(index++);
 				String dateTimeString = rset.getString(index++);
 				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
+				//formatter
+				
 				LocalDateTime registartionDate = ts.toLocalDateTime();
+				//LocalDateTime registartionDate = formatter.format()
 				Role role = Role.valueOf(rset.getString(index++));
 				
 				users.add(new User(id, active, username, password, registartionDate, role));
@@ -105,6 +111,46 @@ public class UserDAO {
 		}
 		
 		return users;
+	}
+	
+	public static User getById(int idUser) throws SQLException, ParseException{
+	
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM User WHERE id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			int index;
+			pstmt.setInt(1, idUser);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				index = 1;
+				int id = rset.getInt(index++);
+				boolean active = (rset.getInt(index++) == 0 ? false : true);
+				String username = rset.getString(index++);
+				String password = rset.getString(index++);
+				String dateTimeString = rset.getString(index++);
+				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
+				LocalDateTime registartionDate = ts.toLocalDateTime();
+				Role role = Role.valueOf(rset.getString(index++));
+				
+				return new User(id, active, username, password, registartionDate, role);
+				
+			}
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		
+		}
+		
+		
+		
+		return null;
 	}
 	
 	public static boolean alreadyExists(String username, String password) throws SQLException {
@@ -180,6 +226,35 @@ public class UserDAO {
 		}
 		
 	}
+	
+	public static boolean update(User user) throws SQLException {
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		try {
+		
+			String query = "UPDATE User SET password = ?, role = ? "
+					+ "WHERE id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			
+			pstmt.setString(index++, user.getPassword());
+			pstmt.setString(index++, user.getRole().toString());
+			pstmt.setInt(index++, user.getId());
+			
+		
+			int affectedRows = pstmt.executeUpdate();
+		
+			return affectedRows == 1 ? true : false;
+	}finally {
+		try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+	}
+		
+	} //od metode
 
 
-}
+} //od klase
