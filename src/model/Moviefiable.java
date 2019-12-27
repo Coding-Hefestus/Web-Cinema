@@ -35,6 +35,28 @@ public abstract class Moviefiable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public int hashCode() {
+		
+		return this.id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Moviefiable other = (Moviefiable) obj;
+		if (active != other.active)
+			return false;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 	
 	
 	

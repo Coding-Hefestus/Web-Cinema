@@ -227,7 +227,9 @@
 					<td><a href="#?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
 					<td><%=m.getDuration() %></td>
 					<td><%=m.getProductionYear() %></td>
-					<td><%=m.getDescription() %></td>
+					<td><%=m.getGenresDisplay() %></td>
+					<td><%=m.getDistributor() %></td>
+					<td><%=m.getCountryOfOrigin() %></td>
 					
 					
 					 

@@ -21,8 +21,8 @@ public class Projection extends Moviefiable{
 		this.administrator = administrator;
 	}
 	
-	@SuppressWarnings("unused")
-	private Projection() {this(-1, false, null, null, null, null, -1, null);}
+
+	public Projection() {this(-1, false, null, null, null, null, -1, null);}
 
 	public Movie getMovie() {
 		return movie;

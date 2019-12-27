@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Period {
+public class Period extends Moviefiable{
 	
 	private int id;
 	private LocalDateTime start;
@@ -10,17 +10,17 @@ public class Period {
 	
 	
 	
-	public Period(int id, LocalDateTime start, LocalDateTime end) {
-		super();
-		this.id = id;
+	public Period(int id, boolean active, LocalDateTime start, LocalDateTime end) {
+		super(id, active);
+		
 		this.start = start;
 		this.end = end;
 	};
 	
-	public Period() {this(-1, null, null);}
+	public Period() {this(-1, false, null, null);}
 	
 	
-	
+	//Kad se bude pravila nova projekcija
 	public Period(int id,  LocalDateTime start, int duration) {
 		this.id = id;
 		this.start = start;		

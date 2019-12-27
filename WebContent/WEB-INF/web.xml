@@ -187,4 +187,14 @@
     <servlet-name>MyProfileServlet</servlet-name>
     <url-pattern>/MyProfileServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MainPageAppServlet</display-name>
+    <servlet-name>MainPageAppServlet</servlet-name>
+    <servlet-class>servlets.MainPageAppServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MainPageAppServlet</servlet-name>
+    <url-pattern>/MainPageAppServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,26 +1,27 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Hall extends Moviefiable{
 	
-	private Set<Dimension> dimensions;
+	private Set<ProjectionType> dimensions;
 	private String name;
 	
 	
-	public Hall(int id, boolean active, Set<Dimension> dimensions, String name) {
+	public Hall(int id, boolean active, Set<ProjectionType> dimensions, String name) {
 		super(id, active);
 		this.dimensions = dimensions;
 		this.name = name;
 	}
 	
-	public Hall() {this(-1, false, null, "");}
+	public Hall() {this(-1, false, new HashSet<ProjectionType>(), "");}
 
-	public Set<Dimension> getDimensions() {
+	public Set<ProjectionType> getDimensions() {
 		return dimensions;
 	}
 
-	public void setDimensions(Set<Dimension> dimensions) {
+	public void setDimensions(Set<ProjectionType> dimensions) {
 		this.dimensions = dimensions;
 	}
 
