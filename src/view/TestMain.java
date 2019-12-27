@@ -1,5 +1,6 @@
 package view;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +39,8 @@ public class TestMain {
 		set.remove(new Actor(1, false, "Dwayne Johnson - Rock"));
 		System.out.println(set.size());
 		
-		
+		LocalDateTime l = LocalDateTime.MIN;
+		System.out.println(l.getYear());
 		
 	}
 

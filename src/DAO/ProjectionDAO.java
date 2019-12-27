@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import model.Hall;
 import model.Movie;
@@ -27,34 +28,23 @@ public class ProjectionDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM Projection";
+			String query = "SELECT * FROM Projection WHERE active = 1";
 
 			pstmt = conn.prepareStatement(query);			
 			rset = pstmt.executeQuery();
 			int index;
 			while (rset.next()) {
 				index = 1;
-				
-				
+
 				int idProjection = rset.getInt(index++);
 				boolean active = rset.getInt(index++) == 1 ? true : false;
 				Movie movie = MovieDAO.getById(rset.getInt(index++));
-				
-			
-				ProjectionType projectionType = ProjectionTypeDAO.getById(rset.getInt(index++));//
-				
-				Hall hall = HallDAO.getById(rset.getInt(index++));
-				
+				ProjectionType projectionType = ProjectionTypeDAO.getById(rset.getInt(index++));//				
+				Hall hall = HallDAO.getById(rset.getInt(index++));	
 				Period period = PeriodDAO.getById(rset.getInt(index++));
-				
-				double price = rset.getInt(index++);
-				//System.out.println(index++);
+				double price = rset.getInt(index++);				
 				User admin = UserDAO.getById(rset.getInt(index++));
-				
-				
-				System.out.println(admin.getUsername());
-				//System.exit(1);
-				
+
 				projections.add(new Projection(idProjection, active, movie, projectionType, hall, period, price, admin)); 
 			}
 			
@@ -66,8 +56,12 @@ public class ProjectionDAO {
 			//kako?
 		}
 		
-		
 		return projections;
+//		return (ArrayList<Projection>) projections
+//				  						.stream()
+//										.sorted(Projection.sortByMovie()
+//										.thenComparing(Projection.sortByStartDate()))
+//										.collect(Collectors.toList());
 		
 	}
 

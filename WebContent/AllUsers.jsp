@@ -46,11 +46,11 @@
     					 <fieldset>
         						<legend>Filter</legend>
         						
-        						<input type="radio" id="nameAsc" name="roleFilter" value="ADMIN">
-    							<label for="nameAsc">Administrators</label><br>
+        						<input type="radio" id="nameAdmin" name="roleFilter" value="ADMIN">
+    							<label for="nameAdmin">Administrators</label><br>
 
-    							<input type="radio" id="nameDsc" name="roleFilter" value="USER">
-    							<label for="nameDsc">Users</label>
+    							<input type="radio" id="nameUser" name="roleFilter" value="USER">
+    							<label for="nameUser">Users</label>
 
     					</fieldset> 
     					
@@ -77,6 +77,7 @@
 						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
 									<select  name="toYear" > <%for (int i = 1950; i <= 2020; i++ ){ %> <option selected="selected" value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
+					
 					</fieldset>
 					
 					<fieldset>

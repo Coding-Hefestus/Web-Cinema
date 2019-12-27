@@ -137,42 +137,7 @@
 				
 				</td>
 				
-				<%-- <td align="center"><input type="text" name="descriptionFilter" value="<%= request.getAttribute("descriptionFilter")%>">
-					<fieldset>
-        						<legend>Sorting order</legend>
-        						
-        						
-        						<input type="radio" id="descriptionAsc" name="byDescription" value="asc">
-    							<label for="descriptionAsc">Ascending</label><br>
 
-    							<input type="radio" id="descriptionDsc" name="byDescription" value="dsc">
-    							<label for="descriptionDsc">Descending</label>
-
-        					
-    				</fieldset> 
-				
-				</td> --%>
-				
-				
-				<%-- <td align="center"><input type="text" name="actorsFilter" value="<%= request.getAttribute("actorsFilter")%>">
-						<fieldset>
-        						<legend>Sorting order</legend>
-        						
-        						
-        						<input type="radio" id="byActorsAsc" name="byActors" value="asc">
-    							<label for="byActosAsc">Ascending</label><br>
-
-    							<input type="radio" id="byActorsDsc" name="byActors" value="dsc">
-    							<label for="byActorsDsc">Descending</label>
-
-        					
-    				</fieldset> 
-				
-				</td> --%>
-				
-				
-				
-				
 				<td align="center"><input type="submit" value="Filter"></td>
 				
 				<td align="center"><input type="submit" value="Sort"></td>
