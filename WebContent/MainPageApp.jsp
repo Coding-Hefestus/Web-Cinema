@@ -17,7 +17,9 @@
 	<%if (loggedInUser.getRole() == Role.ADMIN){ %>
 		<a href="./UsersManagementServlet">Users management</a>
 	<%}%>
-
 	
+	<a href="./LogoutServlet">Logout</a>
+	
+	<a href="./MyProfileServlet">My profile</a>
 </body>
 </html>

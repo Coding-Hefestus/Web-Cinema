@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import DAO.ActorDAO;
 import DAO.DirectorDAO;
 import DAO.GenreDAO;
 import model.Actor;
-import model.Director;
 import model.Movie;
 import model.User;
 

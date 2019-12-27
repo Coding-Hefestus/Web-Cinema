@@ -116,6 +116,14 @@
 		
 	</table>
 	
-	<a href="./MainPageApp.jsp">Back to Main Page</a>
+	<form action="LogoutServlet" method="get">
+					 	<input type=submit value="Logout" style=width:100%>
+	</form>
+	
+	<form action="MainPageApp.jsp" >
+			<input type=submit value="Back to Main Page" style=width:100%>
+	</form>
+	
+	
 </body>
 </html>

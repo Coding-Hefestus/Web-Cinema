@@ -167,4 +167,24 @@
     <servlet-name>EditUserServlet</servlet-name>
     <url-pattern>/EditUserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogoutServlet</display-name>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MyProfileServlet</display-name>
+    <servlet-name>MyProfileServlet</servlet-name>
+    <servlet-class>servlets.MyProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyProfileServlet</servlet-name>
+    <url-pattern>/MyProfileServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

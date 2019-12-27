@@ -12,7 +12,6 @@ import DAO.ActorDAO;
 import DAO.DirectorDAO;
 import DAO.GenreDAO;
 import model.Actor;
-import model.Director;
 import model.Movie;
 import model.User;
 

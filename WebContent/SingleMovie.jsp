@@ -1,6 +1,9 @@
+<%@page import="model.User"%>
 <%@page import="model.Movie"%>
+<%@page import="model.Role"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%Movie movie = (Movie) request.getAttribute("movie"); %>
+ <%User loggedInUser = (User) request.getSession().getAttribute("loggedInUser"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,9 +43,13 @@
 		
 		
 	</table>
-	
-	<form action="UsersManagementServlet" method="get">
-		<input type=submit value="Users management" style=width:100%>
+	<%if (loggedInUser.getRole() == Role.ADMIN){ %>
+		<form action="UsersManagementServlet" method="get">
+			<input type=submit value="Users management" style=width:100%>
+		</form>
+	<%} %>
+	<form action="LogoutServlet" method="get">
+		<input type=submit value="Logout" style=width:100%>
 	</form>
 	
 	

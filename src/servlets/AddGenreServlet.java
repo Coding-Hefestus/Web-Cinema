@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.ActorDAO;
 import DAO.DirectorDAO;
 import DAO.GenreDAO;
-import model.Director;
 import model.Genre;
 import model.Movie;
 import model.User;
