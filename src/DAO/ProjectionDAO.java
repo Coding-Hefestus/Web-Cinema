@@ -56,12 +56,12 @@ public class ProjectionDAO {
 			//kako?
 		}
 		
-		return projections;
-//		return (ArrayList<Projection>) projections
-//				  						.stream()
-//										.sorted(Projection.sortByMovie()
-//										.thenComparing(Projection.sortByStartDate()))
-//										.collect(Collectors.toList());
+		//return projections;
+		return (ArrayList<Projection>) projections
+				  						.stream()
+										.sorted(Projection.sortByMovie()
+										.thenComparing(Projection.sortByMovie()))
+										.collect(Collectors.toList());
 		
 	}
 

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,11 +19,13 @@ import org.apache.commons.collections4.ComparatorUtils;
 import DAO.ProjectionDAO;
 import model.Projection;
 import model.User;
+import utility.Utility;
 
 
 public class MainPageAppServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -39,25 +42,22 @@ public class MainPageAppServlet extends HttpServlet {
 		String fromDate = request.getParameter("fromDate");
 		String fromTime = request.getParameter("fromTime");
 		
+		
+		
 		String toDate = request.getParameter("toDate");
 		String toTime = request.getParameter("toTime");
 		
 		LocalDateTime from = LocalDateTime.MIN;
 		LocalDateTime to = LocalDateTime.MAX;
 		
-		if (fromDate != null && fromTime != null && toDate != null && toTime != null) {
-			
+		if (fromDate != null && fromTime != null && toDate != null && toTime != null) {			
+			from = LocalDateTime.parse(fromDate + " " + fromTime, formatter);
+			to = LocalDateTime.parse(toDate + " " + toTime, formatter);
 		}
-		
-		
 
-		
-		LocalDateTime from = LocalDateTime.MIN;
-		LocalDateTime to = LocalDateTime.MAX;
-		
-		
 		String dimensionFilter = request.getParameter("dimensionFilter");
 		dimensionFilter = (dimensionFilter != null ? dimensionFilter : "");	
+
 		
 		String hallFilter = request.getParameter("hallFilter");
 		hallFilter = (hallFilter != null ? hallFilter : "");	
@@ -80,7 +80,9 @@ public class MainPageAppServlet extends HttpServlet {
 		String hallSort = request.getParameter("byHall");
 		String priceSort = request.getParameter("byPrice");
 		
-		if (movieSort != null) comparators.add(Projection.sortByMovie(movieSort));
+		
+		
+		if (movieSort != null)  comparators.add(Projection.comparatorByMovie(movieSort));
 		if (dateSort != null) comparators.add(Projection.sortByDate(dateSort));
 		if (dimensionSort != null) comparators.add(Projection.sortByDimension(dimensionSort));
 		if (hallSort != null) comparators.add(Projection.sortByHall(hallSort));
@@ -89,11 +91,7 @@ public class MainPageAppServlet extends HttpServlet {
 
 		
 		try {
-//			if (movieFilter.equals("") && from == LocalDateTime.MIN && to == LocalDateTime.MAX && dimensionFilter.equals("") && hallFilter.equals("") && fromPriceFilter == 0 && toPriceFilter == Integer.MAX_VALUE) {
-//				System.out.println("ok");
-//			} else System.out.println("pajsla");
-			
-			
+
 			ArrayList<Projection> filteredProjections = (ArrayList<Projection>) ProjectionDAO.getAll().stream()
 							.filter(Projection.movieFilter(movieFilter)						
 							.and(Projection.dateFilter(from, to))
@@ -102,7 +100,7 @@ public class MainPageAppServlet extends HttpServlet {
 							.and(Projection.ticketFilter(fromPriceFilter, toPriceFilter)))
 							.collect(Collectors.toList());
 			
-//			System.out.println(filteredProjections.size());
+
 			if (comparators.size() != 0) Collections.sort(filteredProjections, ComparatorUtils.chainedComparator(comparators));
 
 			request.setAttribute("movieFilter", movieFilter);
@@ -112,13 +110,16 @@ public class MainPageAppServlet extends HttpServlet {
 				request.setAttribute("fromDate", "1950-01-01" );
 				request.setAttribute("fromTime", "12:00" );
 			} else {
-				request.setAttribute("fromDate", buildDate(from));
-				request.setAttribute("fromTime", buildTime(to));
+				request.setAttribute("fromDate", fromDate);
+				request.setAttribute("fromTime", fromTime);
 			}
 			
 			if (to == LocalDateTime.MAX) {
 				request.setAttribute("toDate", "2025-01-01" );
 				request.setAttribute("toTime", "12:00" );
+			} else {
+				request.setAttribute("toDate", toDate);
+				request.setAttribute("toTime", toTime);
 			}
 			
 			request.setAttribute("dimensionFilter", dimensionFilter);
@@ -145,7 +146,7 @@ public class MainPageAppServlet extends HttpServlet {
 	}
 	
 	private  int getFilter(String filter) {
-		if (filter != null) System.out.println("from: " + filter);
+		
 		int tempFilter = 0;
 		try {
 			int temp = Integer.valueOf(filter);
@@ -171,7 +172,7 @@ public class MainPageAppServlet extends HttpServlet {
 		} catch(Exception e) {
 			
 			return Integer.MAX_VALUE;
-			//e.printStackTrace();
+		
 			
 		}
 		return  tempFilter;

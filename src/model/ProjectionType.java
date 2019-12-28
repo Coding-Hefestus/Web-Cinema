@@ -9,6 +9,7 @@ public class ProjectionType extends Moviefiable{
 		super(id, active);
 		this.dimension = dimension;
 		this.name = dimension.toString();
+		
 	}
 	
 	

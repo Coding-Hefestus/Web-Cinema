@@ -28,7 +28,9 @@ public class ProjectionTypeDAO {
 			rset = pstmt.executeQuery();
 		
 			if (rset.next()) {
-				return new  ProjectionType(rset.getInt(1), rset.getInt(2) == 1 ? true : false, Dimension.valueOf(rset.getString(3)));
+				
+				return  new  ProjectionType(rset.getInt(1), rset.getInt(2) == 1 ? true : false, Dimension.valueOf(rset.getString(3)));
+
 			}
 			
 			

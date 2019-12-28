@@ -103,7 +103,7 @@ public class Projection extends Moviefiable{
 	public static Predicate<Projection> dimensionFilter(String filter){
 		return p -> p.getProjectionType().getName().toLowerCase().contains(filter.toLowerCase());//getName().toLowerCase().contains(filter.toLowerCase());
 	}
-//
+
 	
 	public static Predicate<Projection> ticketFilter(int from, int to){
 		return p -> p.getTicketPrice() >= from && p.getTicketPrice() <= to;//getName().toLowerCase().contains(filter.toLowerCase());
@@ -124,6 +124,18 @@ public class Projection extends Moviefiable{
 		return Comparator.comparing(Projection::startDate);
 	}
 	
+	public static Comparator<Projection> comparatorByMovie(String direction){
+		
+		switch(direction) {
+		
+		case "asc":
+			return Comparator.comparing(Projection::movieName);
+		case "dsc":
+			return Comparator.comparing(Projection::movieName).reversed();
+		default: return null;
+		}
+	}
+	
 	public static Comparator<Projection> sortByDate(String direction){
 		
 		switch(direction) {
@@ -132,7 +144,7 @@ public class Projection extends Moviefiable{
 			return Comparator.comparing(Projection::startDate);
 		case "dsc":
 			return Comparator.comparing(Projection::startDate).reversed();
-		default: return null;
+		default: return sortByMovie();
 		}
 	}
 	

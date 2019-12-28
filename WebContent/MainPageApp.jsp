@@ -69,14 +69,13 @@
 					<fieldset>
 						<legend>Filter</legend>
 						<%--  --%>
-						
+							<!--  -->
 							from:&nbsp;<input name="fromDate" type="date" value="<%=request.getAttribute("fromDate")%>" > 
 							<input name="fromTime" type="time" value="<%=request.getAttribute("fromTime")%>" ></br>
 							
 							
 							to:&nbsp;<input name="toDate" type="date" value="<%=request.getAttribute("toDate")%>" > 
-							<input name="fromTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
-							<%-- to:&nbsp;<input name="toDate" type="datetime" value="<%=request.getAttribute("toDate")%>" ></br> --%>
+							<input name="toTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
 						
 
 						
@@ -117,13 +116,13 @@
     					 <fieldset>
         						<legend>Filter</legend>
         						
-        						<input type="radio" id="dimension2D" <%if(request.getAttribute("dimensionFilter").equals("IID")){ %> checked <%} %> name="dimensionFilter" value="IID">
+        						<input type="radio" id="dimension2D" <%if(request.getAttribute("dimensionFilter").equals("IID")){ %> checked <%} %> name="dimensionFilter" value="2D">
     							<label for="dimension2D">2D</label><br>
 
-    							<input type="radio" id="dimension3D" <%if(request.getAttribute("dimensionFilter").equals("IIID")){ %> checked <%} %> name="dimensionFilter" value="IIID">
+    							<input type="radio" id="dimension3D" <%if(request.getAttribute("dimensionFilter").equals("IIID")){ %> checked <%} %> name="dimensionFilter" value="3D">
     							<label for="dimension3D">3D</label>
     							
-    							<input type="radio" id="dimension4D" <%if(request.getAttribute("dimensionFilter").equals("IVD")){ %> checked <%} %> name="dimensionFilter" value="IVD">
+    							<input type="radio" id="dimension4D" <%if(request.getAttribute("dimensionFilter").equals("IVD")){ %> checked <%} %> name="dimensionFilter" value="4D">
     							<label for="dimension4D">4D</label>
 
     					</fieldset> 
@@ -146,16 +145,16 @@
     					 <fieldset>
         						<legend>Filter</legend>
         						
-        						<input type="radio" id="hallWhite" <%if (request.getAttribute("hallFilter").equals("White Hall")){ %> checked <%} %> name="hallFilter" value="1">
+        						<input type="radio" id="hallWhite" <%if (request.getAttribute("hallFilter").equals("White Hall")){ %> checked <%} %> name="hallFilter" value="White Hall">
     							<label for="hallWhite">White Hall</label><br>
 
-    							<input type="radio" id="hallBlack" <%if (request.getAttribute("hallFilter").equals("Black Hall")){ %> checked <%} %> name="hallFilter" value="2">
+    							<input type="radio" id="hallBlack" <%if (request.getAttribute("hallFilter").equals("Black Hall")){ %> checked <%} %> name="hallFilter" value="Black Hall">
     							<label for="hallBlack">Black Hall</label><br>
     							
-    							<input type="radio" id="hallOrange" <%if (request.getAttribute("hallFilter").equals("Orange Hall")){ %> checked <%} %> name="hallFilter" value="3">
+    							<input type="radio" id="hallOrange" <%if (request.getAttribute("hallFilter").equals("Orange Hall")){ %> checked <%} %> name="hallFilter" value="Orange Hall">
     							<label for="hallOrange">Orange Hall</label><br>
     							
-    							<input type="radio" id="hallBlue" <%if (request.getAttribute("hallFilter").equals("Blue Hall")){ %> checked <%} %> name="hallFilter" value="4">
+    							<input type="radio" id="hallBlue" <%if (request.getAttribute("hallFilter").equals("Blue Hall")){ %> checked <%} %> name="hallFilter" value="Blue Hall">
     							<label for="hallBlue">Blue Hall</label><br>
 
     					</fieldset> 
@@ -230,6 +229,12 @@
 		<%} %>
 		
 		</table>
+	
+		<form action="MainPageAppServlet" method="get">
+			<input type=submit value="Refresh all projections" style=width:100%>
+		</form>
+		
+		
 	
 </body>
 </html>

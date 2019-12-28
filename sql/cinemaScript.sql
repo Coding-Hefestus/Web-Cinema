@@ -181,7 +181,7 @@ CREATE TABLE User
     active INTEGER NOT NULL DEFAULT 0,
     username VARCHAR(10) UNIQUE NOT NULL, 
     password VARCHAR(10) NOT NULL, 
-    registrationDate DATETIME NOT NULL, --XX-XX-XXXX XX:XX
+    registrationDate VARCHAR(16) NOT NULL, --XX-XX-XXXX XX:XX
     role VARCHAR(11) NOT NULL DEFAULT 'USER' -- SQLite ne poznaje enum-e --unspecified role 11 char
    
 );
@@ -190,16 +190,21 @@ drop table User
 select * 
 from User
 where active = 1
+delete from User where id = 4
 
 
 --id pre active
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', datetime('2007-01-01 10:00'), 'ADMIN');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', datetime('2008-01-01 10:00'), 'USER');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', datetime('2009-01-01 10:00'), 'UNSPECIFIED');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'UNSPECIFIED');
+
+
+
+
 
 delete from User
-select * from User where registrationDate >  datetime('2007-01-01 10:00');
-
+select * from User where datetime(registrationDate) >  datetime('2007-01-01 10:00');
+update User set password = 'b' where id = 2
 
 
 
@@ -235,7 +240,13 @@ INSERT INTO Hall ( active, name) VALUES (1, 'Black hall');
 INSERT INTO Hall ( active, name) VALUES (1, 'Orange hall');
 INSERT INTO Hall ( active, name) VALUES (1, 'Blue hall');
 
-select * from Hall
+--FROM Movie
+--left join Acting on Movie.id = Acting.idMovie
+select Hall.id, Hall.active, Hall.name, ProjectionType.id, ProjectionType.active, ProjectionType.dimension
+from Hall
+left join Supports on Hall.id = Supports.idHall
+left join ProjectionType on Supports.idProjectionType = ProjectionType.id
+where Hall.id = 1
 
 
 create table Supports
@@ -293,18 +304,42 @@ CREATE TABLE Projection
 
 );
 
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (1,    1,       1,                3,       3,        100,   1 );
+                                
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (1,    8,       1,                1,        1,        100,   1 );
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (1,    8,       1,                3,        2,        100,   1 );
 
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (1,    1,       1,                4,        4,        100,   1 );
+
+
+
+select * 
+from Projection
+delete from Projection where id in (1,2, 3, 4)
+
+drop table Period
 CREATE TABLE Period
 (
     id INTEGER PRIMARY KEY,
     active INTEGER  NOT NULL DEFAULT 0,
-    startDate TIMESTEMP NOT NULL,
-    endDate TIMESTEMP NOT NULL
+    startDate VARCHAR(16) NOT NULL,
+    endDate  VARCHAR(16) NOT NULL
     
 );
+select * from Period
+delete from Period
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-02-2019 12:00', '15-02-2019 14:00');
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2019 12:00', '15-01-2019 14:00');
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '19-02-2019 12:00', '19-02-2019 14:00');
 
 
 
+--INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
 
 
 
