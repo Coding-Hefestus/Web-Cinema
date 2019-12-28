@@ -36,15 +36,21 @@ public class MainPageAppServlet extends HttpServlet {
 		movieF = (movieF != null ? movieF : "");		
 		final String movieFilter = new String(movieF);
 		
+		String fromDate = request.getParameter("fromDate");
+		String fromTime = request.getParameter("fromTime");
 		
-		String dayStringFrom = request.getParameter("fromDay");
-		String monthStringFrom = request.getParameter("fromMonth");
-		String yearStringFrom = request.getParameter("fromYear");
+		String toDate = request.getParameter("toDate");
+		String toTime = request.getParameter("toTime");
+		
+		LocalDateTime from = LocalDateTime.MIN;
+		LocalDateTime to = LocalDateTime.MAX;
+		
+		if (fromDate != null && fromTime != null && toDate != null && toTime != null) {
+			
+		}
+		
 		
 
-		String dayStringTo = request.getParameter("toDay");
-		String monthStringTo = request.getParameter("toMonth");
-		String yearStringTo = request.getParameter("toYear");
 		
 		LocalDateTime from = LocalDateTime.MIN;
 		LocalDateTime to = LocalDateTime.MAX;
@@ -64,6 +70,7 @@ public class MainPageAppServlet extends HttpServlet {
 		final int toPriceFilter = getToFilter(toPF);
 		
 		
+		
 		List<Comparator<Projection>> comparators = new ArrayList<>();
 		
 		//sorting parameters
@@ -79,25 +86,14 @@ public class MainPageAppServlet extends HttpServlet {
 		if (hallSort != null) comparators.add(Projection.sortByHall(hallSort));
 		if (priceSort != null) comparators.add(Projection.sortByPrice(priceSort));
 		
-		if (dayStringFrom != null && monthStringFrom != null  && yearStringFrom  != null && dayStringTo != null &&  monthStringTo != null && yearStringTo != null ) {
-			
-			int fromDay = Integer.valueOf(dayStringFrom);
-			int fromMonth = Integer.valueOf(monthStringFrom);
-			int fromYear = Integer.valueOf(yearStringFrom);
-			
-			int toDay = Integer.valueOf(dayStringTo);
-			int toMonth = Integer.valueOf(monthStringTo);
-			int toYear = Integer.valueOf(yearStringTo);
-			
-			from = LocalDateTime.of(fromYear, fromMonth, fromDay, 0, 0);
-			to = LocalDateTime.of(toYear, toMonth, toDay, 0, 0);
-		}
-		
-		
-		
-		
+
 		
 		try {
+//			if (movieFilter.equals("") && from == LocalDateTime.MIN && to == LocalDateTime.MAX && dimensionFilter.equals("") && hallFilter.equals("") && fromPriceFilter == 0 && toPriceFilter == Integer.MAX_VALUE) {
+//				System.out.println("ok");
+//			} else System.out.println("pajsla");
+			
+			
 			ArrayList<Projection> filteredProjections = (ArrayList<Projection>) ProjectionDAO.getAll().stream()
 							.filter(Projection.movieFilter(movieFilter)						
 							.and(Projection.dateFilter(from, to))
@@ -106,29 +102,23 @@ public class MainPageAppServlet extends HttpServlet {
 							.and(Projection.ticketFilter(fromPriceFilter, toPriceFilter)))
 							.collect(Collectors.toList());
 			
-			System.out.println(filteredProjections.size());
+//			System.out.println(filteredProjections.size());
 			if (comparators.size() != 0) Collections.sort(filteredProjections, ComparatorUtils.chainedComparator(comparators));
 
 			request.setAttribute("movieFilter", movieFilter);
 			
 			if (from == LocalDateTime.MIN) {
-				request.setAttribute("fromDay", 1);
-				request.setAttribute("fromMonth", 1);
-				request.setAttribute("fromYear", 1950);
+				
+				request.setAttribute("fromDate", "1950-01-01" );
+				request.setAttribute("fromTime", "12:00" );
 			} else {
-				request.setAttribute("fromDay", from.getDayOfMonth());
-				request.setAttribute("fromMonth", from.getMonthValue());
-				request.setAttribute("fromYear", from.getYear());
+				request.setAttribute("fromDate", buildDate(from));
+				request.setAttribute("fromTime", buildTime(to));
 			}
 			
 			if (to == LocalDateTime.MAX) {
-				request.setAttribute("toDay", 1);
-				request.setAttribute("toMonth", 1);
-				request.setAttribute("toYear", 2025);
-			} else {
-				request.setAttribute("toDay", to.getDayOfMonth());
-				request.setAttribute("toMonth", to.getMonthValue());
-				request.setAttribute("toYear", to.getYear());
+				request.setAttribute("toDate", "2025-01-01" );
+				request.setAttribute("toTime", "12:00" );
 			}
 			
 			request.setAttribute("dimensionFilter", dimensionFilter);

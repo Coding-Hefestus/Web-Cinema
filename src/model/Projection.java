@@ -101,7 +101,7 @@ public class Projection extends Moviefiable{
 	}
 	
 	public static Predicate<Projection> dimensionFilter(String filter){
-		return p -> p.getProjectionType().getName().equalsIgnoreCase(filter);//getName().toLowerCase().contains(filter.toLowerCase());
+		return p -> p.getProjectionType().getName().toLowerCase().contains(filter.toLowerCase());//getName().toLowerCase().contains(filter.toLowerCase());
 	}
 //
 	
@@ -110,7 +110,7 @@ public class Projection extends Moviefiable{
 	}
 	
 	public static Predicate<Projection> hallFilter(String filter){
-		return p -> p.getHall().getName().equalsIgnoreCase(filter);//getName().toLowerCase().contains(filter.toLowerCase());
+		return p -> p.getHall().getName().toLowerCase().contains(filter.toLowerCase());//getName().toLowerCase().contains(filter.toLowerCase());
 	}
 	public static Comparator<Projection> sortByMovie(){
 		return Comparator.comparing(Projection::movieName);

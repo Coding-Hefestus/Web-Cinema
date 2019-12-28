@@ -68,20 +68,33 @@
 			<td align="center">
 					<fieldset>
 						<legend>Filter</legend>
-						<%-- from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromDay") %>  </option>   <%} %>  </select> 
+						<%--  --%>
+						
+							from:&nbsp;<input name="fromDate" type="date" value="<%=request.getAttribute("fromDate")%>" > 
+							<input name="fromTime" type="time" value="<%=request.getAttribute("fromTime")%>" ></br>
+							
+							
+							to:&nbsp;<input name="toDate" type="date" value="<%=request.getAttribute("toDate")%>" > 
+							<input name="fromTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
+							<%-- to:&nbsp;<input name="toDate" type="datetime" value="<%=request.getAttribute("toDate")%>" ></br> --%>
+						
+
+						
+						<%--  from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromDay") %>  </option>   <%} %>  </select> 
 									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromMonth") %>  </option>   <%} %>  </select>	
 									 <select name="fromYear"> <%for (int i = 1950; i <= 2025; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromYear") %> </option>   <%}%>  </select></br>	
 						
 						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=request.getAttribute("toDay") %> </option>   <%} %>  </select> 
 									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=request.getAttribute("toMonth") %>  </option>   <%} %>  </select>	
 									<select  name="toYear" > <%for (int i = 1950; i <= 2025; i++ ){ %> <option  value="<%=i %>"> <%=request.getAttribute("toYear") %>  </option>   <%}%>  </select></br>		
-					   --%>
-					   from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
+					    --%>
+					  <%--  from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
 									 <select name="fromYear"> <%for (int i = 1950; i <= 2025; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>	
 						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
 									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
 									<select  name="toYear" > <%for (int i = 1950; i <= 2025; i++ ){ %> <option selected="selected" value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
+					 --%>
 					</fieldset>
 					
 					<fieldset>
