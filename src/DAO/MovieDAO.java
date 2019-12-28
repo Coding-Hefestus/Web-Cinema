@@ -17,7 +17,7 @@ import model.Movie;
 
 public class MovieDAO {
 
-	//@SuppressWarnings("null")
+	
 	public static List<Movie> getAll() throws Exception {
 		
 		HashMap<Integer, Movie> movies = new  HashMap<Integer, Movie>();

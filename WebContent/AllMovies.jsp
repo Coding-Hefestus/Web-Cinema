@@ -196,8 +196,9 @@
 					<td><%=m.getDistributor() %></td>
 					<td><%=m.getCountryOfOrigin() %></td>
 					
-					
-					 
+					<!-- ako postoji bar 1 dostupna projekcija za ovaj film, prikazi dugme za kupovinu karte  -->
+					<!-- dostupna projekcija -> nije u proslosti; i u sali za tu projekciju, sva sedista nisu popunjena  -->
+					<!-- ako padne bar jedan od ovda dva kriterijuma, karta za dati film se ne moze kupiti -->
 				</tr>
 			
 		

@@ -37,7 +37,7 @@ create table Acting
     FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
     FOREIGN KEY(idActor) REFERENCES Actor(id) ON DELETE RESTRICT
 )
-
+delete FROM Acting
 delete FROM table Acting where id = (2, 2)
 select * from Acting
 INSERT INTO Acting (idMovie, idActor) VALUES (1, 1);
@@ -82,6 +82,7 @@ create table MovieGenre
     FOREIGN KEY(idGenre) REFERENCES Genre(id) ON DELETE RESTRICT
 
 )
+delete from MovieGenre
 select * from MovieGenre
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 1);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 1);
@@ -117,6 +118,7 @@ create table Directing
 select * from Directing
 select * from Director
 drop table Directing
+delete from Directing
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
@@ -200,8 +202,6 @@ INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1
 
 
 
-
-
 delete from User
 select * from User where datetime(registrationDate) >  datetime('2007-01-01 10:00');
 update User set password = 'b' where id = 2
@@ -224,21 +224,24 @@ INSERT INTO ProjectionType ( active, dimension) VALUES (1, 'IVD');
 select * from ProjectionType
 
 
+delete from Hall
+drop table Hall
 
 CREATE TABLE Hall
 (
      id INTEGER PRIMARY KEY,
      active INTEGER  NOT NULL DEFAULT 0,
+     capacity INTEGER NOT NULL,
      name VARCHAR(20) NOT NULL
      
 );
 
 
 
-INSERT INTO Hall ( active, name) VALUES (1, 'White hall');
-INSERT INTO Hall ( active, name) VALUES (1, 'Black hall');
-INSERT INTO Hall ( active, name) VALUES (1, 'Orange hall');
-INSERT INTO Hall ( active, name) VALUES (1, 'Blue hall');
+INSERT INTO Hall ( active, name) VALUES (1, 3, 'White hall');
+INSERT INTO Hall ( active, name) VALUES (1, 4, 'Black hall');
+INSERT INTO Hall ( active, name) VALUES (1, 5, 'Orange hall');
+INSERT INTO Hall ( active, name) VALUES (1, 6, 'Blue hall');
 
 --FROM Movie
 --left join Acting on Movie.id = Acting.idMovie
@@ -264,6 +267,7 @@ INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 1);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 2);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 3);
 
+delete from Supports
 select * from Supports
 
 
@@ -321,7 +325,7 @@ select *
 from Projection
 delete from Projection where id in (1,2, 3, 4)
 
-drop table Period
+delete from  Period
 CREATE TABLE Period
 (
     id INTEGER PRIMARY KEY,
