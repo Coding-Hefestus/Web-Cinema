@@ -188,7 +188,7 @@
 			<%} %>
 		<%} else if (loggedInUser.getRole() == Role.USER){ %>
 	
-				<!-- KUPI KARTU ZA SVAKI FIL BUTTON, AKO POSTOJE PROJEKCIJE  -->
+				<!-- KUPI KARTU ZA SVAKI FILm, BUTTON, AKO POSTOJE PROJEKCIJE  -->
 				<%for (Movie m : filteredMovies){ %>
 			
 				<tr>

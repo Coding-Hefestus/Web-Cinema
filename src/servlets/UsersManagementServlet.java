@@ -64,10 +64,6 @@ public class UsersManagementServlet extends HttpServlet {
 			int toMonth = Integer.valueOf(monthStringTo);
 			int toYear = Integer.valueOf(yearStringTo);
 			
-			//DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			 
-			//from = LocalDateTime.parse(dayStringFrom+"-"+monthStringFrom+"-"+yearStringFrom, formatter);
-			//to = LocalDateTime.parse(dayStringTo+"-"+monthStringTo+"-"+yearStringTo, formatter);
 			
 			from = LocalDateTime.of(fromYear, fromMonth, fromDay, 0, 0);
 			to = LocalDateTime.of(toYear, toMonth, toDay, 0, 0);

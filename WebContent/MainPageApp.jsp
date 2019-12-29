@@ -207,21 +207,21 @@
 		
 		<%for (Projection p : filteredProjections){ %>
 			<tr>
-					<td><a href="#?id=<%= p.getId() %>"> <%= p.getMovie().getName() %></a></td>
-					<td><a href="#?id=<%= p.getId() %>"> <%= Utility.convertDateWithTimeToString(p.getPeriod().getStart()) %></a></td>
+					<td><a href="SingleMovieServlet?id=<%= p.getMovie().getId() %>"> <%= p.getMovie().getName() %></a></td>
+					<td><a href="SingleProjectionServlet?id=<%= p.getId() %>"> <%= Utility.convertDateWithTimeToString(p.getPeriod().getStart()) %></a></td>
 					<td><%=p.getProjectionType().getName() %></td>
 					<td><%=p.getHall().getName() %></td>
 					<td><%=p.getTicketPrice() %></td>
 					
-					<%if (loggedInUser.getRole() == Role.ADMIN){ %>
+				 <%-- <%if (loggedInUser.getRole() == Role.ADMIN){ %>
 						<td>
 						<form action="" method="post">
   					
   							<button name="delete" type="submit" value="<%= p.getId()%>">Delete projection</button>
   							
 						</form>
-					</td> 
-					<%} %>
+					</td>  
+					<%} %>  --%>
 					
 					 
 				</tr>

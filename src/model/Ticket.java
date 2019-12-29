@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class Ticket extends Moviefiable {
 	
@@ -66,6 +68,52 @@ public class Ticket extends Moviefiable {
 		this.user = user;
 	}
 	
+	//dateFilter(from, to)
+	public static Predicate<Ticket> dateFilter(LocalDateTime from, LocalDateTime to){
+		return t -> t.getPurchasingDate().isAfter(from)  && t.getPurchasingDate().isBefore(to);
+	}
 	
-
+	public static Predicate<Ticket> userFilter(String filter){
+		return t -> t.getUser().getUsername().toLowerCase().contains(filter.toString());
+	}
+	
+	public static Comparator<Ticket> comparatorByPurchasingDate(String direction){
+		
+		switch(direction) {
+		
+		case "asc":
+			return Comparator.comparing(Ticket::getPurchasingDate);
+		case "dsc":
+			return Comparator.comparing(Ticket::getPurchasingDate).reversed();
+		default: return null;
+		}
+	}
+	
+	public static Comparator<Ticket> comparatorByUser(String direction){
+		
+		switch(direction) {
+		
+		case "asc":
+			return Comparator.comparing(Ticket::getStringUser);
+		case "dsc":
+			return Comparator.comparing(Ticket::getStringUser).reversed();
+		default: return null;
+		}
+	}
+	
+	public String getStringUser() {
+		return this.getUser().getUsername();
+	}
+	
+	//sortByDate
+	public static Comparator<Ticket> sortByDate(){
+		
+		return Comparator.comparing(Ticket::getPurchasingDate);
+	}
+	
+	//sortByUser
+	public static Comparator<Ticket> sortByUser(){
+		
+		return Comparator.comparing(Ticket::getStringUser);
+	}
 }

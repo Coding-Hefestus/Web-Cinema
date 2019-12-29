@@ -100,6 +100,8 @@ public class MainPageAppServlet extends HttpServlet {
 							.and(Projection.ticketFilter(fromPriceFilter, toPriceFilter)))
 							.collect(Collectors.toList());
 			
+			
+			
 
 			if (comparators.size() != 0) Collections.sort(filteredProjections, ComparatorUtils.chainedComparator(comparators));
 

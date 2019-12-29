@@ -1,9 +1,15 @@
 package utility;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Utility {
+	
+	private static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
 
 	public static String convertDateWithTimeToString(LocalDateTime d) {
 		String datum = null;
@@ -32,6 +38,13 @@ public class Utility {
 		}
 		return datum;
 	}
+	
+	public static LocalDateTime convertStringToDateWithTime(String d) throws ParseException {
+		Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(d).getTime());
+		LocalDateTime date = ts.toLocalDateTime();
+		return date;
+	}
+	
 	
 //	public static LocalDateTime convertStringWithTimeToStringForProjection(String d) {
 //		String datum = null;

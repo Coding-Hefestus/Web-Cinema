@@ -4,20 +4,20 @@ public class Seat extends Moviefiable {
 
 	private int number;
 	private Hall hall;
-	private boolean taken;
+
 	
 	
-	public Seat(int id, boolean active, int number, Hall hall, boolean taken) {
+	public Seat(int id, boolean active, int number, Hall hall) {
 		super(id, active);
 		this.number = number;
 		this.hall = hall;
-		this.taken = taken;
+	
 	}
 
 
 
 
-	public Seat() {this(-1, false, -1, null, false);}
+	public Seat() {this(-1, false, -1, null);}
 
 
 
@@ -50,16 +50,7 @@ public class Seat extends Moviefiable {
 
 
 
-	public boolean isTaken() {
-		return taken;
-	}
-
-
-
-
-	public void setTaken(boolean taken) {
-		this.taken = taken;
-	}
+	
 		
 	
 

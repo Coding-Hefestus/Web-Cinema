@@ -27,7 +27,11 @@ public class ProjectionDAO {
 		ResultSet rset = null;
 		
 		try {
-			String query = "SELECT * FROM Projection";
+			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)" 
+						   +" FROM Projection" 
+					       +" LEFT JOIN Ticket ON  Projection.id = Ticket.idProjection" 
+					       +" WHERE Projection.active = 1"
+					       +" GROUP BY Projection.id, Ticket.idProjection";
 
 
 			pstmt = conn.prepareStatement(query);			
@@ -44,8 +48,8 @@ public class ProjectionDAO {
 				Period period = PeriodDAO.getById(rset.getInt(index++));
 				double price = rset.getInt(index++);				
 				User admin = UserDAO.getById(rset.getInt(index++));
-				//int ticketsSold = rset.getInt(index++);
-				projections.add(new Projection(idProjection, active, movie, projectionType, hall, period, price, admin)); 
+				int ticketsSold = rset.getInt(index++);
+				projections.add(new Projection(idProjection, active, movie, projectionType, hall, period, price, admin, ticketsSold)); 
 			}
 			
 			
