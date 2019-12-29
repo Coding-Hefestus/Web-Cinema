@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections4.ComparatorUtils;
 
 import DAO.MovieDAO;
+import DAO.ProjectionDAO;
 import model.Movie;
+import model.Projection;
 import model.User;
 
 
@@ -78,8 +81,7 @@ public class MovieServlet extends HttpServlet {
 		if (countryOfOriginSort != null) comparators.add(Movie.comparatorByCountryOfOrigin(countryOfOriginSort));
 		if (distributorSort != null) comparators.add(Movie.comparatorByDistributor(distributorSort));
 		if (genresSort != null) comparators.add(Movie.compartorByGenres(genresSort));
-		//System.out.println("from: " + fromDurationFilter);
-		//System.out.println("to: " + toDurationFilter);
+
 
 		try {
 
@@ -91,7 +93,30 @@ public class MovieServlet extends HttpServlet {
 							.and(Movie.distributorFilter(distributorFilter))
 							.and(Movie.countryOfOriginFilter(countryOfOriginFilter)))
 							.collect(Collectors.toList());
-			//Sorting here
+			
+			
+			for (Movie m : filteredMovies) {
+//				System.out.println("size filtered movies: " + filteredMovies.size());
+//				System.out.println("movie: " + m.getName());
+//				System.out.println("NUMBER OF PROJECTIONS: " + ((ArrayList<Projection>)ProjectionDAO.getProjectionsForMovie(m.getId()) ).size());
+//				System.out.println("tickets sold: " + ((ArrayList<Projection>)ProjectionDAO.getProjectionsForMovie(m.getId()) ).get(0).getTicketsSold());
+//				
+				Optional<Projection> hasAvailableProjection = ProjectionDAO.getProjectionsForMovie(m.getId())
+						.stream()
+						.filter(Projection.afterNow())
+						.filter(Projection.hasAvailableSeats())
+						.findAny();
+				
+				
+				if (hasAvailableProjection.isPresent()) m.setAvailable(true); 
+				else m.setAvailable(false);
+
+				
+				
+				
+			}
+			
+			
 			if (comparators.size() != 0) Collections.sort(filteredMovies, ComparatorUtils.chainedComparator(comparators));
 			
 			request.setAttribute("nameFilter", titleFilter);

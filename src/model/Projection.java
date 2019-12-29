@@ -12,7 +12,20 @@ public class Projection extends Moviefiable{
 	private Period period;
 	private double ticketPrice;
 	private User administrator;
+	private int ticketsSold;
 	
+	
+	public Projection(int id, boolean active, Movie movie, ProjectionType projectionType, Hall hall, Period period,
+			double ticketPrice, User administrator, int ticketsSold) {
+		super(id, active);
+		this.movie = movie;
+		this.projectionType = projectionType;
+		this.hall = hall;
+		this.period = period;
+		this.ticketPrice = ticketPrice;
+		this.administrator = administrator;
+		this.ticketsSold = ticketsSold;
+	}
 	
 	public Projection(int id, boolean active, Movie movie, ProjectionType projectionType, Hall hall, Period period,
 			double ticketPrice, User administrator) {
@@ -23,10 +36,11 @@ public class Projection extends Moviefiable{
 		this.period = period;
 		this.ticketPrice = ticketPrice;
 		this.administrator = administrator;
+		
 	}
 	
 
-	public Projection() {this(-1, false, null, null, null, null, -1, null);}
+	public Projection() {this(-1, false, null, null, null, null, -1, null, 0);}
 
 	public Movie getMovie() {
 		return movie;
@@ -92,6 +106,16 @@ public class Projection extends Moviefiable{
 		this.administrator = administrator;
 	}
 	
+	public int getTicketsSold() {
+		return ticketsSold;
+	}
+
+
+	public void setTicketsSold(int ticketsSold) {
+		this.ticketsSold = ticketsSold;
+	}
+
+
 	public static Predicate<Projection> movieFilter(String filter){
 		return p -> p.getMovie().getName().toLowerCase().contains(filter.toLowerCase());
 	}
@@ -112,6 +136,18 @@ public class Projection extends Moviefiable{
 	public static Predicate<Projection> hallFilter(String filter){
 		return p -> p.getHall().getName().toLowerCase().contains(filter.toLowerCase());//getName().toLowerCase().contains(filter.toLowerCase());
 	}
+	
+	public static Predicate<Projection> afterNow(){
+	
+		return p -> p.getPeriod().getStart().isAfter(LocalDateTime.now());
+	}
+	
+	public static  Predicate<Projection> hasAvailableSeats(){
+		
+		return p -> p.getTicketsSold() < p.getHall().getCapacity();
+	}
+	
+	
 	public static Comparator<Projection> sortByMovie(){
 		return Comparator.comparing(Projection::movieName);
 	}

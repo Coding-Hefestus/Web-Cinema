@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 import model.Dimension;
 import model.Hall;
@@ -23,7 +22,7 @@ public class HallDAO {
 		
 		try {
 			
-			String query = "SELECT Hall.id, Hall.active, Hall.name, ProjectionType.id, ProjectionType.active, ProjectionType.dimension"
+			String query = "SELECT Hall.id, Hall.active, Hall.capacity, Hall.name, ProjectionType.id, ProjectionType.active, ProjectionType.dimension"
 							+" FROM Hall"
 							+" LEFT JOIN Supports ON Hall.id = Supports.idHall"
 							+" LEFT JOIN ProjectionType ON Supports.idProjectionType = ProjectionType.id"
@@ -42,16 +41,17 @@ public class HallDAO {
 					Hall h = new Hall();
 					h.setId(rset.getInt(1));
 					h.setActive(rset.getInt(2) == 1 ? true : false);
-					h.setName(rset.getString(3));
+					h.setCapacity(rset.getInt(3));
+					h.setName(rset.getString(4));
 					hall.put(rset.getInt(1), h);
 				}
 				
 				if (rset.getInt(4) != 0) {
-					hall.get(rset.getInt(1)).getDimensions().add(new ProjectionType(rset.getInt(4), rset.getInt(5) == 1 ? true : false, Dimension.valueOf(rset.getString(6))));
+					hall.get(rset.getInt(1)).getDimensions().add(new ProjectionType(rset.getInt(5), rset.getInt(6) == 1 ? true : false, Dimension.valueOf(rset.getString(7))));
 				}
 			}
 			
-			//System.out.println("");
+			
 			
 			return hall.get(idHall);
 			

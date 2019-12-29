@@ -163,6 +163,9 @@
 					<td><%=m.getDistributor() %></td>
 					<td><%=m.getCountryOfOrigin() %></td>
 					
+					
+					
+					
 
 					<td>
 						<form action="EditMovieServlet" method="post">
@@ -195,6 +198,18 @@
 					<td><%=m.getGenresDisplay() %></td>
 					<td><%=m.getDistributor() %></td>
 					<td><%=m.getCountryOfOrigin() %></td>
+					
+					<%if (m.isAvailable()) { %>
+						<td>
+							<form action="BuyTicketServlet" method="post">
+  						
+  								<button name="ticket" type="submit" value="<%= m.getId()%>">Buy ticket</button>
+  							
+							</form>
+						</td>
+						
+					<%} %>
+					
 					
 					<!-- ako postoji bar 1 dostupna projekcija za ovaj film, prikazi dugme za kupovinu karte  -->
 					<!-- dostupna projekcija -> nije u proslosti; i u sali za tu projekciju, sva sedista nisu popunjena  -->

@@ -16,7 +16,7 @@ public class Movie extends Moviefiable{
 	private HashSet<Actor> actors;
 	private HashSet<Genre> genres;
 	private HashSet<Director> directors;
-	
+	private boolean available;
 
 	public Movie(int id, boolean active, String name, int duration, int productionYear, 
 			String description, String distributor, String countryOfOrigin, 
@@ -133,6 +133,15 @@ public class Movie extends Moviefiable{
 
 	public void setDirectors(HashSet<Director> directors) {
 		this.directors = directors;
+	}
+
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	public static Predicate<Movie> nameFilter(String filter){
