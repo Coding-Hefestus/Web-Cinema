@@ -73,6 +73,7 @@
 							
 							to:&nbsp;<input name="toDate" type="date" value="<%=request.getAttribute("toDate")%>" > 
 							<input name="toTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
+					
 					</fieldset>
 					
 					<fieldset>

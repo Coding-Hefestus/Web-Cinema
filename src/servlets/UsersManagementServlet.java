@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,7 +23,8 @@ import model.User;
 
 public class UsersManagementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
@@ -41,36 +43,20 @@ public class UsersManagementServlet extends HttpServlet {
 		final String roleFilter = new String(roleF);
 		
 		//from 
-		String dayStringFrom = request.getParameter("fromDay");
-		String monthStringFrom = request.getParameter("fromMonth");
-		String yearStringFrom = request.getParameter("fromYear");
-		
-		
+		String fromDate = request.getParameter("fromDate");
+		String fromTime = request.getParameter("fromTime");
+	
 		//to
-		String dayStringTo = request.getParameter("toDay");
-		String monthStringTo = request.getParameter("toMonth");
-		String yearStringTo = request.getParameter("toYear");
+		String toDate = request.getParameter("toDate");
+		String toTime = request.getParameter("toTime");
 		
 		LocalDateTime from = LocalDateTime.MIN;
 		LocalDateTime to = LocalDateTime.MAX;
 		
-		if (dayStringFrom != null && monthStringFrom != null  && yearStringFrom  != null && dayStringTo != null &&  monthStringTo != null && yearStringTo != null ) {
-			
-			int fromDay = Integer.valueOf(dayStringFrom);
-			int fromMonth = Integer.valueOf(monthStringFrom);
-			int fromYear = Integer.valueOf(yearStringFrom);
-			
-			int toDay = Integer.valueOf(dayStringTo);
-			int toMonth = Integer.valueOf(monthStringTo);
-			int toYear = Integer.valueOf(yearStringTo);
-			
-			
-			from = LocalDateTime.of(fromYear, fromMonth, fromDay, 0, 0);
-			to = LocalDateTime.of(toYear, toMonth, toDay, 0, 0);
-			
-			
+		if (fromDate != null && fromTime != null && toDate != null && toTime != null) {			
+			from = LocalDateTime.parse(fromDate + " " + fromTime, formatter);
+			to = LocalDateTime.parse(toDate + " " + toTime, formatter);
 		}
-		
 		
 		
 		//to
@@ -98,6 +84,22 @@ public class UsersManagementServlet extends HttpServlet {
 			
 			if (comparators.size() != 0) Collections.sort(filteredUsers, ComparatorUtils.chainedComparator(comparators));
 			
+			if (from == LocalDateTime.MIN) {
+				
+				request.setAttribute("fromDate", "1950-01-01" );
+				request.setAttribute("fromTime", "12:00" );
+			} else {
+				request.setAttribute("fromDate", fromDate);
+				request.setAttribute("fromTime", fromTime);
+			}
+			
+			if (to == LocalDateTime.MAX) {
+				request.setAttribute("toDate", "2025-01-01" );
+				request.setAttribute("toTime", "12:00" );
+			} else {
+				request.setAttribute("toDate", toDate);
+				request.setAttribute("toTime", toTime);
+			}
 			
 			request.setAttribute("filteredUsers", filteredUsers);
 			request.setAttribute("usernameFilter", usernameFilter);
