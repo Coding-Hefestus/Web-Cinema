@@ -44,8 +44,9 @@
 	<%if(loggedInUser.getRole() == Role.USER && (projection.getHall().getCapacity() - projection.getTicketsSold()) != 0){ %>
 		
 		
-		<form>
-			<button name="buy" type="submit" value="<%= projection.getId()%>">Buy ticket</button>
+		<form action="#" method="get">
+		
+			<button name="buy" type="submit" style=width:100% value="<%= projection.getId()%>">Buy ticket</button>
 			
 		</form>
 	
@@ -122,9 +123,12 @@
 		
 		<%for (Ticket t : ticketsForProjection){ %>
 			<tr>
-			
-			<td><%= Utility.convertDateWithTimeToString(t.getPurchasingDate()) %></td>
-			<td><%= t.getUser().getUsername() %></td>
+				
+				<td> <a href="ServletStranicaKarteNIJE__IMPLEMENTIRANOOOO?id=<%= t.getId()%>"><%= Utility.convertDateWithTimeToString(t.getPurchasingDate()) %></a></td>
+				<td> <a href="SingleUserServlet?id=<%=t.getUser().getId()%>"> <%= t.getUser().getUsername() %></a></td>
+				
+				<%-- <td><%= Utility.convertDateWithTimeToString(t.getPurchasingDate()) %></td>
+				<td><%= t.getUser().getUsername() %></td> --%>
 			
 			</tr>
 			
@@ -138,9 +142,8 @@
 		
 		</table>
 		
-		<form>
-			<button name="delete" type="submit" value="<%= projection.getId()%>">Delete projection</button>
-			
+		<form action="DeleteProjectionServlet" method="get">
+			<button name="delete" style=width:100% type="submit" value="<%= projection.getId()%>">Delete projection</button>			
 		</form>
 		
 		<%} %>

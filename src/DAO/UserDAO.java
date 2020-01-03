@@ -234,14 +234,15 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		try {
 		
-			String query = "UPDATE User SET password = ?, role = ? "
-					+ "WHERE id = ?";
+			String query = "UPDATE User SET password = ?, role = ?, active = ?"
+					+ " WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			
 			pstmt.setString(index++, user.getPassword());
 			pstmt.setString(index++, user.getRole().toString());
+			pstmt.setInt(index++, user.isActive() == true ? 1 : 0 );
 			pstmt.setInt(index++, user.getId());
 			
 		

@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Dimension;
-import model.Movie;
-import model.Projection;
 import model.ProjectionType;
 
 public class ProjectionTypeDAO {

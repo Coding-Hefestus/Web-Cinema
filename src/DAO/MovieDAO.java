@@ -375,7 +375,6 @@ public class MovieDAO {
 				
 				pstmt.close();
 				
-//				GenreDAO.cleanAllGenresForMovie(movie.getId());
 				if(!movie.getGenres().isEmpty()) {
 					for (Genre g : movie.getGenres()) {
 						//GenreDAO.addGenreInMovie(movie.getId(), g.getId());
@@ -388,23 +387,6 @@ public class MovieDAO {
 					}
 				}
 				
-//				DirectorDAO.cleanAllDirectorsForMovie(movie.getId());
-//				if(!movie.getDirectors().isEmpty()) {
-//					for (Director d : movie.getDirectors()) DirectorDAO.addDirectorInMovie(movie.getId(), d.getId()); 
-//				}
-//					
-//				ActorDAO.cleanAllActorsForMovie(movie.getId());
-//				if(!movie.getActors().isEmpty()) {
-//					for (Actor a : movie.getActors())  ActorDAO.addActorInMovie(movie.getId(), a.getId());
-//				}
-//				
-//				
-//				GenreDAO.cleanAllGenresForMovie(movie.getId());
-//				if(!movie.getGenres().isEmpty()) {
-//					for (Genre g : movie.getGenres()) GenreDAO.addGenreInMovie(movie.getId(), g.getId());
-//				}
-//				
-//				 conn.commit();
 			}
 			
 		     return affectedRows != 0;

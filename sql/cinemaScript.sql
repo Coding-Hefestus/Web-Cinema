@@ -87,8 +87,7 @@ select * from MovieGenre
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 1);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 1);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 2);
-INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 3);
-INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 2);
+
 
 
 
@@ -122,14 +121,9 @@ delete from Directing
 
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
-delete from Directing
-where idMovie = 1 AND idDirector in (1,3)
-
 INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
-
-
 INSERT INTO Directing (idMovie, idDirector) VALUES (3, 2);
-INSERT INTO Directing (idMovie, idDirector) VALUES (4, 3);
+
 
 
 
@@ -186,25 +180,12 @@ CREATE TABLE User
    
 );
 
-drop table User
-select * 
-from User
-where active = 1
-delete from User where id = 4
 
-
+select * from User
 --id pre active
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'UNSPECIFIED');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'd', 'd', '16-02-2008 12:00', 'USER');
-
-
-
-
-delete from User
-select * from User where datetime(registrationDate) >  datetime('2007-01-01 10:00');
-update User set password = 'b' where id = 2
 
 
 
@@ -266,6 +247,8 @@ create table Supports
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 1);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 2);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 3);
+INSERT INTO Supports ( idHall, idProjectionType) VALUES (2, 2);
+INSERT INTO Supports ( idHall, idProjectionType) VALUES (3, 3);
 
 delete from Supports
 select * from Supports
@@ -293,7 +276,7 @@ CREATE TABLE Projection
 
 );
 select * from Projection
-delete from Projection where id = 1
+
 --test projekcija za dugme Kupi na stranici Filmova
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
                 VALUES   (1,    1,       1,                1,       1,        100,   1 );
@@ -304,7 +287,7 @@ INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, pri
 
                              
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    8,       1,                1,        1,        100,   1 );
+                VALUES   (1,    3,       1,                1,        1,        100,   1 );
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
                 VALUES   (1,    8,       1,                3,        2,        100,   1 );
 
@@ -319,14 +302,15 @@ SELECT Projection.id FROM Projection WHERE idMovie = 1 AND active = 1
 
 
 
-select Projection.id, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*) as Tickets_Sold 
+select Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)
 from Projection
-LEFT JOIN Ticket on  Projection.id = Ticket.idProjection
-where Projection.id = 1 and Projection.active = 1 and Ticket.active = 1 
+LEFT JOIN Ticket on  Projection.id = Ticket.idProjection 
+where Projection.active = 1 and Ticket.active = 1 
+--where Projection.id = 1 and Projection.active = 1 and Ticket.active = 1 
 group by Projection.id, Ticket.idProjection
 
 
-delete from Projection where id in (1,2, 3, 4)
+
 
 delete from  Period
 CREATE TABLE Period
@@ -337,26 +321,17 @@ CREATE TABLE Period
     endDate  VARCHAR(16) NOT NULL
     
 );
-select * from Period where id = 1
-update Period set startDate = '20-02-2020 12:00', endDate = '20-02-2020 14:00' WHERE ID = 2
-delete from Period WHERE Id = 1
+select * from Period
+delete from Period
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-03-2020 12:00', '16-03-2020 14:00');
 INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-02-2020 12:00', '15-02-2020 14:00');
 
 
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2019 12:00', '15-01-2019 14:00');
-
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '19-02-2019 12:00', '19-02-2019 14:00');
-
-
-
+--INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2019 12:00', '15-01-2019 14:00');
+--INSERT INTO Period (active, startDate, endDate) VALUES (1, '19-02-2019 12:00', '19-02-2019 14:00');
 --INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
 
 
-
-
-
-DELETE FROM Ticket WHERE ID  =2
 CREATE TABLE Ticket
 (
     id INTEGER PRIMARY KEY,
@@ -371,24 +346,25 @@ CREATE TABLE Ticket
 );
 select * from Ticket
 
+
 --3 TICKETS FOR White Hall
 INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        1,            1, '14-02-2019 14:00', 4);
+              VALUES (1,        1,            1, '14-12-2019 14:00', 2);
 INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        1,            2, '14-02-2019 14:00', 4);
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        1,            3, '14-02-2019 14:00', 4);
-
-
---tickets for Black hall
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        2,            4, '14-02-2019 14:00', 4);
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        2,            5, '14-02-2019 14:00', 4);
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        2,            6, '14-02-2019 14:00', 4);
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        2,            7, '14-02-2019 14:00', 4);
+              VALUES (1,        1,            2, '14-12-2019 13:00', 2);
+--INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
+--              VALUES (1,        1,            3, '14-02-2019 14:00', 4);
+--
+--
+---- 4 tickets for Black hall
+--INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
+--              VALUES (1,        2,            4, '14-02-2019 14:00', 4);
+--INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
+--              VALUES (1,        2,            5, '14-02-2019 14:00', 4);
+--INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
+--              VALUES (1,        2,            6, '14-02-2019 14:00', 4);
+--INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
+--              VALUES (1,        2,            7, '14-02-2019 14:00', 4);
 
 
 
@@ -403,11 +379,12 @@ CREATE TABLE Seat
    
     
 );
+select * from Seat
 
 --3 seats for White Hall
-INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 1);
-INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 1);
-INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 1);
+INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 1); --id 1
+INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 1);--id 2
+INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 1); --id 3
 
 --4 seats for Black Hall
 INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 2); --id 4
@@ -416,5 +393,5 @@ INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 2);--id 6
 INSERT INTO Seat (active, number, idHall) VALUES (1, 4, 2);--id 7
 
 
-select * from Seat
+
 

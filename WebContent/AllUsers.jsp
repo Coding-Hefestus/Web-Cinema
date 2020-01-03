@@ -79,13 +79,7 @@
 							<input name="toTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
 					
 						
-						<%-- from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
-									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
-									 <select name="fromYear"> <%for (int i = 1950; i <= 2020; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>	
-						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
-									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
-									<select  name="toYear" > <%for (int i = 1950; i <= 2020; i++ ){ %> <option selected="selected" value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
-					 --%>
+						
 					</fieldset>
 					
 					<fieldset>

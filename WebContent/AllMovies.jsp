@@ -51,8 +51,8 @@
 				</td>
 				
 				<td align="center">
-					from:&nbsp;<input type="text" name="fromDurationFilter" value="<%= request.getAttribute("fromDurationFilter")%>"><br/>
-					to:&nbsp;<input type="text" name="toDurationFilter" value="<%= request.getAttribute("toDurationFilter")%>">
+					from:&nbsp;<input type="text" name="fromDurationFilter" value="<%= request.getAttribute("fromDurationFilter")%>">
+					to:&nbsp;<input type="text" name="toDurationFilter" value="<%= request.getAttribute("toDurationFilter")%>"><br/>
 					<fieldset>
         						<legend>Sorting order</legend>
         						
@@ -70,8 +70,8 @@
 				</td>
 				
 				<td align="center">
-					from:&nbsp;<input type="text" name="fromProductionFilter" value="<%= request.getAttribute("fromProductionFilter")%>"></br>
-					to:&nbsp;<input type="text" name="toProductionFilter" value="<%= request.getAttribute("toProductionFilter")%>">
+					from:&nbsp;<input type="text" name="fromProductionFilter" value="<%= request.getAttribute("fromProductionFilter")%>">
+					to:&nbsp;<input type="text" name="toProductionFilter" value="<%= request.getAttribute("toProductionFilter")%>"></br>
 					
 					<fieldset>
         						<legend>Sorting order</legend>
@@ -223,9 +223,7 @@
 	
 	
 				<%if (loggedInUser.getRole() == Role.ADMIN){%>
-					 <form action="AddNewMovieServlet" method="post">
-					 	<input type=submit value="Add new movie" style=width:100%>
-					 </form>
+					 
 					 <form action="UsersManagementServlet" method="get">
 					 	<input type=submit value="Users management" style=width:100%>
 					 </form>

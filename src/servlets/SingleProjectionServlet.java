@@ -33,7 +33,7 @@ public class SingleProjectionServlet extends HttpServlet {
 		
 		String idP = request.getParameter("id");
 		int idProjection = Integer.valueOf(idP);
-		System.out.println(idProjection);
+		//System.out.println(idProjection);
 		
 		String fromDate = request.getParameter("fromDate");
 		String fromTime = request.getParameter("fromTime");

@@ -29,8 +29,8 @@ public class ProjectionDAO {
 		try {
 			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)" 
 						   +" FROM Projection" 
-					       +" LEFT JOIN Ticket ON  Projection.id = Ticket.idProjection" 
-					       +" WHERE Projection.active = 1"
+					       +" LEFT JOIN Ticket ON Projection.id = Ticket.idProjection" 
+					       +" WHERE Projection.active = 1 AND Ticket.active = 1"
 					       +" GROUP BY Projection.id, Ticket.idProjection";
 
 
@@ -157,6 +157,34 @@ public class ProjectionDAO {
 		//return projections;
 		return projectionsForMovie;
 	
+	}
+	
+	public static void delete(int idProjection) throws SQLException, ParseException{
+		
+		
+		Projection projection = getById(idProjection);
+		projection.setActive(false);
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		
+		
+		try {
+			
+			String query = "UPDATE Projection SET active = 0 WHERE id = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idProjection);
+			pstmt.executeUpdate();
+			
+			return;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		
+		}
 	}
 
 }

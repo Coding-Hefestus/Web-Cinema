@@ -17,15 +17,17 @@
 <body>
 
 	<a href="./MovieServlet">Show all movies</a>
-	<%if (loggedInUser.getRole() == Role.ADMIN){ %>
-		<a href="./UsersManagementServlet">Users management</a>
-	<%}%>
+	
 	
 	<a href="./LogoutServlet">Logout</a>
 	
 	<a href="./MyProfileServlet">My profile</a>
 	
-	
+	<%if(loggedInUser.getRole() == Role.ADMIN){ %>
+		
+		<a href="./UsersManagementServlet">Users management</a>
+		
+	<%} %>
 	
 	
 	<table border="1" style=width:100%>
@@ -76,24 +78,7 @@
 							
 							to:&nbsp;<input name="toDate" type="date" value="<%=request.getAttribute("toDate")%>" > 
 							<input name="toTime" type="time" value="<%=request.getAttribute("toTime")%>" ></br>
-						
-
-						
-						<%--  from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromDay") %>  </option>   <%} %>  </select> 
-									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromMonth") %>  </option>   <%} %>  </select>	
-									 <select name="fromYear"> <%for (int i = 1950; i <= 2025; i++ ){ %> <option value="<%=i%>"> <%=request.getAttribute("fromYear") %> </option>   <%}%>  </select></br>	
-						
-						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=request.getAttribute("toDay") %> </option>   <%} %>  </select> 
-									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=request.getAttribute("toMonth") %>  </option>   <%} %>  </select>	
-									<select  name="toYear" > <%for (int i = 1950; i <= 2025; i++ ){ %> <option  value="<%=i %>"> <%=request.getAttribute("toYear") %>  </option>   <%}%>  </select></br>		
-					    --%>
-					  <%--  from:&nbsp; <select name="fromDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
-									 <select name="fromMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
-									 <select name="fromYear"> <%for (int i = 1950; i <= 2025; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>	
-						to:&nbsp; <select name="toDay"> <%for (int i = 1; i <= 31; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select> 
-									 <select name="toMonth"> <%for (int i = 1; i <= 12; i++ ){ %> <option value="<%=i %>"> <%=i %> </option>   <%} %>  </select>	
-									<select  name="toYear" > <%for (int i = 1950; i <= 2025; i++ ){ %> <option selected="selected" value="<%=i %>"> <%=i %> </option>   <%}%>  </select></br>		
-					 --%>
+										
 					</fieldset>
 					
 					<fieldset>
@@ -106,8 +91,6 @@
     						<label for="dateDsc">Descending</label>
 					
 					</fieldset>
-					
-
 				</td>
 				
 				<!-- Projection Type -->
@@ -175,8 +158,8 @@
 				<td align="center">
 				<fieldset>
         					<legend>Filtering</legend>
-					from:&nbsp;<input type="text" name="fromPriceFilter" value="<%= request.getAttribute("fromPriceFilter")%>"></br>
-					to:&nbsp;<input type="text" name="toPriceFilter" value="<%= request.getAttribute("toPriceFilter")%>">
+								from:&nbsp;<input type="text" name="fromPriceFilter" value="<%= request.getAttribute("fromPriceFilter")%>"></br>
+								to:&nbsp;<input type="text" name="toPriceFilter" value="<%= request.getAttribute("toPriceFilter")%>">
 				</fieldset> 
 					
 				<fieldset>
@@ -229,6 +212,15 @@
 		<%} %>
 		
 		</table>
+		<%if (loggedInUser.getRole() == Role.ADMIN){ %>
+			<form action="" method="get">
+				<input type=button value="Add new projection" style=width:100%>
+			</form>
+			
+			<form action="AddNewMovieServlet" method="get">
+				<input type=button value="Add new movie" style=width:100%>
+			</form>
+		<%}%>
 	
 		<form action="MainPageAppServlet" method="get">
 			<input type=submit value="Refresh all projections" style=width:100%>

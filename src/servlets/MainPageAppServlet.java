@@ -19,7 +19,6 @@ import org.apache.commons.collections4.ComparatorUtils;
 import DAO.ProjectionDAO;
 import model.Projection;
 import model.User;
-import utility.Utility;
 
 
 public class MainPageAppServlet extends HttpServlet {

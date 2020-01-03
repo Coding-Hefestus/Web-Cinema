@@ -1,13 +1,18 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.TicketDAO;
+import DAO.UserDAO;
 import model.Movie;
 import model.Role;
+import model.Ticket;
 import model.User;
 
 /**
@@ -30,10 +35,33 @@ public class MyProfileServlet extends HttpServlet {
 			if ( m != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
 		} 
 		
+		String newPassword = request.getParameter("newPassword");
 		
-		//if user vidi za ponistavanje karata ili sta vec obican user radi...
+		try {
+			if ( newPassword != null && !newPassword.equals("")) {
+				if (!UserDAO.alreadyExists(loggedInUser.getUsername(), newPassword)) {
+					loggedInUser.setPassword(newPassword);
+					UserDAO.update(loggedInUser);
+					request.getSession().invalidate();
+					response.sendRedirect("./Login.html");
+					//response.sendRedirect("./UsersManagementServlet");			
+				}
+			} else if (newPassword == null){
+				ArrayList<Ticket> ticketsForUser = TicketDAO.getTicketsForUser(loggedInUser);
+				
+				request.setAttribute("tickets", ticketsForUser);
+				request.getRequestDispatcher("./MyProfile.jsp").forward(request, response);
+				//response.sendRedirect("./MyProfile.jsp");
+			}else {
+			
+				response.sendRedirect("./MainPageAppServlet");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		response.sendRedirect("./MyProfile.jsp");
+		
+		
 		
 	}
 

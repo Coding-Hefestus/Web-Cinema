@@ -71,4 +71,54 @@ public class TicketDAO {
 	}
 	
 	
-}
+	public static ArrayList<Ticket> getTicketsForUser(User user) throws SQLException, ParseException{
+		
+		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			String query =   "SELECT * FROM Ticket WHERE Ticket.idUser = ? AND Ticket.active = 1";
+
+			pstmt = conn.prepareStatement(query);	
+			pstmt.setInt(1, user.getId());
+			rset = pstmt.executeQuery();
+			int index, id;
+			boolean active;
+			
+			while  (rset.next()) {
+				index = 1;
+
+				id = rset.getInt(index++);
+				active = rset.getInt(index++) == 1 ? true : false;
+				Projection projection = ProjectionDAO.getById(rset.getInt(index++));
+				Seat seat = SeatDAO.getById(rset.getInt(index++));
+				LocalDateTime purchasingDate = Utility.convertStringToDateWithTime(rset.getString(index++));
+				
+				tickets.add(new Ticket(id, active, projection, seat, purchasingDate, user));
+				
+				
+			}
+			
+			
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+			
+		}
+		
+		return (ArrayList<Ticket>) tickets
+				.stream()
+				.sorted(Ticket.sortByDate().reversed())	
+				.collect(Collectors.toList());
+				
+				//.thenComparing(Ticket.sortByUser()))
+	}
+		
+
+	
+} //from class

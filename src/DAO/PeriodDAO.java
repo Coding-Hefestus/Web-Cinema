@@ -9,10 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
-import model.Dimension;
-import model.Hall;
 import model.Period;
-import model.ProjectionType;
 
 public class PeriodDAO {
 	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -48,7 +45,7 @@ public class PeriodDAO {
 				LocalDateTime start = tsStart.toLocalDateTime();
 				period.setStart(start);
 				
-				String dateTimeStringEnd = rset.getString(3);
+				String dateTimeStringEnd = rset.getString(4);
 				Timestamp tsEnd = new Timestamp(DATETIME_FORMAT.parse(dateTimeStringEnd).getTime());
 				LocalDateTime end = tsEnd.toLocalDateTime();
 				period.setEnd(end);

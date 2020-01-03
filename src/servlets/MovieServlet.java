@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -101,14 +101,18 @@ public class MovieServlet extends HttpServlet {
 //				System.out.println("NUMBER OF PROJECTIONS: " + ((ArrayList<Projection>)ProjectionDAO.getProjectionsForMovie(m.getId()) ).size());
 //				System.out.println("tickets sold: " + ((ArrayList<Projection>)ProjectionDAO.getProjectionsForMovie(m.getId()) ).get(0).getTicketsSold());
 //				
-				Optional<Projection> hasAvailableProjection = ProjectionDAO.getProjectionsForMovie(m.getId())
+//				Optional<Projection> hasAvailableProjection = ProjectionDAO.getProjectionsForMovie(m.getId())
+//						.stream()
+//						.filter(Projection.afterNow())
+//						.filter(Projection.hasAvailableSeats())
+//						.findAny();
+				
+				boolean hasAvaliableProjections = ProjectionDAO.getProjectionsForMovie(m.getId())
 						.stream()
-						.filter(Projection.afterNow())
-						.filter(Projection.hasAvailableSeats())
-						.findAny();
-				
-				
-				if (hasAvailableProjection.isPresent()) m.setAvailable(true); 
+						.anyMatch(Projection.hasAvaliableProjections());
+						
+						
+				if (hasAvaliableProjections) m.setAvailable(true); 
 				else m.setAvailable(false);
 
 				
@@ -152,7 +156,7 @@ public class MovieServlet extends HttpServlet {
 	}
 	
 	private  int getFilter(String filter) {
-		if (filter != null) System.out.println("from: " + filter);
+	
 		int tempFilter = 0;
 		try {
 			int temp = Integer.valueOf(filter);
