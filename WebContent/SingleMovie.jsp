@@ -47,6 +47,8 @@
 		<form action="UsersManagementServlet" method="get">
 			<input type=submit value="Users management" style=width:100%>
 		</form>
+		
+		
 	<%} %>
 	<form action="LogoutServlet" method="get">
 		<input type=submit value="Logout" style=width:100%>

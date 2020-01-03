@@ -213,13 +213,15 @@
 		
 		</table>
 		<%if (loggedInUser.getRole() == Role.ADMIN){ %>
-			<form action="" method="get">
-				<input type=button value="Add new projection" style=width:100%>
+			<form action="AddNewProjectionServlet" method="get" id="form1">
 			</form>
+			<button type="submit" style=width:100% form="form1">Add new projection</button>
 			
-			<form action="AddNewMovieServlet" method="get">
-				<input type=button value="Add new movie" style=width:100%>
+			
+			<form action="AddNewMovieServlet" method="post" id="form2">	
 			</form>
+			<button type="submit" style=width:100% form="form2" style=width:100%>Add new movie</button>
+			
 		<%}%>
 	
 		<form action="MainPageAppServlet" method="get">

@@ -33,7 +33,7 @@ public class DeleteMovieServlet extends HttpServlet {
 		
 		try {
 			int idMovie = Integer.valueOf(stringId);
-			System.out.println(idMovie);
+			
 			
 			MovieDAO.delete(idMovie);
 				
