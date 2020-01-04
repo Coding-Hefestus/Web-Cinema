@@ -196,15 +196,7 @@
 					<td><%=p.getHall().getName() %></td>
 					<td><%=p.getTicketPrice() %></td>
 					
-				 <%-- <%if (loggedInUser.getRole() == Role.ADMIN){ %>
-						<td>
-						<form action="" method="post">
-  					
-  							<button name="delete" type="submit" value="<%= p.getId()%>">Delete projection</button>
-  							
-						</form>
-					</td>  
-					<%} %>  --%>
+			
 					
 					 
 				</tr>

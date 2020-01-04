@@ -1,11 +1,15 @@
 package model;
 
+import java.sql.SQLException;
+import java.util.function.Function;
+
+import DAO.SeatDAO;
+
 public class Seat extends Moviefiable {
 
 	private int number;
 	private Hall hall;
 
-	
 	
 	public Seat(int id, boolean active, int number, Hall hall) {
 		super(id, active);
@@ -14,13 +18,18 @@ public class Seat extends Moviefiable {
 	
 	}
 
-
-
-
 	public Seat() {this(-1, false, -1, null);}
 
+	public static Seat getById(int idSeat) throws SQLException {
+		Seat seat = SeatDAO.getById(idSeat);
+		return seat;
+	}
+	
 
-
+	
+//	public static Function<Integer, Boolean, Integer, Hall, Seat> funk{
+//		return Seat::new;
+//	}
 
 	public int getNumber() {
 		return number;

@@ -277,4 +277,34 @@
     <servlet-name>AddProjectionTypeServlet</servlet-name>
     <url-pattern>/AddProjectionTypeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowProjectionsServlet</display-name>
+    <servlet-name>ShowProjectionsServlet</servlet-name>
+    <servlet-class>servlets.ShowProjectionsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowProjectionsServlet</servlet-name>
+    <url-pattern>/ShowProjectionsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FindAvailableSeatsServlet</display-name>
+    <servlet-name>FindAvailableSeatsServlet</servlet-name>
+    <servlet-class>servlets.FindAvailableSeatsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FindAvailableSeatsServlet</servlet-name>
+    <url-pattern>/FindAvailableSeatsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConfirmPurchaseServlet</display-name>
+    <servlet-name>ConfirmPurchaseServlet</servlet-name>
+    <servlet-class>servlets.ConfirmPurchaseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmPurchaseServlet</servlet-name>
+    <url-pattern>/ConfirmPurchaseServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

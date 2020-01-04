@@ -354,7 +354,6 @@ CREATE TABLE Ticket
 );
 select * from Ticket
 
-
 --3 TICKETS FOR White Hall
 INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
               VALUES (1,        1,            1, '14-12-2019 14:00', 2);
@@ -399,6 +398,23 @@ INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 2); --id 4
 INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 2);--id 5
 INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 2);--id 6
 INSERT INTO Seat (active, number, idHall) VALUES (1, 4, 2);--id 7
+
+
+
+
+select * 
+from Hall
+where Hall.id = 1 and Seat.idHall = 1 AND Seat.id not in (select Ticket.idSeat
+                                          from Ticket
+                                          where Ticket.idProjection = 1)
+                                          
+
+
+SELECT Seat.id
+from seat
+where Seat.idHall = 1 and Seat.id not in (select Ticket.idSeat
+                                    from Ticket
+                                    where Ticket.idProjection = 1);
 
 
 

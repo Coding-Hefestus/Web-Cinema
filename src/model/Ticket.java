@@ -11,10 +11,6 @@ public class Ticket extends Moviefiable {
 	private LocalDateTime purchasingDate;
 	private User user;
 	
-	
-	
-	
-	
 	public Ticket(int id, boolean active, Projection projection, Seat seat, LocalDateTime purchasingDate, User user) {
 		super(id, active);
 		this.projection = projection;
@@ -22,10 +18,6 @@ public class Ticket extends Moviefiable {
 		this.purchasingDate = purchasingDate;
 		this.user = user;
 	}
-
-
-
-
 
 	public Ticket() {this(-1, false, null, null, null, null);}
 

@@ -201,9 +201,9 @@
 					
 					<%if (m.isAvailable()) { %>
 						<td>
-							<form action="BuyTicketServlet" method="post">
+							<form action="ShowProjectionsServlet" method="get">
   						
-  								<button name="ticket" type="submit" value="<%= m.getId()%>">Buy ticket</button>
+  								<button name="movie" type="submit" value="<%= m.getId()%>">Buy ticket</button>
   							
 							</form>
 						</td>
