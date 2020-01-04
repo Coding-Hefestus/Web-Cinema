@@ -40,7 +40,7 @@ public class Projection extends Moviefiable{
 	}
 	
 
-	public Projection() {this(-1, false, null, null, null, null, -1, null, 0);}
+	public Projection() {this(-1, true, null, null, null, null, -1, null, 0);}
 
 	public Movie getMovie() {
 		return movie;
@@ -109,7 +109,6 @@ public class Projection extends Moviefiable{
 	public int getTicketsSold() {
 		return ticketsSold;
 	}
-
 
 	public void setTicketsSold(int ticketsSold) {
 		this.ticketsSold = ticketsSold;

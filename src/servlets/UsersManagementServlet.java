@@ -18,6 +18,7 @@ import org.apache.commons.collections4.ComparatorUtils;
 
 import DAO.UserDAO;
 import model.Movie;
+import model.Moviefiable;
 import model.User;
 
 
@@ -31,7 +32,7 @@ public class UsersManagementServlet extends HttpServlet {
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		Movie m = (Movie)request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
+		Moviefiable m = (Moviefiable)request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 		if (m != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
 		
 		String usernameF = request.getParameter("usernameFilter"); 

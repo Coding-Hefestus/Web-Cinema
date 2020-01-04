@@ -230,7 +230,8 @@ select Hall.id, Hall.active, Hall.capacity, Hall.name, ProjectionType.id, Projec
 from Hall
 left join Supports on Hall.id = Supports.idHall
 left join ProjectionType on Supports.idProjectionType = ProjectionType.id
-where Hall.id = 1
+--order by Hall.id
+where Hall.id = 4
 
 
 create table Supports
@@ -276,7 +277,7 @@ CREATE TABLE Projection
 
 );
 select * from Projection
-
+delete from Projection where id = 2
 --test projekcija za dugme Kupi na stranici Filmova
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
                 VALUES   (1,    1,       1,                1,       1,        100,   1 );
@@ -302,13 +303,20 @@ SELECT Projection.id FROM Projection WHERE idMovie = 1 AND active = 1
 
 
 
-select Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)
+select Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(Ticket.id)
 from Projection
 LEFT JOIN Ticket on  Projection.id = Ticket.idProjection 
-where Projection.active = 1 and Ticket.active = 1 
+where Projection.active = 1 --and Ticket.active = 1 
 --where Projection.id = 1 and Projection.active = 1 and Ticket.active = 1 
 group by Projection.id, Ticket.idProjection
 
+--projections for hall
+
+select Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)
+from Projection
+LEFT JOIN Ticket on  Projection.id = Ticket.idProjection 
+where Projection.active = 1 and Ticket.active = 1 and Projection.idHall = 1 
+group by Projection.id, Ticket.idProjection
 
 
 
@@ -322,7 +330,7 @@ CREATE TABLE Period
     
 );
 select * from Period
-delete from Period
+delete from Period where id = 3
 INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-03-2020 12:00', '16-03-2020 14:00');
 INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
 

@@ -237,4 +237,44 @@
     <servlet-name>DeleteUserServlet</servlet-name>
     <url-pattern>/DeleteUserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddNewProjectionServlet</display-name>
+    <servlet-name>AddNewProjectionServlet</servlet-name>
+    <servlet-class>servlets.AddNewProjectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewProjectionServlet</servlet-name>
+    <url-pattern>/AddNewProjectionServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddMovieServlet</display-name>
+    <servlet-name>AddMovieServlet</servlet-name>
+    <servlet-class>servlets.AddMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddMovieServlet</servlet-name>
+    <url-pattern>/AddMovieServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddHallServlet</display-name>
+    <servlet-name>AddHallServlet</servlet-name>
+    <servlet-class>servlets.AddHallServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddHallServlet</servlet-name>
+    <url-pattern>/AddHallServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddProjectionTypeServlet</display-name>
+    <servlet-name>AddProjectionTypeServlet</servlet-name>
+    <servlet-class>servlets.AddProjectionTypeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProjectionTypeServlet</servlet-name>
+    <url-pattern>/AddProjectionTypeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

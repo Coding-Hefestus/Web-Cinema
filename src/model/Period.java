@@ -21,12 +21,13 @@ public class Period extends Moviefiable{
 	
 	
 	//Kad se bude pravila nova projekcija
-	public Period(int id,  LocalDateTime start, int duration) {
+	public Period(int id, boolean active,  LocalDateTime start, int movieDuration) {
 		this.id = id;
+		this.active = active;
 		this.start = start;		
 		this.end = LocalDateTime.of
 				(start.getYear(), start.getMonth(), start.getDayOfMonth(), 
-				start.getHour(), start.getMinute()).plusMinutes(duration);		
+				start.getHour(), start.getMinute()).plusMinutes(movieDuration);		
 	}
 	
 	public boolean overlaps(Period other) {

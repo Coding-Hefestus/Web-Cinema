@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import model.Period;
 import model.Projection;
 import model.ProjectionType;
 import model.User;
+import utility.Utility;
 
 public class ProjectionDAO {
 
@@ -27,10 +29,10 @@ public class ProjectionDAO {
 		ResultSet rset = null;
 		
 		try {
-			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)" 
+			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(Ticket.id)" 
 						   +" FROM Projection" 
 					       +" LEFT JOIN Ticket ON Projection.id = Ticket.idProjection" 
-					       +" WHERE Projection.active = 1 AND Ticket.active = 1"
+					       +" WHERE Projection.active = 1"
 					       +" GROUP BY Projection.id, Ticket.idProjection";
 
 
@@ -79,10 +81,10 @@ public class ProjectionDAO {
 		
 		try {
 			
-			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(*)" 
+			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(Ticket.id)" 
 			+" FROM Projection"
 			+" LEFT JOIN Ticket ON  Projection.id = Ticket.idProjection"
-			+" WHERE Projection.id = ? AND Projection.active = 1 AND Ticket.active = 1" 
+			+" WHERE Projection.id = ? AND Projection.active = 1" 
 			+" GROUP BY Projection.id, Ticket.idProjection";
 			
 			
@@ -186,5 +188,123 @@ public class ProjectionDAO {
 		
 		}
 	}
+	
+	public static ArrayList<Projection>  getProjectionsForHall(int idHall) throws SQLException, ParseException{
+		
+		ArrayList<Projection> projectionsForHall = new ArrayList<Projection>();
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			String query = "SELECT Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(Ticket.id)" 
+						  +" FROM Projection" 
+						  +" LEFT JOIN Ticket ON Projection.id = Ticket.idProjection" 
+						  +" WHERE Projection.active = 1 AND Projection.idHall = ?"
+						  +" GROUP BY Projection.id, Ticket.idProjection";
+
+			pstmt = conn.prepareStatement(query);	
+			pstmt.setInt(1, idHall);
+			rset = pstmt.executeQuery();
+			
+			int idProjection;
+			while  (rset.next()) {
+				
+				idProjection = rset.getInt(1);
+				Projection p = getById(idProjection);
+				projectionsForHall.add(p);
+				//return new Projection(id, active, movie, projectionType, hall, period, price, admin, ticketsSold); 
+			}
+			
+			
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+			//kako?
+		}
+		
+		//System.exit(1);
+		//return projections;
+		return projectionsForHall;
+
+	}
+	
+	@SuppressWarnings("resource")
+	public static boolean add(Projection newProjection) throws Exception {
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		
+		
+		try {
+			conn.setAutoCommit(false); 
+			conn.commit();
+			String query ="INSERT INTO Period (active, startDate, endDate) VALUES (?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			int index = 1;
+			
+			pstmt.setInt(index++, newProjection.getPeriod().isActive() == true ? 1 : 0);
+			pstmt.setString(index++, Utility.convertDateWithTimeToString(newProjection.getPeriod().getStart()));
+			pstmt.setString(index++, Utility.convertDateWithTimeToString(newProjection.getPeriod().getEnd()));
+
+			int affectedRows = pstmt.executeUpdate();
+			
+			if (affectedRows == 1) {
+				//pstmt.close();
+				 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+		 	            if (generatedKeys.next()) {
+		 	            	newProjection.getPeriod().setId(generatedKeys.getInt(1));
+		 	            }
+		 	            else {
+		 	                throw new SQLException("Creating movie failed, no ID obtained.");
+		 	            }
+		 	     }//od try-a
+				 
+				 query = "INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				 pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				 index = 1;
+				 
+				 pstmt.setInt(index++, newProjection.isActive() == true ? 1 : 0);
+				 pstmt.setInt(index++, newProjection.getMovie().getId());
+				 pstmt.setInt(index++, newProjection.getProjectionType().getId());
+				 pstmt.setInt(index++, newProjection.getHall().getId());
+				 pstmt.setInt(index++, newProjection.getPeriod().getId());
+				 pstmt.setDouble(index++, newProjection.getTicketPrice());
+				 pstmt.setInt(index++, newProjection.getAdministrator().getId());
+				 
+				 affectedRows = pstmt.executeUpdate();
+				 
+				 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+		 	            if (generatedKeys.next()) {
+		 	            	newProjection.setId(generatedKeys.getInt(1));
+		 	            }
+		 	            else {
+		 	                throw new SQLException("Creating movie failed, no ID obtained.");
+		 	            }
+		 	     }//od try-a
+				 
+				   conn.commit(); // 
+			       return affectedRows != 0 && newProjection.getId() != -1;
+			} //od ifa-a
+			
+			
+			
+		}catch (Exception ex) {
+			try {conn.rollback();} catch (Exception ex1) {ex1.printStackTrace();} // ako je 2. commit neuspešan, vratiti bazu u stanje koje je zapamćeno 1. commit-om
+			throw ex;		
+		} finally {
+			try {conn.setAutoCommit(true);} catch (Exception ex1) {ex1.printStackTrace();} // svaku sledeću naredbu izvršavati odmah
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+		
+		return false;
+	}
+	
+	
 
 }

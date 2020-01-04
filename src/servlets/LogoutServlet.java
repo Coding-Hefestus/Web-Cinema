@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Movie;
+import model.Moviefiable;
 import model.Role;
 import model.User;
 
@@ -21,7 +22,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser.getRole().equals(Role.ADMIN)) {
-			Movie m = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
+			Moviefiable m = (Moviefiable) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 			if ( m != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
 		}
 		
