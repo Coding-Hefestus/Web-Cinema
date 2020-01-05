@@ -44,8 +44,8 @@
 	<%if(loggedInUser.getRole() == Role.USER && (projection.getHall().getCapacity() - projection.getTicketsSold()) != 0){ %>
 		
 		
-		<form action="#" method="get">
-		
+		<form action="FindAvailableSeatsServlet" method="get">
+			<input type="hidden" name="projection" value="<%=projection.getId()%>">
 			<button name="buy" type="submit" style=width:100% value="<%= projection.getId()%>">Buy ticket</button>
 			
 		</form>

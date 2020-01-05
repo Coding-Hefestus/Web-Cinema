@@ -192,7 +192,7 @@
 				<%for (Movie m : filteredMovies){ %>
 			
 				<tr>
-					<td><a href="#?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
+					<td><a href="SingleMovieServlet?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
 					<td><%=m.getDuration() %></td>
 					<td><%=m.getProductionYear() %></td>
 					<td><%=m.getGenresDisplay() %></td>
