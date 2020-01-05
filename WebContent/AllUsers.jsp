@@ -123,6 +123,10 @@
 					 	<input type=submit value="Logout" style=width:100%>
 	</form>
 	
+	<form action="MyProfileServlet" method="get">
+			<input type=submit value="My profile" style=width:100%>
+	</form>
+	
 	<form action="MainPageAppServlet" method="get" >
 			<input type=submit value="Back to Main Page" style=width:100%>
 	</form>

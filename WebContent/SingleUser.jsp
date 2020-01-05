@@ -85,6 +85,11 @@
 			<input style=width:100% type="submit" value="Delete user">
 	</form>
 	
+	<form action="MyProfileServlet" method="get">
+			<input type=submit value="My profile" style=width:100%>
+	</form>
+	
+	
 	<h3>Tickets for user</h3>
 	
 	

@@ -147,6 +147,10 @@
 		</form>
 		
 		<%} %>
+		
+		<form action="MyProfileServlet" method="get">
+			<input type=submit value="My profile" style=width:100%>
+		</form>
 
 </body>
 </html>

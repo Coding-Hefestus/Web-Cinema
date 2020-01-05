@@ -71,6 +71,7 @@
 	</table>
 	</form>
 	
+	
 	<h3>Tickets for user</h3>
 	
 	
@@ -83,7 +84,7 @@
 		<%for(Ticket t : ticketsForUser){ %>
 			
 			<tr> 
-				<td> <a href="ServletStranicaKarteNIJE__IMPLEMENTIRANOOOO?id=<%= t.getId()%>"> <%=Utility.convertDateWithTimeToString(t.getPurchasingDate()) %> </a></td>
+				<td> <a href="TicketServlet?id=<%= t.getId()%>"> <%=Utility.convertDateWithTimeToString(t.getPurchasingDate()) %> </a></td>
 			</tr>
 			
 		
@@ -91,7 +92,9 @@
 	
 	</table>
 	
-	
+	<form action="MainPageAppServlet" method="get" >
+			<input type=submit value="Back to Main Page" style=width:100%>
+	</form>
 	
 	
 	

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.TicketDAO;
 import DAO.UserDAO;
 import model.Movie;
+import model.Moviefiable;
+import model.Projection;
 import model.Role;
 import model.Ticket;
 import model.User;
@@ -31,8 +33,12 @@ public class MyProfileServlet extends HttpServlet {
 		
 		
 		if (loggedInUser.getRole().equals(Role.ADMIN)) {
-			Movie m = (Movie) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
+			Moviefiable m = (Moviefiable) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
 			if ( m != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
+			
+//			Projection p = (Projection) request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
+//			if ( p != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
+//		
 		} 
 		
 		String newPassword = request.getParameter("newPassword");
