@@ -97,7 +97,7 @@
 		<%for(Ticket t : ticketsForUser){ %>
 			
 			<tr> 
-				<td> <a href="ServletStranicaKarteNIJE__IMPLEMENTIRANOOOO?id=<%= t.getId()%>"> <%=Utility.convertDateWithTimeToString(t.getPurchasingDate()) %> </a></td>
+				<td> <a href="TicketServlet?id=<%= t.getId()%>"> <%=Utility.convertDateWithTimeToString(t.getPurchasingDate()) %> </a></td>
 			</tr>
 			
 		

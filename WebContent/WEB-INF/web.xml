@@ -317,4 +317,34 @@
     <servlet-name>ConfirmPurchaseServlet</servlet-name>
     <url-pattern>/ConfirmPurchaseServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TicketServlet</display-name>
+    <servlet-name>TicketServlet</servlet-name>
+    <servlet-class>servlets.TicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TicketServlet</servlet-name>
+    <url-pattern>/TicketServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteTicketServlet</display-name>
+    <servlet-name>DeleteTicketServlet</servlet-name>
+    <servlet-class>servlets.DeleteTicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteTicketServlet</servlet-name>
+    <url-pattern>/DeleteTicketServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UnspecifiedUserServlet</display-name>
+    <servlet-name>UnspecifiedUserServlet</servlet-name>
+    <servlet-class>servlets.UnspecifiedUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnspecifiedUserServlet</servlet-name>
+    <url-pattern>/UnspecifiedUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

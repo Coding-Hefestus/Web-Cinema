@@ -5,18 +5,73 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import model.Projection;
+import model.Role;
 import model.Seat;
 import model.Ticket;
 import model.User;
 import utility.Utility;
 
 public class TicketDAO {
+	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+	public static Ticket getById(int idTicket) throws SQLException, ParseException {
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM Ticket WHERE active = 1 AND id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			
+			
+			//active, idProjection, idSeat, timeOfSale,     idUser
+		
+			pstmt.setInt(1, idTicket);	
+		    
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				
+				int id = rset.getInt(1);
+
+				boolean active = (rset.getInt(2) == 0 ? false : true);
+				
+				Projection projection = ProjectionDAO.getById(rset.getInt(3));
+				
+				Seat seat = SeatDAO.getById(rset.getInt(4));
+
+				String dateTimeString = rset.getString(5);
+				
+				Timestamp ts = new Timestamp(DATETIME_FORMAT.parse(dateTimeString).getTime());
+
+				LocalDateTime timeOfSale = ts.toLocalDateTime();
+
+				User user = UserDAO.getById(rset.getInt(6));
+
+				return new Ticket(id, active, projection, seat, timeOfSale, user);
+				
+			}
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		
+		}
+
+		return null;
+		
+		
+	}
 	
 	
 	public static ArrayList<Ticket> getTicketsForProjection(int idProjection) throws SQLException, ParseException{
@@ -164,7 +219,34 @@ public class TicketDAO {
 		
 		
 	}
+	
+	
+	public static boolean delete(int idTicket) throws SQLException {
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		try {
+			String query = "DELETE FROM Ticket WHERE id = ?";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, idTicket);	
+			
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			if (affectedRows == 1) return true;
+	        else return false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		
+		}
+		
+		
+	}
 
 	
 } //from class

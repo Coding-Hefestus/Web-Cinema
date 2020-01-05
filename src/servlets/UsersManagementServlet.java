@@ -77,7 +77,8 @@ public class UsersManagementServlet extends HttpServlet {
 		try {
 		
 			ArrayList<User> filteredUsers = (ArrayList<User>)  UserDAO.getAll().stream()
-							.filter(User.usernameFilter(usernameFilter)
+					.filter(u -> u.getId() != loggedInUser.getId())		
+					.filter(User.usernameFilter(usernameFilter)
 									.and(User.roleFilter(roleFilter))
 									.and(User.registrationDateFilter(from, to)))
 									.collect(Collectors.toList());
