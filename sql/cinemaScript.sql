@@ -353,7 +353,6 @@ CREATE TABLE Ticket
     FOREIGN KEY(idUser) REFERENCES User(id)  ON DELETE RESTRICT
 );
 select * from Ticket
-
 --3 TICKETS FOR White Hall
 INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
               VALUES (1,        1,            1, '14-12-2019 14:00', 2);
@@ -415,6 +414,13 @@ from seat
 where Seat.idHall = 1 and Seat.id not in (select Ticket.idSeat
                                     from Ticket
                                     where Ticket.idProjection = 1);
+
+
+
+
+
+
+
 
 
 

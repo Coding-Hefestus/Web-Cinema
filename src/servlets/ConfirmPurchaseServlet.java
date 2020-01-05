@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,13 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.ProjectionDAO;
 import DAO.SeatDAO;
+import DAO.TicketDAO;
 import model.Projection;
-import model.Seat;
 import model.Ticket;
 import model.User;
 
+
 public class ConfirmPurchaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -29,25 +32,38 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
 		try {
-			//System.out.println(request.getParameter("seats"));
-			String uri = request.getQueryString();
+			
 			int idProjection = Integer.valueOf(request.getParameter("projection"));
+
 			Projection projection = ProjectionDAO.getById(idProjection);
-			//System.out.println(uri);
 			
-			Stream<String> st = Stream.of(uri.split("&"));
-			//Stream<String> st1 = st.of(uri.split("seats="));
+			String seatsIds = request.getParameter("seatsIds");
+	
+			ArrayList<Ticket> newTicketsForSeats = 
+		    Stream.of(seatsIds.split("\\|"))
+				  .map(s -> s.split("seats="))
+                  .flatMap(Arrays::stream)
+                  .filter(x -> !x.contentEquals(""))
+                  .mapToInt(Integer::valueOf)
+                  .mapToObj(s -> {
+                   try {
+                        return new Ticket(-1, true, projection, SeatDAO.getById(s), 
+                    				 LocalDateTime.now(), loggedInUser);
+                       } catch (SQLException e) { e.printStackTrace(); return null;}
+                   
+                       })
+                  .collect(Collectors.toCollection(ArrayList::new));
 			
-			//st1.forEach(System.out::println);
+			boolean success = false;
 			
-			ArrayList<Ticket> newTicketsForSeats = Stream.of(uri.split("&"))
-					.map(s -> s.split("seats="))
-					.flatMap(Arrays::stream)
-					.mapToInt(Integer::valueOf)
-					//.map(s -> new Seat(s))
-					.map(s -> new Ticket(-1, true, projection, SeatDAO.getById(s), LocalDateTime.now(), loggedInUser))
-					.collect(Collectors.toList());
-			//seats=2&seats=3
+			for (Ticket t : newTicketsForSeats) {
+				success = false;
+				if(TicketDAO.add(t)) success = true; 
+			}
+			
+			if (success) response.sendRedirect("./MainPageAppServlet");
+				
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

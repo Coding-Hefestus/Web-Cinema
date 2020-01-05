@@ -25,6 +25,14 @@ public class Seat extends Moviefiable {
 		return seat;
 	}
 	
+	public  Seat(int idSeat) throws SQLException {
+		Seat seat = SeatDAO.getById(idSeat);
+		this.id = seat.getId();
+		this.active = seat.isActive();
+		this.number = seat.getNumber();
+		this.hall = seat.getHall();
+	}
+	
 
 	
 //	public static Function<Integer, Boolean, Integer, Hall, Seat> funk{

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -117,6 +118,51 @@ public class TicketDAO {
 				.collect(Collectors.toList());
 				
 				//.thenComparing(Ticket.sortByUser()))
+	}
+	
+	
+	public static boolean add(Ticket newTicket) throws SQLException {
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		try {
+			String query = "INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale, idUser) "
+					    + "VALUES (?, ?, ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			int index = 1;
+
+			pstmt.setInt(index++, newTicket.isActive() ? 1 : 0);	
+			pstmt.setInt(index++, newTicket.getProjection().getId());
+			pstmt.setInt(index++, newTicket.getSeat().getId());
+			pstmt.setString(index++, Utility.convertDateWithTimeToString(newTicket.getPurchasingDate()));
+			pstmt.setInt(index++, newTicket.getUser().getId());
+			
+			int affectedRows = pstmt.executeUpdate();
+
+			if (affectedRows == 1) {
+	            
+	        	 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+	 	            if (generatedKeys.next()) {
+	 	            	newTicket.setId(generatedKeys.getInt(1));
+	 	            	return true;
+	 	            }
+	 	            else {
+	 	                throw new SQLException("Creating ticket failed, no ID obtained.");
+	 	            }
+	 	        }
+			} else return false;
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		
+		}
+		
+		
 	}
 		
 

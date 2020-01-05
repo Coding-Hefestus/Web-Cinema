@@ -2,9 +2,12 @@ package view;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import DAO.MovieDAO;
 import model.Actor;
@@ -30,17 +33,41 @@ public class TestMain {
 		//}
 		HashSet<Actor> set = new HashSet<Actor>();
 		
-		Actor g1 = new Actor(1, true, "Dwayne Johnson - Rock");
-		Actor g2 = new Actor(2, true, "Dwayne Johnson - Rock");
+//		Actor g1 = new Actor(1, true, "Dwayne Johnson - Rock");
+//		Actor g2 = new Actor(2, true, "Dwayne Johnson - Rock");
+//		
+//		set.add(g1);
+//		set.add(g2);
+//		System.out.println(set.size());
+//		set.remove(new Actor(1, false, "Dwayne Johnson - Rock"));
+//		System.out.println(set.size());
+//		
+//		LocalDateTime l = LocalDateTime.MIN;
+//		System.out.println(l.getYear());
+		String uri = "seats=2|seats=3";
 		
-		set.add(g1);
-		set.add(g2);
-		System.out.println(set.size());
-		set.remove(new Actor(1, false, "Dwayne Johnson - Rock"));
-		System.out.println(set.size());
+//		Stream<String> st = Stream.of(uri.split("&"));
+//		st.forEach(System.out::println);
+		//String[] old = uri.split("|");
+		//st.flatMap(mapper)
+		//System.out.println(String.join("", Arrays.copyOfRange(old, 1, old.length)));
+
+		//Stream.of( String.join("", Arrays.copyOfRange(old, 1, old.length)))
 		
-		LocalDateTime l = LocalDateTime.MIN;
-		System.out.println(l.getYear());
+		Stream.of(uri.split("\\|"))
+		.map(s -> s.split("seats="))
+		.flatMap(Arrays::stream)
+		.filter(x -> !x.contentEquals(""))
+		.forEach(System.out::println);
+//		ArrayList<Integer> ints = Stream.of(uri.split("&"))
+//		.map(s -> s.split("seats=")[1])
+//		.mapToInt(Integer::valueOf).boxed()
+//		.collect(Collectors.toCollection(ArrayList::new));
+//		
+//		for (Integer i : ints) {
+//			System.out.println(i);
+//		}
+		
 		
 	}
 

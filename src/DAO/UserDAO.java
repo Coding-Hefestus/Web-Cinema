@@ -190,7 +190,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		//ResultSet rset = null;
 		try {
-			String query = "INSERT INTO USER (active, username, password, registrationDate, role) "
+			String query = "INSERT INTO User (active, username, password, registrationDate, role) "
 					    + "VALUES (?, ?, ?, ?, ?)";
 
 			pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

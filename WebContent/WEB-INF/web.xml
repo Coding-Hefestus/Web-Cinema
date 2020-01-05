@@ -299,6 +299,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>ProceedToConfirmPurchaseServlet</display-name>
+    <servlet-name>ProceedToConfirmPurchaseServlet</servlet-name>
+    <servlet-class>servlets.ProceedToConfirmPurchaseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProceedToConfirmPurchaseServlet</servlet-name>
+    <url-pattern>/ProceedToConfirmPurchaseServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>ConfirmPurchaseServlet</display-name>
     <servlet-name>ConfirmPurchaseServlet</servlet-name>
     <servlet-class>servlets.ConfirmPurchaseServlet</servlet-class>
