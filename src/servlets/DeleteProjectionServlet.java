@@ -20,7 +20,7 @@ public class DeleteProjectionServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
+		else {
 		String idP = request.getParameter("delete");
 		
 		
@@ -32,7 +32,7 @@ public class DeleteProjectionServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("./MainPageAppServlet");
-		
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

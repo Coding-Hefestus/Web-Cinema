@@ -22,12 +22,14 @@ public class DeleteTicketServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		try {
 			int idTicket = Integer.valueOf(request.getParameter("delete"));
 			if (TicketDAO.delete(idTicket)) response.sendRedirect("./MainPageAppServlet");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

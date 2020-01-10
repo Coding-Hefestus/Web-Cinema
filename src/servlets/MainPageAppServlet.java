@@ -32,6 +32,7 @@ public class MainPageAppServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		//all filtering parameters
 		String movieF = request.getParameter("movieFilter"); 
@@ -136,6 +137,7 @@ public class MainPageAppServlet extends HttpServlet {
 			request.getRequestDispatcher("./MainPageApp.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 		
 	}

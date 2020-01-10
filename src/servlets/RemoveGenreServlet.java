@@ -33,6 +33,7 @@ public class RemoveGenreServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String genreString = request.getParameter("genre");
 		try {
@@ -55,7 +56,7 @@ public class RemoveGenreServlet extends HttpServlet {
 		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
-		
+		}
 	}
 
 }

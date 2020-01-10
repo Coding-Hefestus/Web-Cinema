@@ -20,6 +20,8 @@ public class EditUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
+			
 		
 		String id = request.getParameter("id");
 		String newRole = request.getParameter("role");
@@ -47,6 +49,8 @@ public class EditUserServlet extends HttpServlet {
 				response.sendRedirect("./UsersManagementServlet");
 			}	
 		} catch (Exception e) {e.printStackTrace();}
+		
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

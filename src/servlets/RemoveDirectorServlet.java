@@ -22,12 +22,14 @@ public class RemoveDirectorServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		//doGet(request, response);
 
 		
@@ -52,6 +54,7 @@ public class RemoveDirectorServlet extends HttpServlet {
 		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
+		}
 	}
 
 }

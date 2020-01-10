@@ -20,7 +20,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 
@@ -29,6 +29,7 @@ public class RegisterServlet extends HttpServlet {
 		//doGet(request, response);
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -56,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
 			// TODO: handle exception
 		}
 		
-		
+		}
 	}
 
 }

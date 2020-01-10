@@ -26,6 +26,7 @@ public class AddHallServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		try {
@@ -47,6 +48,7 @@ public class AddHallServlet extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

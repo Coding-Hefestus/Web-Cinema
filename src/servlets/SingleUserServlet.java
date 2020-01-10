@@ -24,6 +24,7 @@ public class SingleUserServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String idU = request.getParameter("id");
 		int idUser = Integer.valueOf(idU);
@@ -39,6 +40,7 @@ public class SingleUserServlet extends HttpServlet {
 		} catch (Exception e) {
 			
 			e.printStackTrace();
+		}
 		}
 	}
 

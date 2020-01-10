@@ -35,6 +35,7 @@ public class RemoveActorServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		String actorString = request.getParameter("actor");
@@ -58,6 +59,7 @@ public class RemoveActorServlet extends HttpServlet {
 		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
+		}
 		
 		
 	}

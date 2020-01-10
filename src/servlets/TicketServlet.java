@@ -23,6 +23,7 @@ public class TicketServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		try {
@@ -38,6 +39,7 @@ public class TicketServlet extends HttpServlet {
 			request.getRequestDispatcher("./SingleTicket.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

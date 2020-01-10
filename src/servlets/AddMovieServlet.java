@@ -26,7 +26,7 @@ public class AddMovieServlet extends HttpServlet {
 
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
+		else {
 		
 		try {
 			int idMovie = Integer.valueOf(request.getParameter("movie"));
@@ -46,6 +46,7 @@ public class AddMovieServlet extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

@@ -25,6 +25,7 @@ public class AddDirectorServlet extends HttpServlet {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
+		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -35,6 +36,7 @@ public class AddDirectorServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String director = request.getParameter("director");
 		String origin = request.getParameter("origin");
@@ -64,6 +66,7 @@ public class AddDirectorServlet extends HttpServlet {
 			request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
 		}
 		
+		}
 	}
 
 }

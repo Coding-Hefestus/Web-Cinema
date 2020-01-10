@@ -31,6 +31,7 @@ public class AddActorServlet extends HttpServlet {
 		//doGet(request, response);
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String actor = request.getParameter("actor");
 		String origin = request.getParameter("origin");
@@ -60,6 +61,7 @@ public class AddActorServlet extends HttpServlet {
 			request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
 		}
 		
+		}
 		
 	}
 

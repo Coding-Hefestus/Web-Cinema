@@ -29,6 +29,7 @@ public class SingleProjectionServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		String idP = request.getParameter("id");
@@ -95,6 +96,7 @@ public class SingleProjectionServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		}
 		
 		
 		

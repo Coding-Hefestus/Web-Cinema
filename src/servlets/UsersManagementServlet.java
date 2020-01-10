@@ -29,6 +29,7 @@ public class UsersManagementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		Moviefiable m = (Moviefiable)request.getSession().getAttribute(String.valueOf(loggedInUser.getId()));
@@ -114,7 +115,7 @@ public class UsersManagementServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
+		}
 		
 	}
 

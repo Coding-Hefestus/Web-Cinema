@@ -25,6 +25,7 @@ public class FindAvailableSeatsServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		try {
@@ -35,6 +36,7 @@ public class FindAvailableSeatsServlet extends HttpServlet {
 			request.getRequestDispatcher("./ChooseSeats.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

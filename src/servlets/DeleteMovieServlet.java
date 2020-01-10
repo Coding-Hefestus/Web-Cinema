@@ -27,7 +27,7 @@ public class DeleteMovieServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
+		else {
 		
 		String stringId = request.getParameter("delete");
 		
@@ -44,6 +44,7 @@ public class DeleteMovieServlet extends HttpServlet {
 		response.sendRedirect("./MovieServlet");
 		
 		//doGet(request, response);
-	}
+		}
+		}
 
 }

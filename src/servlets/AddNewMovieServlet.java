@@ -25,15 +25,15 @@ public class AddNewMovieServlet extends HttpServlet {
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
 		
+		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
-		
+
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String movieName = request.getParameter("movieName");
 		String movieDuration = request.getParameter("movieDuration");
@@ -124,7 +124,7 @@ public class AddNewMovieServlet extends HttpServlet {
 		} //od else
 		
 		
-		
+		}
 		
 
 	}

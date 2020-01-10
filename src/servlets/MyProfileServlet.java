@@ -25,6 +25,7 @@ public class MyProfileServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		if (loggedInUser.getRole().equals(Role.ADMIN)) {
@@ -60,7 +61,7 @@ public class MyProfileServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		}
 		
 		
 		

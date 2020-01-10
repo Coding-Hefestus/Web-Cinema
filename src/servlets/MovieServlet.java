@@ -32,6 +32,7 @@ public class MovieServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		//filter params
 		String nameF = request.getParameter("nameFilter"); 
@@ -141,6 +142,7 @@ public class MovieServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 		
 		

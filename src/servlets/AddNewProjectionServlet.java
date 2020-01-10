@@ -33,7 +33,7 @@ public class AddNewProjectionServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
+		else {
 		
 		String movieName = request.getParameter("movieName");
 		String hallName = request.getParameter("hall");
@@ -125,7 +125,7 @@ public class AddNewProjectionServlet extends HttpServlet {
 		} //od elsa
 		
 		
-		
+		}
 	}
 
 	

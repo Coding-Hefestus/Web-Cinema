@@ -22,6 +22,7 @@ public class ShowProjectionsServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		try {
 			int idMovie = Integer.valueOf(request.getParameter("movie"));
@@ -36,6 +37,7 @@ public class ShowProjectionsServlet extends HttpServlet {
 			request.getRequestDispatcher("./AllProjectionsForMovie.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

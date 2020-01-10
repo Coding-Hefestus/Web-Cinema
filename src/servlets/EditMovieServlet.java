@@ -23,8 +23,7 @@ public class EditMovieServlet extends HttpServlet {
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		
+
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
@@ -36,6 +35,7 @@ public class EditMovieServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String movieName = request.getParameter("movieName");
 		String movieDuration = request.getParameter("movieDuration");
@@ -124,6 +124,7 @@ public class EditMovieServlet extends HttpServlet {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
+		}
 		}
 
 	}

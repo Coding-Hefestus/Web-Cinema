@@ -19,6 +19,7 @@ public class DeleteUserServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		
 		String idUser = request.getParameter("id");
@@ -31,6 +32,7 @@ public class DeleteUserServlet extends HttpServlet {
 			response.sendRedirect("./UsersManagementServlet");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

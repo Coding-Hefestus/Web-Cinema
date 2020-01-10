@@ -34,6 +34,7 @@ public class AddGenreServlet extends HttpServlet {
 
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
 		
 		String genre = request.getParameter("genre");
 		String origin = request.getParameter("origin");
@@ -60,6 +61,8 @@ public class AddGenreServlet extends HttpServlet {
 			request.getRequestDispatcher("./EditMovie.jsp").forward(request, response);
 		} else if (origin.equals("AddNewMovie")) {
 			request.getRequestDispatcher("./AddNewMovie.jsp").forward(request, response);
+		}
+		
 		}
 		
 	}

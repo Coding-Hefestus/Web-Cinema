@@ -30,6 +30,8 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		final User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
+		else {
+			
 		
 		try {
 			
@@ -66,6 +68,7 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 
