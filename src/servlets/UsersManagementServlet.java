@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections4.ComparatorUtils;
 
 import DAO.UserDAO;
-import model.Movie;
 import model.Moviefiable;
 import model.User;
 

@@ -10,16 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.TicketDAO;
 import DAO.UserDAO;
-import model.Movie;
 import model.Moviefiable;
-import model.Projection;
 import model.Role;
 import model.Ticket;
 import model.User;
 
-/**
- * Servlet implementation class MyProfileServlet
- */
 public class MyProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

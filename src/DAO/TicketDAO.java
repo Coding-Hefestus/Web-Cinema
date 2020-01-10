@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import model.Projection;
-import model.Role;
 import model.Seat;
 import model.Ticket;
 import model.User;

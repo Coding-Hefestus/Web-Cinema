@@ -51,9 +51,11 @@
 		
 	<%} %>
 	
-	<form action="MyProfileServlet" method="get">
-			<input type=submit value="My profile" style=width:100%>
-	</form>
+	<%if (loggedInUser.getRole() != Role.UNSPECIFIED){%>
+				<form action="MyProfileServlet" method="get">
+					<input type=submit value="My profile" style=width:100%>
+				</form>
+	<%} %>
 	
 	
 	<form action="LogoutServlet" method="get">

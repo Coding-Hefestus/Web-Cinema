@@ -163,9 +163,6 @@
 					<td><%=m.getDistributor() %></td>
 					<td><%=m.getCountryOfOrigin() %></td>
 					
-					
-					
-					
 
 					<td>
 						<form action="EditMovieServlet" method="post">
@@ -217,7 +214,21 @@
 				</tr>
 			
 		
-				<%} %>
+			<%} %> 
+		<%} else {%>
+		
+			<%for (Movie m : filteredMovies){ %>
+			
+				<tr>
+					<td><a href="SingleMovieServlet?id=<%= m.getId() %>"> <%= m.getName() %></a></td>
+					<td><%=m.getDuration() %></td>
+					<td><%=m.getProductionYear() %></td>
+					<td><%=m.getGenresDisplay() %></td>
+					<td><%=m.getDistributor() %></td>
+					<td><%=m.getCountryOfOrigin() %></td>
+					
+			<%} %> 
+			
 		<%} %>
 	</table>
 	
@@ -229,10 +240,11 @@
 					 </form>
 				<%} %>
 				
+				<%if (loggedInUser.getRole() != Role.UNSPECIFIED){%>
 				<form action="MyProfileServlet" method="get">
 					<input type=submit value="My profile" style=width:100%>
 				</form>
-	
+				<%} %>
 				
 				<form action="LogoutServlet" method="get">
 					 	<input type=submit value="Logout" style=width:100%>

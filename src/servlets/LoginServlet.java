@@ -2,10 +2,14 @@ package servlets;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import DAO.UserDAO;
 import model.User;
@@ -33,7 +37,10 @@ public class LoginServlet extends HttpServlet {
 			User user = UserDAO.get(userName, password);
 			if (user == null) { response.sendRedirect("./Login.html"); return;}
 			else {
-				request.getSession().setAttribute("loggedInUser", user);				
+				request.getSession().setAttribute("loggedInUser", user);
+								
+				setSession(userName, request);
+
 				response.sendRedirect("./MainPageAppServlet");
 				
 			}
@@ -42,6 +49,17 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	private static void setSession(String userName, HttpServletRequest request) {
+				
+		ServletContext context = request.getSession( ).getServletContext();
+		
+		@SuppressWarnings("unchecked")
+		HashMap<String,HttpSession> mapa = 
+				(HashMap<String, HttpSession>) context.getAttribute("usersSessions");
+		
+		mapa.put(userName, request.getSession());
 	}
 
 }

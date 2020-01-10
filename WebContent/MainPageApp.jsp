@@ -21,7 +21,11 @@
 	
 	<a href="./LogoutServlet">Logout</a>
 	
-	<a href="./MyProfileServlet">My profile</a>
+	<%if(loggedInUser.getRole() != Role.UNSPECIFIED){ %>
+		<a href="./MyProfileServlet">My profile</a>
+	<%} %>
+	
+	
 	
 	<%if(loggedInUser.getRole() == Role.ADMIN){ %>
 		

@@ -43,31 +43,16 @@ public class TestMain {
 //		System.out.println(set.size());
 //		
 //		LocalDateTime l = LocalDateTime.MIN;
-//		System.out.println(l.getYear());
+
 		String uri = "seats=2|seats=3";
 		
-//		Stream<String> st = Stream.of(uri.split("&"));
-//		st.forEach(System.out::println);
-		//String[] old = uri.split("|");
-		//st.flatMap(mapper)
-		//System.out.println(String.join("", Arrays.copyOfRange(old, 1, old.length)));
 
-		//Stream.of( String.join("", Arrays.copyOfRange(old, 1, old.length)))
-		
 		Stream.of(uri.split("\\|"))
 		.map(s -> s.split("seats="))
 		.flatMap(Arrays::stream)
 		.filter(x -> !x.contentEquals(""))
 		.forEach(System.out::println);
-//		ArrayList<Integer> ints = Stream.of(uri.split("&"))
-//		.map(s -> s.split("seats=")[1])
-//		.mapToInt(Integer::valueOf).boxed()
-//		.collect(Collectors.toCollection(ArrayList::new));
-//		
-//		for (Integer i : ints) {
-//			System.out.println(i);
-//		}
-		
+
 		
 	}
 

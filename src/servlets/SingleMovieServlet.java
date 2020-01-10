@@ -24,7 +24,7 @@ public class SingleMovieServlet extends HttpServlet {
 		
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
-		
+		else {
 		
 		
 		String idM = request.getParameter("id");
@@ -41,6 +41,7 @@ public class SingleMovieServlet extends HttpServlet {
 		}
 
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		}
 	}
 
 	
