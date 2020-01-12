@@ -159,7 +159,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM User WHERE username = ? AND password = ?";
+			String query = "SELECT * FROM User WHERE username = ? OR password = ?";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
