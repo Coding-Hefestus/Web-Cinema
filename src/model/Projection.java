@@ -141,18 +141,7 @@ public class Projection extends Moviefiable{
 		return p -> p.getPeriod().getStart().isAfter(LocalDateTime.now()) &&  
 				    p.getTicketsSold() < p.getHall().getCapacity();
 	}
-	
-//	public static Predicate<Projection> afterNow(){
-//	
-//		return p -> p.getPeriod().getStart().isAfter(LocalDateTime.now());
-//	}
-//	
-//	public static  Predicate<Projection> hasAvailableSeats(){
-//		
-//		return p -> p.getTicketsSold() < p.getHall().getCapacity();
-//	}
-	
-	
+
 	public static Comparator<Projection> sortByMovie(){
 		return Comparator.comparing(Projection::movieName);
 	}

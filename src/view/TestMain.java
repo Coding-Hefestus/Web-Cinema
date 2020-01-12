@@ -1,19 +1,19 @@
 package view;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+//import java.time.LocalDateTime;
+//import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+//import java.util.HashSet;
+//import java.util.Set;
+//import java.util.stream.Collectors;
+//import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import DAO.MovieDAO;
-import model.Actor;
-import model.Dimension;
-import model.Genre;
-import model.Movie;
+//import DAO.MovieDAO;
+//import model.Actor;
+//import model.Dimension;
+//import model.Genre;
+//import model.Movie;
 
 public class TestMain {
 
@@ -31,7 +31,7 @@ public class TestMain {
 		//for (Integer  i : IntStream.rangeClosed(1, 3).g) {
 			
 		//}
-		HashSet<Actor> set = new HashSet<Actor>();
+		//HashSet<Actor> set = new HashSet<Actor>();
 		
 //		Actor g1 = new Actor(1, true, "Dwayne Johnson - Rock");
 //		Actor g2 = new Actor(2, true, "Dwayne Johnson - Rock");

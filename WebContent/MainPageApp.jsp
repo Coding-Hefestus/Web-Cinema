@@ -30,7 +30,7 @@
 	<%if(loggedInUser.getRole() == Role.ADMIN){ %>
 		
 		<a href="./UsersManagementServlet">Users management</a>
-		
+		<a href="./Report.jsp">Report</a>
 	<%} %>
 	
 	

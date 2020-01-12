@@ -183,9 +183,10 @@ CREATE TABLE User
 
 select * from User
 --id pre active
+update User set password = 'b' where id = 2
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
-INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'UNSPECIFIED');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'USER');
 
 
 
@@ -295,8 +296,12 @@ INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, pri
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
                 VALUES   (1,    1,       1,                4,        4,        100,   1 );
 
---LEFT JOIN Acting ON Movie.id = Acting.idMovie
---LEFT JOIN Actor ON Acting.idActor = Actor.id
+--za test Report
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (0,    1,       1,                4,        1,        100,   1 );
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
+                VALUES   (0,    3,       1,                4,        1,        100,   1 );
+
 
 SELECT Projection.id FROM Projection WHERE idMovie = 1 AND active = 1
 
@@ -353,6 +358,7 @@ CREATE TABLE Ticket
     FOREIGN KEY(idUser) REFERENCES User(id)  ON DELETE RESTRICT
 );
 select * from Ticket
+delete from Ticket where id in (2,3)
 --3 TICKETS FOR White Hall
 INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
               VALUES (1,        1,            1, '14-12-2019 14:00', 2);
@@ -417,11 +423,20 @@ where Seat.idHall = 1 and Seat.id not in (select Ticket.idSeat
 
 
 
+--report
+
+/*FROM Movie
+LEFT JOIN Acting ON Movie.id = Acting.idMovie
+LEFT JOIN Actor ON Acting.idActor = Actor.id*/
+select * from Projection
+select * from Ticket
 
 
-
-
-
-
-
+SELECT Movie.id, Movie.name, Projection.id, Projection.active, Period.startDate, Period.endDate, Ticket.id, Projection.price
+FROM Movie 
+LEFT JOIN Projection ON Movie.id = Projection.idMovie
+LEFT JOIN Ticket ON Projection.id = Ticket.idProjection
+JOIN Period ON Projection.idPeriod = Period.id
+WHERE Movie.active = 1
+ORDER BY Movie.id
 
