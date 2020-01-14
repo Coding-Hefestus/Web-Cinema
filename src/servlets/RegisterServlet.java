@@ -31,8 +31,9 @@ public class RegisterServlet extends HttpServlet {
 	
 		
 		try {
-			if (UserDAO.alreadyExists(username, password)) response.sendRedirect("./Register.html");
-			else {
+			if (!isAlphanumeric(username) || !isAlphanumeric(password)) { response.sendRedirect("./Register.html");
+			}else if (UserDAO.alreadyExists(username, password)) { response.sendRedirect("./Register.html");	
+			}else {
 				
 				User newUser = new User();
 				newUser.setActive(true);
@@ -51,6 +52,19 @@ public class RegisterServlet extends HttpServlet {
 		}
 	
 		
+	}
+	
+	private boolean isAlphanumeric(String str) {
+//		char c;
+//		for (int i=0; i<str.length(); i++) {
+//            c = str.charAt(i);
+//            if ((!Character.isDigit(c) && !Character.isLetter(c)) || c.equals(" ")) return false;
+//        }
+//        return true;
+		if (str.equals("")) return false;
+		else return !str.chars()
+                    .mapToObj(c -> (char) c)
+                    .anyMatch(c -> ( (!Character.isDigit(c) && !Character.isLetter(c)) || Character.isWhitespace(c) ));
 	}
 
 }
