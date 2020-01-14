@@ -120,9 +120,20 @@ public class ReportServlet extends HttpServlet {
 	}
 	
 	
-	private HashMap<String, Double> getTotals(ArrayList<Report> reports){
+	//@SuppressWarnings("serial")
+	private  HashMap<String, Double> getTotals(ArrayList<Report> reports){
 		
+		//Random r = new Random();
+		//if(r.nextBoolean()) 
 		return (HashMap<String, Double>) reports.stream().collect(new MapCollector());
+//		else return (HashMap<String, Double>) 
+//                reports.stream()
+//                .collect(
+//                  this::supplier,
+//                  this::acumulator,
+//                  this::combiner);
+		
+
 	}
 	
 	
@@ -133,4 +144,26 @@ public class ReportServlet extends HttpServlet {
 		request.setAttribute("income", map.get("income"));
 		
 	}
+	
+
+//	private Supplier<HashMap<String, Double>> supplier() {
+//	    return  () -> new HashMap<String, Double>() {{
+//	        put("projections", 0.0);
+//	        put("tickets", 0.0);
+//	        put("income", 0.0);
+//	    }};
+//	}
+//	
+//	
+//
+//	private void accumulator(HashMap<String, Double> map, Report report) {
+//	    map.put("projections", map.get("projections") + report.getProjections());
+//	    map.put("tickets", map.get("tickets") + report.getTickets());
+//	    map.put("income", map.get("income") + report.getIncome());
+//	}
+//
+//	
+//	private void combiner(HashMap<String, Double> firstMap, HashMap<String, Double> secondMap) {
+//	    firstMap.putAll(secondMap);
+//	}
 }

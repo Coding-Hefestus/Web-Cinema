@@ -26,8 +26,9 @@ public class LogoutServlet extends HttpServlet {
 			if ( m != null) request.getSession().removeAttribute(String.valueOf(loggedInUser.getId()));
 		}
 		
-		request.getSession().invalidate();
-		
+		request.getSession(false).invalidate();
+		response.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate");
+		response.setDateHeader("Expires", 0);
 		response.sendRedirect("./Login.html");
 		
 		
