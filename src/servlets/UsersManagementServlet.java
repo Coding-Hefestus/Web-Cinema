@@ -18,6 +18,7 @@ import org.apache.commons.collections4.ComparatorUtils;
 
 import DAO.UserDAO;
 import model.Moviefiable;
+import model.Role;
 import model.User;
 
 
@@ -77,7 +78,7 @@ public class UsersManagementServlet extends HttpServlet {
 		try {
 		
 			ArrayList<User> filteredUsers = (ArrayList<User>)  UserDAO.getAll().stream()
-					.filter(u -> u.getId() != loggedInUser.getId())		
+					.filter(u -> u.getId() != loggedInUser.getId() && u.getRole() == Role.USER)		
 					.filter(User.usernameFilter(usernameFilter)
 									.and(User.roleFilter(roleFilter))
 									.and(User.registrationDateFilter(from, to)))
