@@ -6,6 +6,8 @@
 <%User loggedInUser = (User) request.getSession().getAttribute("loggedInUser"); %>
 <%String from = (String) request.getAttribute("from"); %>
 <%String to = (String) request.getAttribute("to"); %>
+<%String fromTime = (String) request.getAttribute("fromTime"); %>
+<%String toTime = (String) request.getAttribute("toTime"); %>
 <%ArrayList<Report> sortedReports = (ArrayList<Report>) request.getAttribute("sortedReports"); %>
 <%Double projections = (Double) request.getAttribute("projections"); %>
 <%Double tickets = (Double) request.getAttribute("tickets"); %>
@@ -20,10 +22,16 @@
 </head>
 <body>
 	
-	<%if (from == null || to == null){ %>
+	<%if (from == null || to == null || fromTime == null || toTime == null){ %>
 		<form action="ReportServlet" method="get">			
-				From:&nbsp;<input name="fromDate" type="date" ></br>
-				To:&nbsp;<input name="toDate" type="date" > </br>
+				<!-- From:&nbsp;<input name="fromDate" type="date" ></br>
+				To:&nbsp;<input name="toDate" type="date" > </br> -->
+				from:&nbsp;<input name="fromDate" type="date" value="" > 
+				<input name="fromTime" type="time" value="" ></br>
+							
+							
+				to:&nbsp;<input name="toDate" type="date" value="" > 
+				<input name="toTime" type="time" value="" ></br>
 				<input type="submit" value="Generate report">			
 		</form>
 	
@@ -34,6 +42,9 @@
 	<form action="ReportServlet" method="post">
 		<input type="hidden" value="<%=from %>" name="fromDate">
 		<input type="hidden" value="<%=to %>" name="toDate">
+		
+		<input type="hidden" value="<%=fromTime %>" name="fromTime">
+		<input type="hidden" value="<%=toTime %>" name="toTime">
 	<table border="1" style=width:100%>
 		<tr>
 			<th>Movie</th>

@@ -5,6 +5,7 @@
 <%@page import="model.Role"%>
 <%@page import="model.Ticket"%>
 <%Projection projection = (Projection) request.getAttribute("projection");%>
+<%boolean avaliable = (Boolean) request.getAttribute("avaliable"); %>
  <%User loggedInUser = (User) request.getSession().getAttribute("loggedInUser"); %>
  <%ArrayList<Ticket> ticketsForProjection = (ArrayList<Ticket>) request.getAttribute("ticketsForProjection"); %>
 
@@ -41,7 +42,7 @@
 
 	</table>
 	
-	<%if(loggedInUser.getRole() == Role.USER && (projection.getHall().getCapacity() - projection.getTicketsSold()) != 0){ %>
+	<%if(loggedInUser.getRole() == Role.USER && avaliable){ %>
 		
 		
 		<form action="FindAvailableSeatsServlet" method="get">

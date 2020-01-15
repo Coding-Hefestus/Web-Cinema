@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,8 +25,9 @@ import model.User;
 
 public class ReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-       
+	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+ 
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -39,14 +39,19 @@ public class ReportServlet extends HttpServlet {
 				String from = request.getParameter("fromDate");
 				String to = request.getParameter("toDate");
 				
-				LocalDateTime fromDate = getLocalDateTime(from);
-				LocalDateTime toDate =  getLocalDateTime(to);
+				String fromTime = request.getParameter("fromTime");
+				String toTime = request.getParameter("toTime");
+				
+				LocalDateTime fromDate = getLocalDateTime(from + " " + fromTime);
+				LocalDateTime toDate =  getLocalDateTime(to + " " + toTime);
 				
 				if (fromDate.isBefore(toDate)) {
 					
 					ArrayList<Report> reports = ReportDAO.getReports(fromDate, toDate);
 					request.setAttribute("from", from);
 					request.setAttribute("to", to);
+					request.setAttribute("fromTime", fromTime);
+					request.setAttribute("toTime", toTime);
 									
 					setStatistics(reports, request);
 	
@@ -79,10 +84,13 @@ public class ReportServlet extends HttpServlet {
 				
 				String from = request.getParameter("fromDate");
 				String to = request.getParameter("toDate");
+			
 				
+				String fromTime = request.getParameter("fromTime");
+				String toTime = request.getParameter("toTime");
 				
-				LocalDateTime fromDate = getLocalDateTime(from);
-				LocalDateTime toDate =  getLocalDateTime(to);
+				LocalDateTime fromDate = getLocalDateTime(from + " " + fromTime);
+				LocalDateTime toDate =  getLocalDateTime(to + " " + toTime);
 				
 				String movieSort = request.getParameter("byMovie");
 				String projectionsSort = request.getParameter("byProjections");		
@@ -103,6 +111,8 @@ public class ReportServlet extends HttpServlet {
 				setStatistics(reports, request);
 				request.setAttribute("from", from);
 				request.setAttribute("to", to);
+				request.setAttribute("fromTime", fromTime);
+				request.setAttribute("toTime", toTime);
 
 				request.setAttribute("sortedReports", reports);
 				
@@ -115,24 +125,16 @@ public class ReportServlet extends HttpServlet {
 	}
 	
 	private LocalDateTime getLocalDateTime(String dateString) {
-		LocalDate ldt = LocalDate.parse(dateString , formatter);
-		return LocalDateTime.of(ldt, LocalDateTime.MIN.toLocalTime());
+
+		return  LocalDateTime.parse(dateString, formatter);
 	}
 	
 	
 	//@SuppressWarnings("serial")
 	private  HashMap<String, Double> getTotals(ArrayList<Report> reports){
 		
-		//Random r = new Random();
-		//if(r.nextBoolean()) 
 		return (HashMap<String, Double>) reports.stream().collect(new MapCollector());
-//		else return (HashMap<String, Double>) 
-//                reports.stream()
-//                .collect(
-//                  this::supplier,
-//                  this::acumulator,
-//                  this::combiner);
-		
+
 
 	}
 	
@@ -145,25 +147,4 @@ public class ReportServlet extends HttpServlet {
 		
 	}
 	
-
-//	private Supplier<HashMap<String, Double>> supplier() {
-//	    return  () -> new HashMap<String, Double>() {{
-//	        put("projections", 0.0);
-//	        put("tickets", 0.0);
-//	        put("income", 0.0);
-//	    }};
-//	}
-//	
-//	
-//
-//	private void accumulator(HashMap<String, Double> map, Report report) {
-//	    map.put("projections", map.get("projections") + report.getProjections());
-//	    map.put("tickets", map.get("tickets") + report.getTickets());
-//	    map.put("income", map.get("income") + report.getIncome());
-//	}
-//
-//	
-//	private void combiner(HashMap<String, Double> firstMap, HashMap<String, Double> secondMap) {
-//	    firstMap.putAll(secondMap);
-//	}
 }

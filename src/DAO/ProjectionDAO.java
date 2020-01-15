@@ -66,7 +66,7 @@ public class ProjectionDAO {
 		return (ArrayList<Projection>) projections
 				  						.stream()
 										.sorted(Projection.sortByMovie()
-										.thenComparing(Projection.sortByMovie()))
+										.thenComparing(Projection.sortByStartDate()))
 										.collect(Collectors.toList());
 		
 	}

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 public class Projection extends Moviefiable{
 	
+	
 	private Movie movie;
 	private ProjectionType projectionType;
 	private Hall hall;
@@ -137,9 +138,17 @@ public class Projection extends Moviefiable{
 	}
 	
 	public static Predicate<Projection> hasAvaliableProjections(){
-		
 		return p -> p.getPeriod().getStart().isAfter(LocalDateTime.now()) &&  
 				    p.getTicketsSold() < p.getHall().getCapacity();
+	}
+	
+	public static Predicate<Projection> forToday(){
+		LocalDateTime now = LocalDateTime.now();
+		int todayYear, todayMonth, todayDay;
+		todayYear = now.getYear(); todayMonth = now.getMonthValue(); todayDay = now.getDayOfMonth();
+		return p -> p.getPeriod().getStart().getYear() == todayYear 
+				 && p.getPeriod().getStart().getMonthValue() == todayMonth
+				 && p.getPeriod().getStart().getDayOfMonth() == todayDay;
 	}
 
 	public static Comparator<Projection> sortByMovie(){

@@ -84,6 +84,9 @@ public class SingleProjectionServlet extends HttpServlet {
 				request.setAttribute("toTime", toTime);
 			}
 			
+			if (avaliable(projection)) request.setAttribute("avaliable", true);
+			else request.setAttribute("avaliable", false);
+			
 			request.setAttribute("userFilter", userFilter);
 			
 			request.setAttribute("projection", projection);
@@ -110,6 +113,10 @@ public class SingleProjectionServlet extends HttpServlet {
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
 		doGet(request, response);
+	}
+	
+	private boolean avaliable(Projection projection) {
+		return ((projection.getHall().getCapacity() - projection.getTicketsSold()) != 0 && projection.getPeriod().getStart().isAfter(LocalDateTime.now()));
 	}
 
 }

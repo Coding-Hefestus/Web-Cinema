@@ -71,7 +71,7 @@ public class MainPageAppServlet extends HttpServlet {
 		
 		
 		
-		List<Comparator<Projection>> comparators = new ArrayList<>();
+		List<Comparator<Projection>> comparators = new ArrayList<Comparator<Projection>>();
 		
 		//sorting parameters
 		String movieSort = request.getParameter("byMovie");
@@ -93,6 +93,7 @@ public class MainPageAppServlet extends HttpServlet {
 		try {
 
 			ArrayList<Projection> filteredProjections = (ArrayList<Projection>) ProjectionDAO.getAll().stream()
+							.filter(Projection.forToday())
 							.filter(Projection.movieFilter(movieFilter)						
 							.and(Projection.dateFilter(from, to))
 							.and(Projection.dimensionFilter(dimensionFilter))

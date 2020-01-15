@@ -19,14 +19,13 @@ CREATE TABLE Movie
 
 
 select * from Movie
-delete from Movie where id  in (2, 3,4,5)
-update Movie set active = 0 where id  in (2, 3,4,5)
 
-INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: Jungle', 120, 2017, 'Description goes here', '20th Century Fox', 'USA' );
-INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Jumanji: The next level', 140,2019, 'Description goes here', '20th Century Fox', 'USA'  );
-INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'John Shaft', 100 ,2001, 'Description goes here', 'DreamWorks', 'USA' );
-INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Lord of the Rings - Part I', 125 ,2003, 'Description goes here', 'Lions Gate', 'USA' );
-INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Joker', 125 ,2019, '', 'Cinematicks', 'USA' );
+
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Joker', 122 ,2019, 'Description goes here', 'Cinematicks', 'USA' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'John Shaft', 99 ,2000, 'Description goes here', 'DreamWorks', 'USA' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Avengers: Endgame', 182, 2019, 'Description goes here', '20th Century Fox', 'USA' );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Harry Potter', 120, 2017, 'Description goes here', 'New Line Cinema', 'USA'  );
+INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Churchil', 105 ,2017, 'Description goes here', 'Silver Reel', 'USA' );
 
 --------------------------------------------------------
 create table Acting
@@ -37,13 +36,22 @@ create table Acting
     FOREIGN KEY(idMovie) REFERENCES Movie(id) ON DELETE RESTRICT, 
     FOREIGN KEY(idActor) REFERENCES Actor(id) ON DELETE RESTRICT
 )
-delete FROM Acting
-delete FROM table Acting where id = 1
 select * from Acting
+
 INSERT INTO Acting (idMovie, idActor) VALUES (1, 1);
-INSERT INTO Acting (idMovie, idActor) VALUES (1, 2);
+
 INSERT INTO Acting (idMovie, idActor) VALUES (2, 2);
+
 INSERT INTO Acting (idMovie, idActor) VALUES (3, 3);
+INSERT INTO Acting (idMovie, idActor) VALUES (3, 4);
+INSERT INTO Acting (idMovie, idActor) VALUES (3, 5);
+
+INSERT INTO Acting (idMovie, idActor) VALUES (4, 6);
+INSERT INTO Acting (idMovie, idActor) VALUES (4, 7);
+
+INSERT INTO Acting (idMovie, idActor) VALUES (5, 8);
+
+
 create table Actor
 (
 
@@ -53,11 +61,20 @@ name TEXT NOT NULL
 
 )
 
-drop table Actor
+
 select * from Actor
-INSERT INTO Actor (active, name) VALUES (1, 'Dwayne Johnson - Rock');
-INSERT INTO Actor (active, name) VALUES (1, 'Karen Gillan');
+
+INSERT INTO Actor (active, name) VALUES (1, 'Joaquin Phoenix');
 INSERT INTO Actor (active, name) VALUES (1, 'Samuel L Jackson');
+INSERT INTO Actor (active, name) VALUES (1, 'Robert Downey Jr.');
+INSERT INTO Actor (active, name) VALUES (1, 'Scarlet Johansson');
+INSERT INTO Actor (active, name) VALUES (1, 'Chris Hemsworth');
+INSERT INTO Actor (active, name) VALUES (1, 'Daniel Redclif');
+INSERT INTO Actor (active, name) VALUES (1, 'Rupert Greeen');
+INSERT INTO Actor (active, name) VALUES (1, 'Brian Cox');
+
+
+
 --------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------
@@ -69,9 +86,22 @@ create table Genre
 
 )
 select * from Genre
-INSERT INTO Genre (active, name) VALUES (1, 'Comedy');
+
+INSERT INTO Genre (active, name) VALUES (1, 'Crime');
+INSERT INTO Genre (active, name) VALUES (1, 'Drama');
+INSERT INTO Genre (active, name) VALUES (1, 'Triler');
 INSERT INTO Genre (active, name) VALUES (1, 'Action');
+INSERT INTO Genre (active, name) VALUES (1, 'Comedy');
 INSERT INTO Genre (active, name) VALUES (1, 'Adventure');
+INSERT INTO Genre (active, name) VALUES (1, 'Family');
+INSERT INTO Genre (active, name) VALUES (1, 'Biography');
+INSERT INTO Genre (active, name) VALUES (1, 'History');
+
+
+
+
+
+
 
 create table MovieGenre
 (
@@ -82,12 +112,27 @@ create table MovieGenre
     FOREIGN KEY(idGenre) REFERENCES Genre(id) ON DELETE RESTRICT
 
 )
-delete from MovieGenre
 select * from MovieGenre
+--Joker
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 1);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 2);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (1, 3);
+--Shaft
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 4);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 5);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (2, 1);
+--Avengers
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 4);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 6);
 INSERT INTO MovieGenre (idMovie, idGenre) VALUES (3, 2);
-
+--potter
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 4);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 6);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (4, 7);
+--churchill
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (5, 8);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (5, 2);
+INSERT INTO MovieGenre (idMovie, idGenre) VALUES (5, 9);
 
 
 
@@ -100,9 +145,12 @@ create table Director
     name TEXT NOT NULL
 )
 select * from Director
-INSERT INTO Director (active, name) VALUES (1, 'Jake Kasdan');
-INSERT INTO Director (active, name) VALUES (1, 'John Singleton');
-INSERT INTO Director (active, name) VALUES (1, 'Peter Jackson');
+INSERT INTO Director (active, name) VALUES (1, 'Todd Phillips');
+INSERT INTO Director (active, name) VALUES (2, 'John Singleton');
+INSERT INTO Director (active, name) VALUES (3, 'Anthony Russo');
+INSERT INTO Director (active, name) VALUES (3, 'Cris Columbus');
+INSERT INTO Director (active, name) VALUES (3, 'Jonathan Teplitzky');
+
 
 
 create table Directing
@@ -115,14 +163,11 @@ create table Directing
 
 )
 select * from Directing
-select * from Director
-drop table Directing
-delete from Directing
-
 INSERT INTO Directing (idMovie, idDirector) VALUES (1, 1);
-INSERT INTO Directing (idMovie, idDirector) VALUES (1, 3);
-INSERT INTO Directing (idMovie, idDirector) VALUES (2, 1);
-INSERT INTO Directing (idMovie, idDirector) VALUES (3, 2);
+INSERT INTO Directing (idMovie, idDirector) VALUES (2, 2);
+INSERT INTO Directing (idMovie, idDirector) VALUES (3, 3);
+INSERT INTO Directing (idMovie, idDirector) VALUES (4, 4);
+INSERT INTO Directing (idMovie, idDirector) VALUES (5, 5);
 
 
 
@@ -183,10 +228,12 @@ CREATE TABLE User
 
 select * from User
 --id pre active
-update User set password = 'b' where id = 2
+
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'USER');
+INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'd', 'd', '15-03-2012 10:00', 'UNSPECIFIED');
+
 
 
 
@@ -198,16 +245,16 @@ CREATE TABLE ProjectionType
     
 );
 
+select * from ProjectionType
+
 INSERT INTO ProjectionType ( active, dimension) VALUES (1, 'IID');
 INSERT INTO ProjectionType ( active, dimension) VALUES (1, 'IIID');
 INSERT INTO ProjectionType ( active, dimension) VALUES (1, 'IVD');
 
 
-select * from ProjectionType
 
 
-delete from Hall
-drop table Hall
+
 
 CREATE TABLE Hall
 (
@@ -217,6 +264,7 @@ CREATE TABLE Hall
      name VARCHAR(20) NOT NULL
      
 );
+select * from hall
 
 
 
@@ -244,21 +292,25 @@ create table Supports
     FOREIGN KEY(idProjectionType) REFERENCES ProjectionType(id) ON DELETE RESTRICT
 
 );
-
-
+select * from Supports
+--White hall supports 2D, 3D
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 1);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 2);
-INSERT INTO Supports ( idHall, idProjectionType) VALUES (1, 3);
+
+--Black hall supports 3D, 4D
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (2, 2);
+INSERT INTO Supports ( idHall, idProjectionType) VALUES (2, 3);
+
+--Orange hall supports 2D, 4D
+INSERT INTO Supports ( idHall, idProjectionType) VALUES (3, 2);
 INSERT INTO Supports ( idHall, idProjectionType) VALUES (3, 3);
 
 delete from Supports
-select * from Supports
 
 
 
 
-drop table Projection
+
 CREATE TABLE Projection
 
 (
@@ -278,34 +330,66 @@ CREATE TABLE Projection
 
 );
 select * from Projection
-delete from Projection where id = 2
---test projekcija za dugme Kupi na stranici Filmova
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    1,       1,                1,       1,        100,   1 );
+--id filmova
 
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    1,       1,                2,       2,        100,   1 );
------
+--'Joker', 1
+--'John Shaft', 2
+-- 'Avengers: Endgame', 3
+-- 'Harry Potter', 4
+--'Churchil', 5
+delete from Projection
+select * from Projection
 
-                             
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    3,       1,                1,        1,        100,   1 );
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    8,       1,                3,        2,        100,   1 );
-
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (1,    1,       1,                4,        4,        100,   1 );
-
---za test Report
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (0,    1,       1,                4,        1,        100,   1 );
-INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) 
-                VALUES   (0,    3,       1,                4,        1,        100,   1 );
+--projekcije za dan 14.01.2020 white hall (8 projekcija, 8 Perioda)
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 1, 1, 1, 100, 1); --id 1
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 2, 1, 2, 150, 1); --id 2
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 2, 1, 3, 200, 1); --id 3
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 1, 1, 4, 200, 1); --id 4
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 2, 1, 5, 200, 1); --id 5
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 2, 1, 6, 200, 1); --id 6
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 1, 1, 7, 200, 1); --id 7
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 1, 1, 8, 200, 1); --id 8
 
 
-SELECT Projection.id FROM Projection WHERE idMovie = 1 AND active = 1
+--Projekcije za dan 15.01.2020 black hall (8 projekcija 8 perioda)
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 3, 2, 9, 100, 1); --id 9
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 2, 2, 10, 150, 1); --id 10
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 3, 2, 11, 200, 1); --id 11
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 3, 2, 12, 200, 1); --id 12
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 2, 2, 13, 200, 1); --id 13
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 2, 2, 14, 200, 1); --id 14
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 3, 2, 15, 200, 1); --id 15
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 3, 2, 16, 200, 1); --id 16
 
+--Projekcije za dan 16.01.2020 Orange hall (8 projekcija 8 perioda)
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 1, 3, 17, 100, 1); --id 17
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 3, 3, 18, 150, 1); --id 18
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 3, 3, 19, 200, 1); --id 19
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 1, 3, 20, 200, 1); --id 20
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 3, 3, 21, 200, 1); --id 21
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 3, 3, 22, 200, 1); --id 22
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 1, 3, 23, 200, 1); --id 23
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 1, 3, 24, 200, 1); --id 24
 
+--Projekcije za dan 17.01.2020 White hall (8 projekcija 8 perioda)
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 1, 1, 25, 100, 1); --id 25
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 2, 1, 26, 150, 1); --id 26
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 2, 1, 27, 200, 1); --id 27
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 1, 1, 28, 200, 1); --id 28
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 2, 1, 29, 200, 1); --id 29
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 2, 1, 30, 200, 1); --id 30
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 1, 1, 31, 200, 1); --id 31
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 1, 1, 32, 200, 1); --id 32
+
+--Projekcije za dan 18.01.2020 Black hall (8 projekcija 8 perioda)
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 3, 2, 33, 100, 1); --id 33
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 2, 2, 34, 150, 1); --id 34
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 2, 2, 35, 200, 1); --id 35
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 3, 2, 35, 200, 1); --id 35
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 2, 2, 37, 200, 1); --id 37
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 2, 2, 38, 200, 1); --id 38
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 3, 3, 2, 39, 200, 1); --id 39
+INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 4, 3, 2, 40, 200, 1); --id 40
 
 
 select Projection.id, Projection.active, Projection.idMovie, Projection.idProjectionType, Projection.idHall, Projection.idPeriod, Projection.price, Projection.idAdmin, COUNT(Ticket.id)
@@ -325,7 +409,7 @@ group by Projection.id, Ticket.idProjection
 
 
 
-delete from  Period
+
 CREATE TABLE Period
 (
     id INTEGER PRIMARY KEY,
@@ -335,15 +419,63 @@ CREATE TABLE Period
     
 );
 select * from Period
-delete from Period where id = 3
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-03-2020 12:00', '16-03-2020 14:00');
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
+--durations
+--'Joker', 122 
+ --'John Shaft', 99 
+--'Avengers: Endgame', 182
+--'Harry Potter', 120
+--'Churchil', 105
+delete from Period
 
+--Period objekti za dan 14.01.2020 (8 projekcija za white hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 09:00', '14-01-2020 11:02'); --id 1
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 11:30', '14-01-2020 12:59'); --id 2
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 13:30', '14-01-2020 15:32'); --id 3
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 16:00', '14-01-2020 17:39'); --id 4
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 17:45', '14-01-2020 20:47'); --id 5
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 21:00', '14-01-2020 23:00'); --id 6
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 04:00', '14-01-2020 07:02'); --id 7
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 07:10', '14-01-2020 08:59'); --id 8
 
---INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2019 12:00', '15-01-2019 14:00');
---INSERT INTO Period (active, startDate, endDate) VALUES (1, '19-02-2019 12:00', '19-02-2019 14:00');
---INSERT INTO Period (active, startDate, endDate) VALUES (1, '20-02-2019 12:00', '20-02-2019 14:00');
+--Period objekti za dan 15.01.2020 (8 projekcija za Black Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 09:00', '15-01-2020 11:02'); --id 9
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 11:30', '15-01-2020 12:59'); --id 10
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 13:30', '15-01-2020 15:32'); --id 11
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 16:00', '15-01-2020 17:39'); --id 12
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 17:45', '15-01-2020 20:47'); --id 13
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 21:00', '15-01-2020 23:00'); --id 14
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 04:00', '15-01-2020 07:02'); --id 15
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 07:10', '15-01-2020 08:59'); --id 16
 
+--Period objekti za dan 16.01.2020 (8 projekcija za Orange Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 09:00', '16-01-2020 11:02'); --id 17
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 11:30', '16-01-2020 12:59'); --id 18
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 13:30', '16-01-2020 15:32'); --id 19
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 16:00', '16-01-2020 17:39'); --id 20
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 17:45', '16-01-2020 20:47'); --id 12
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 21:00', '16-01-2020 23:00'); --id 22
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 04:00', '16-01-2020 07:02'); --id 23
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 07:10', '16-01-2020 08:59'); --id 24
+
+--Period objekti za dan 17.01.2020 (8 projekcija za White Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 09:00', '17-01-2020 11:02'); --id 25
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 11:30', '17-01-2020 12:59'); --id 26
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 13:30', '17-01-2020 15:32'); --id 27
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 16:00', '17-01-2020 17:39'); --id 28
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 17:45', '17-01-2020 20:47'); --id 29
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 21:00', '17-01-2020 23:00'); --id 30
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 04:00', '17-01-2020 07:02'); --id 31
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 07:10', '17-01-2020 08:59'); --id 32
+
+--Period objekti za dan 18.01.2020 (8 projekcija za Black Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 09:00', '18-01-2020 11:02'); --id 33
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 11:30', '18-01-2020 12:59'); --id 34
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 13:30', '18-01-2020 15:32'); --id 35
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 16:00', '18-01-2020 17:39'); --id 36
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 17:45', '18-01-2020 20:47'); --id 37
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 21:00', '18-01-2020 23:00'); --id 38
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 04:00', '18-01-2020 07:02'); --id 39
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 07:10', '18-01-2020 08:59'); --id 40
 
 CREATE TABLE Ticket
 (
@@ -358,29 +490,137 @@ CREATE TABLE Ticket
     FOREIGN KEY(idUser) REFERENCES User(id)  ON DELETE RESTRICT
 );
 select * from Ticket
-delete from Ticket where id in (2,3)
---3 TICKETS FOR White Hall
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        1,            1, '14-12-2019 14:00', 2);
-INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
-              VALUES (1,        1,            2, '14-12-2019 13:00', 2);
---INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
---              VALUES (1,        1,            3, '14-02-2019 14:00', 4);
---
---
----- 4 tickets for Black hall
---INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
---              VALUES (1,        2,            4, '14-02-2019 14:00', 4);
---INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
---              VALUES (1,        2,            5, '14-02-2019 14:00', 4);
---INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
---              VALUES (1,        2,            6, '14-02-2019 14:00', 4);
---INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale,     idUser) 
---              VALUES (1,        2,            7, '14-02-2019 14:00', 4);
+--Tickets for Projections on 14.01.2020 White hall; ID projekcija (1-8); id sedišta (1-3)
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 1, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 1, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 2, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 2, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 3, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 3, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 4, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 4, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 5, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 5, 2, '10-01-2020 12:00', 2);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 6, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 6, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 7, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 7, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 8, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 8, 2, '10-01-2020 12:00', 3);
+
+
+--Tickets for Projections on 15.01.2020 Black hall; ID projekcija (9-16); id sedišta (4-7)
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 9, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 9, 5, '10-01-2020 12:00', 3);
+
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 10, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 10, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 11, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 11, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 12, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 12, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 13, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 13, 5, '10-01-2020 12:00', 2);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 14, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 14, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 15, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 15, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 16, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 16, 5, '10-01-2020 12:00', 3);
+
+--Tickets for Projections on 16.01.2020 Orange hall; ID projekcija (17-24); id sedišta (8-12)
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 17, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 17, 9, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 18, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 18, 9, '10-01-2020 12:00', 3);
+
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 19, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 19, 9, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 20, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 20, 9, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 21, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 21, 9, '10-01-2020 12:00', 2);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 22, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 22, 9, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 23, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 23, 9, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 24, 8, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 24, 9, '10-01-2020 12:00', 3);
+
+--Tickets for Projections on 17.01.2020  white hall; ID projekcija (25-32); id sedišta (1-3)
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 25, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 25, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 26, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 26, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 27, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 27, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 28, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 28, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 29, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 29, 2, '10-01-2020 12:00', 2);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 30, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 30, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 31, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 31, 2, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 32, 1, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 32, 2, '10-01-2020 12:00', 3);
+
+
+--Tickets for Projections on 18.01.2020  Black hall; ID projekcija (33-40); id sedišta (4-7)
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 33, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 33, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 34, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 34, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 35, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 35, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 36, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 36, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 37, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 37, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 38, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 38, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 39, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 39, 5, '10-01-2020 12:00', 3);
+
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 40, 4, '10-01-2020 12:00', 2);
+INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 40, 5, '10-01-2020 12:00', 3);
 
 
 
-DROP TABLE Seat
 CREATE TABLE Seat
 (
 
@@ -392,7 +632,6 @@ CREATE TABLE Seat
     
 );
 select * from Seat
-
 --3 seats for White Hall
 INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 1); --id 1
 INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 1);--id 2
@@ -404,6 +643,12 @@ INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 2);--id 5
 INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 2);--id 6
 INSERT INTO Seat (active, number, idHall) VALUES (1, 4, 2);--id 7
 
+--5 sests for Orange Hall
+INSERT INTO Seat (active, number, idHall ) VALUES (1, 1, 3); --id 8
+INSERT INTO Seat (active, number, idHall ) VALUES (1, 2, 3);--id 9
+INSERT INTO Seat (active, number, idHall) VALUES (1, 3, 3);--id 10
+INSERT INTO Seat (active, number, idHall) VALUES (1, 4, 3);--id 11
+INSERT INTO Seat (active, number, idHall) VALUES (1, 5, 3);--id 12
 
 
 
@@ -424,19 +669,11 @@ where Seat.idHall = 1 and Seat.id not in (select Ticket.idSeat
 
 
 --report
-
-/*FROM Movie
-LEFT JOIN Acting ON Movie.id = Acting.idMovie
-LEFT JOIN Actor ON Acting.idActor = Actor.id*/
-select * from Projection
-select * from Ticket
-
-
-SELECT Movie.id, Movie.name, Projection.id, Projection.active, Period.startDate, Period.endDate, Ticket.id, Projection.price
+SELECT Movie.id, Movie.name, Projection.id, Projection.active, Period.startDate, Period.endDate, Projection.price, count(Ticket.id)
 FROM Movie 
 LEFT JOIN Projection ON Movie.id = Projection.idMovie
 LEFT JOIN Ticket ON Projection.id = Ticket.idProjection
-JOIN Period ON Projection.idPeriod = Period.id
+LEFT JOIN Period ON Projection.idPeriod = Period.id
 WHERE Movie.active = 1
+group by Projection.id
 ORDER BY Movie.id
-

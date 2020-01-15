@@ -140,9 +140,7 @@
     							
     							<input type="radio" id="hallOrange" <%if (request.getAttribute("hallFilter").equals("Orange Hall")){ %> checked <%} %> name="hallFilter" value="Orange Hall">
     							<label for="hallOrange">Orange Hall</label><br>
-    							
-    							<input type="radio" id="hallBlue" <%if (request.getAttribute("hallFilter").equals("Blue Hall")){ %> checked <%} %> name="hallFilter" value="Blue Hall">
-    							<label for="hallBlue">Blue Hall</label><br>
+
 
     					</fieldset> 
     					

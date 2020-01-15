@@ -41,8 +41,11 @@ public class PeriodDAO {
 				period.setActive(rset.getInt(2) == 1 ? true : false);
 				
 				String dateTimeStringStart = rset.getString(3);
+				
 				Timestamp tsStart = new Timestamp(DATETIME_FORMAT.parse(dateTimeStringStart).getTime());
 				LocalDateTime start = tsStart.toLocalDateTime();
+				//System.out.println(start);
+				//System.exit(1);
 				period.setStart(start);
 				
 				String dateTimeStringEnd = rset.getString(4);

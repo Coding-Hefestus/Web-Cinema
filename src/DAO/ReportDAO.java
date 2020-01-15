@@ -25,19 +25,22 @@ public class ReportDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT Movie.id, Movie.name, Projection.id, Projection.active, Period.startDate, Period.endDate, Ticket.id, Projection.price" 
-					      + " FROM Movie" 
-					      + " LEFT JOIN Projection ON Movie.id = Projection.idMovie"
-					      + " LEFT JOIN Ticket ON Projection.id = Ticket.idProjection"
-					      + " JOIN Period ON Projection.idPeriod = Period.id"
-					      + " WHERE Movie.active = 1" 
-					      + " ORDER BY Movie.id";
+			
+			String query = "SELECT Movie.id, Movie.name, Projection.id, Projection.active, Period.startDate, Period.endDate, Projection.price, count(Ticket.id)"
+			             + " FROM Movie" 
+			             + " LEFT JOIN Projection ON Movie.id = Projection.idMovie"
+			             + " LEFT JOIN Ticket ON Projection.id = Ticket.idProjection"
+			             + " LEFT JOIN Period ON Projection.idPeriod = Period.id"
+			             + " WHERE Movie.active = 1"
+			             + " GROUP BY Projection.id"
+			             + " ORDER BY Movie.id";
 
 			pstmt = conn.prepareStatement(query);
 
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
+				
 				
 				if (!mapa.containsKey(rset.getInt(1))) {
 					Report report = new Report();
@@ -51,11 +54,9 @@ public class ReportDAO {
 					report.setProjections(report.getProjections() + 1);
 					
 					if (rset.getInt(7) != 0) {
-						report.setTickets(report.getTickets() + 1);
-						report.setIncome(report.getIncome() +  rset.getDouble(8));
+						report.setTickets(report.getTickets() + rset.getInt(8));
+						report.setIncome(report.getIncome() +  rset.getInt(8)*rset.getDouble(7));
 					}
-					
-					
 				}
 			}
 		} finally {
