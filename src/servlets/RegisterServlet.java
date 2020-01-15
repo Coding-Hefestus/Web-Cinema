@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
 		if (str.equals("")) return false;
 		else return !str.chars()
                     .mapToObj(c -> (char) c)
-                    .anyMatch(c -> ( (!Character.isDigit(c) && !Character.isLetter(c)) || Character.isWhitespace(c) ));
+                    .anyMatch(c -> ((!Character.isDigit(c) && !Character.isLetter(c)) || Character.isWhitespace(c) ));
 	}
 
 }
