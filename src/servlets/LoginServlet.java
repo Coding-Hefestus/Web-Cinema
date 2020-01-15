@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 	
-	private static void setSession(String userName, HttpServletRequest request) {
+	private  void setSession(String userName, HttpServletRequest request) {
 				
 		ServletContext context = request.getSession( ).getServletContext();
 		

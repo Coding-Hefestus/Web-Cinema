@@ -228,7 +228,7 @@ CREATE TABLE User
 
 select * from User
 --id pre active
-
+delete from User where id in (4,5)
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'USER');
@@ -337,7 +337,6 @@ select * from Projection
 -- 'Avengers: Endgame', 3
 -- 'Harry Potter', 4
 --'Churchil', 5
-delete from Projection
 select * from Projection
 
 --projekcije za dan 14.01.2020 white hall (8 projekcija, 8 Perioda)
@@ -425,8 +424,7 @@ select * from Period
 --'Avengers: Endgame', 182
 --'Harry Potter', 120
 --'Churchil', 105
-delete from Period
-
+select * from Period
 --Period objekti za dan 14.01.2020 (8 projekcija za white hall)
 INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 09:00', '14-01-2020 11:02'); --id 1
 INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 11:30', '14-01-2020 12:59'); --id 2

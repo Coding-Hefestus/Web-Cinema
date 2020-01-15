@@ -127,12 +127,6 @@ public class UsersManagementServlet extends HttpServlet {
 		User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 		if (loggedInUser == null) response.sendRedirect("./Login.html");
 		
-		//prvi put stizemo na servlet
-		//String username = request.getParameter("username");
-		//String registrationDate = request.getParameter("registrationDate");
-		//String role = request.getParameter("role");
-		
-		
 		
 	}
 
