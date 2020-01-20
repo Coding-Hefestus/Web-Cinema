@@ -29,7 +29,7 @@ public class MapCollector implements Collector<Report, Map<String, Double>, Map<
 	public BiConsumer<Map<String, Double>, Report> accumulator() {
 		
 		return (map, report) -> 
-		{
+		{		
 			map.put("projections", map.get("projections") + report.getProjections());
 			map.put("tickets", map.get("tickets") + report.getTickets());
 			map.put("income", map.get("income") + report.getIncome());			

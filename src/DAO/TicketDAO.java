@@ -182,6 +182,8 @@ public class TicketDAO {
 		PreparedStatement pstmt = null;
 		//ResultSet rset = null;
 		try {
+			conn.setAutoCommit(false); 
+			conn.commit();
 			String query = "INSERT INTO Ticket (active, idProjection, idSeat, timeOfSale, idUser) "
 					    + "VALUES (?, ?, ?, ?, ?)";
 
@@ -201,6 +203,7 @@ public class TicketDAO {
 	        	 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
 	 	            if (generatedKeys.next()) {
 	 	            	newTicket.setId(generatedKeys.getInt(1));
+	 	            	conn.commit();
 	 	            	return true;
 	 	            }
 	 	            else {
@@ -209,12 +212,21 @@ public class TicketDAO {
 	 	        }
 			} else return false;
 
+		} //finally {
+//			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+//			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+//			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+//		
+//		}
+		catch (Exception ex) {
+			try {conn.rollback();} catch (Exception ex1) {ex1.printStackTrace();} // ako je 2. commit neuspešan, vratiti bazu u stanje koje je zapamćeno 1. commit-om
+			throw ex;		
 		} finally {
+			try {conn.setAutoCommit(true);} catch (Exception ex1) {ex1.printStackTrace();} // svaku sledeću naredbu izvršavati odmah
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			//try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
-		
 		}
+		
 		
 		
 	}

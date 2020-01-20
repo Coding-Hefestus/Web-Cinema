@@ -19,7 +19,7 @@ CREATE TABLE Movie
 
 
 select * from Movie
-
+DELETE FROM Movie WHERE ID = 6
 
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'Joker', 122 ,2019, 'Description goes here', 'Cinematicks', 'USA' );
 INSERT INTO Movie (active, name, duration, productionYear, description, distributor, countryOfOrigin) VALUES ( 1, 'John Shaft', 99 ,2000, 'Description goes here', 'DreamWorks', 'USA' );
@@ -228,7 +228,7 @@ CREATE TABLE User
 
 select * from User
 --id pre active
-delete from User where id in (4,5)
+
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'a', 'a', '15-12-2009 12:00', 'ADMIN');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'b', 'b', '16-02-2008 12:00', 'USER');
 INSERT INTO User ( active, username, password, registrationDate, role) VALUES (1, 'c', 'c', '15-03-2012 10:00', 'USER');
@@ -329,7 +329,7 @@ CREATE TABLE Projection
     FOREIGN KEY(idAdmin) REFERENCES User(id)  ON DELETE RESTRICT
 
 );
-select * from Projection
+delete from Projection
 --id filmova
 
 --'Joker', 1
@@ -338,7 +338,6 @@ select * from Projection
 -- 'Harry Potter', 4
 --'Churchil', 5
 select * from Projection
-
 --projekcije za dan 14.01.2020 white hall (8 projekcija, 8 Perioda)
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 1, 1, 1, 1, 100, 1); --id 1
 INSERT INTO Projection (active, idMovie, idProjectionType, idHall, idPeriod, price, idAdmin) VALUES (1, 2, 2, 1, 2, 150, 1); --id 2
@@ -417,7 +416,7 @@ CREATE TABLE Period
     endDate  VARCHAR(16) NOT NULL
     
 );
-select * from Period
+delete from Period
 --durations
 --'Joker', 122 
  --'John Shaft', 99 
@@ -425,55 +424,55 @@ select * from Period
 --'Harry Potter', 120
 --'Churchil', 105
 select * from Period
---Period objekti za dan 14.01.2020 (8 projekcija za white hall)
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 09:00', '14-01-2020 11:02'); --id 1
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 11:30', '14-01-2020 12:59'); --id 2
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 13:30', '14-01-2020 15:32'); --id 3
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 16:00', '14-01-2020 17:39'); --id 4
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 17:45', '14-01-2020 20:47'); --id 5
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 21:00', '14-01-2020 23:00'); --id 6
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 04:00', '14-01-2020 07:02'); --id 7
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '14-01-2020 07:10', '14-01-2020 08:59'); --id 8
+--Period objekti za dan 21.01.2020 (8 projekcija za white hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 09:00', '21-01-2020 11:02'); --id 1
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 11:30', '21-01-2020 12:59'); --id 2
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 13:30', '21-01-2020 15:32'); --id 3
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 16:00', '21-01-2020 17:39'); --id 4
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 17:45', '21-01-2020 20:47'); --id 5
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 21:00', '21-01-2020 23:00'); --id 6
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 04:00', '21-01-2020 07:02'); --id 7
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '21-01-2020 07:10', '21-01-2020 08:59'); --id 8
 
---Period objekti za dan 15.01.2020 (8 projekcija za Black Hall)
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 09:00', '15-01-2020 11:02'); --id 9
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 11:30', '15-01-2020 12:59'); --id 10
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 13:30', '15-01-2020 15:32'); --id 11
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 16:00', '15-01-2020 17:39'); --id 12
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 17:45', '15-01-2020 20:47'); --id 13
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 21:00', '15-01-2020 23:00'); --id 14
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 04:00', '15-01-2020 07:02'); --id 15
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '15-01-2020 07:10', '15-01-2020 08:59'); --id 16
+--Period objekti za dan 22.01.2020 (8 projekcija za Black Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 09:00', '22-01-2020 11:02'); --id 9
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 11:30', '22-01-2020 12:59'); --id 10
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 13:30', '22-01-2020 15:32'); --id 11
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 16:00', '22-01-2020 17:39'); --id 12
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 17:45', '22-01-2020 20:47'); --id 13
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 21:00', '22-01-2020 23:00'); --id 14
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 04:00', '22-01-2020 07:02'); --id 15
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '22-01-2020 07:10', '22-01-2020 08:59'); --id 16
 
---Period objekti za dan 16.01.2020 (8 projekcija za Orange Hall)
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 09:00', '16-01-2020 11:02'); --id 17
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 11:30', '16-01-2020 12:59'); --id 18
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 13:30', '16-01-2020 15:32'); --id 19
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 16:00', '16-01-2020 17:39'); --id 20
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 17:45', '16-01-2020 20:47'); --id 12
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 21:00', '16-01-2020 23:00'); --id 22
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 04:00', '16-01-2020 07:02'); --id 23
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '16-01-2020 07:10', '16-01-2020 08:59'); --id 24
+--Period objekti za dan 23.01.2020 (8 projekcija za Orange Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 09:00', '23-01-2020 11:02'); --id 17
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 11:30', '23-01-2020 12:59'); --id 18
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 13:30', '23-01-2020 15:32'); --id 19
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 16:00', '23-01-2020 17:39'); --id 20
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 17:45', '23-01-2020 20:47'); --id 12
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 21:00', '23-01-2020 23:00'); --id 22
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 04:00', '23-01-2020 07:02'); --id 23
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '23-01-2020 07:10', '23-01-2020 08:59'); --id 24
 
---Period objekti za dan 17.01.2020 (8 projekcija za White Hall)
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 09:00', '17-01-2020 11:02'); --id 25
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 11:30', '17-01-2020 12:59'); --id 26
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 13:30', '17-01-2020 15:32'); --id 27
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 16:00', '17-01-2020 17:39'); --id 28
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 17:45', '17-01-2020 20:47'); --id 29
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 21:00', '17-01-2020 23:00'); --id 30
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 04:00', '17-01-2020 07:02'); --id 31
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '17-01-2020 07:10', '17-01-2020 08:59'); --id 32
+--Period objekti za dan 24.01.2020 (8 projekcija za White Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 09:00', '24-01-2020 11:02'); --id 25
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 11:30', '24-01-2020 12:59'); --id 26
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 13:30', '24-01-2020 15:32'); --id 27
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 16:00', '24-01-2020 17:39'); --id 28
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 17:45', '24-01-2020 20:47'); --id 29
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 21:00', '24-01-2020 23:00'); --id 30
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 04:00', '24-01-2020 07:02'); --id 31
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '24-01-2020 07:10', '24-01-2020 08:59'); --id 32
 
---Period objekti za dan 18.01.2020 (8 projekcija za Black Hall)
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 09:00', '18-01-2020 11:02'); --id 33
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 11:30', '18-01-2020 12:59'); --id 34
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 13:30', '18-01-2020 15:32'); --id 35
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 16:00', '18-01-2020 17:39'); --id 36
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 17:45', '18-01-2020 20:47'); --id 37
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 21:00', '18-01-2020 23:00'); --id 38
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 04:00', '18-01-2020 07:02'); --id 39
-INSERT INTO Period (active, startDate, endDate) VALUES (1, '18-01-2020 07:10', '18-01-2020 08:59'); --id 40
+--Period objekti za dan 25.01.2020 (8 projekcija za Black Hall)
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 09:00', '25-01-2020 11:02'); --id 33
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 11:30', '25-01-2020 12:59'); --id 34
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 13:30', '25-01-2020 15:32'); --id 35
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 16:00', '25-01-2020 17:39'); --id 36
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 17:45', '25-01-2020 20:47'); --id 37
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 21:00', '25-01-2020 23:00'); --id 38
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 04:00', '25-01-2020 07:02'); --id 39
+INSERT INTO Period (active, startDate, endDate) VALUES (1, '25-01-2020 07:10', '25-01-2020 08:59'); --id 40
 
 CREATE TABLE Ticket
 (
@@ -487,6 +486,7 @@ CREATE TABLE Ticket
     FOREIGN KEY(idProjection) REFERENCES Projection(id)  ON DELETE RESTRICT,
     FOREIGN KEY(idUser) REFERENCES User(id)  ON DELETE RESTRICT
 );
+delete from Ticket
 select * from Ticket
 --Tickets for Projections on 14.01.2020 White hall; ID projekcija (1-8); id sedišta (1-3)
 INSERT INTO  Ticket (active, idProjection, idSeat, timeOfSale, idUser) VALUES (1, 1, 1, '10-01-2020 12:00', 2);
